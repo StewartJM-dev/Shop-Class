@@ -4,18 +4,18 @@ A learning workshop built for the Stewart boys and their interests. It runs in a
 
 ## Current baseline
 
-249 lesson entries across six workshops:
+257 lesson entries across six workshops:
 
 | Workshop | Entries |
 | --- | ---: |
 | Electronics | 24 |
-| Circuit Lab, including logic, soldering, computer and robotics | 66 |
+| Circuit Lab, including logic, soldering, computer, robotics and transistors | 74 |
 | Game Lab | 20 |
 | Auto Mechanics, including Engine Lab | 41 |
 | Faith & Trail, including Knot Lab | 41 |
 | Coding, including Python and Web Lab | 57 |
 
-The build includes six illustrated workshop covers, 34 progress badges, a personal project shelf, four saved game slots and four saved web-page slots per learner, and export/restore of browser-local progress.
+The build includes six illustrated workshop covers, 35 progress badges, a personal project shelf, four saved game slots and four saved web-page slots per learner, and export/restore of browser-local progress.
 
 ## Run the app
 
@@ -69,3 +69,14 @@ Open Circuit Lab for two new lab entries and 13 guided missions: seven SC-8 comp
 SC-8 is an original educational architecture, not a 6502 emulator or a transistor-level computer. Rover commands are not Python. The rover model uses ideal motion and a single front distance ray; it does not model tire slip, motor electronics, or sensor noise. Programs and controller settings are saved per learner; reopening resets the experiment. Backups include these saved programs.
 
 `extensions/computer-robotics.js` and `.css` mirror the code embedded in the standalone HTML. After editing those sources, run `node scripts/sync-discovery.cjs`, then `npm test`. Keep the marked extension block when merging transistor and motor-control lessons. The integration hooks add the cpu8/robot views, lesson routing, delegated actions and inputs.
+
+
+### Transistors and motor control
+
+Eight guided Transistor Lab lessons (xt1–xt8) cover NPN leads, LED switching, faults, motor switching, flyback protection, PWM, H-bridge direction and a final repair challenge. Open Circuit Lab and choose Transistors & motors. The lessons include diagrams, experiment requirements, quizzes, per-learner saved steps, and the Transistor tamer badge. Completed lessons reopen from the start; unfinished work resumes. Finish/replay cannot award repeated XP.
+
+Claude supplied the initial lessons. The merged version retains the newer computer/robotics guides, adds ownership and resume handling, corrects reversed-component drawings, and blocks short-circuit requests in the H-bridge teaching interlock. A fixed gain is used for conceptual experiments; it does not guarantee saturation in a real transistor or establish a GPIO current budget. Current rating alone does not establish thermal suitability. Spike heights and PWM speed are illustrative.
+
+Editable sources are `extensions/transistor-motor.js` and `.css`; `node scripts/sync-discovery.cjs` embeds both extensions before `npm test`. The transistor tests traverse all eight lessons through their UI actions and check models, ownership, resume, and replay behavior.
+
+Technical review references: [onsemi P2N2222A datasheet](https://www.onsemi.com/download/data-sheet/pdf/p2n2222a-d.pdf) (saturation test currents versus ordinary gain); [TI inductive-load application report](https://www.ti.com/lit/an/slvaes9a/slvaes9a.pdf) (inductive-load discharge).

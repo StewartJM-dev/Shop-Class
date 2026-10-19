@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0 — 2026-10-18
+
+- Merge Claude’s eight transistor/motor-control lessons into the current computer/robotics build: 257 entries and one 35-badge collection.
+- Preserve the sandbox fixes and all 13 beginner computer/robotics guides.
+- Correct reversed-diode and reversed-transistor diagrams; model H-bridge short requests as blocked.
+- Add per-profile saved steps, restart, keyboard pin controls and duplicate/replay XP guards.
+- Clarify the fixed-gain model and limits of current-only transistor selection.
+
+
 ## 0.3.1 — 2026-10-18
 
 - Rewrite all 13 computer/robotics missions with plain-language goals, numbered actions, observations, optional hints and vocabulary help.
