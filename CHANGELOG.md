@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1 — 2026-10-18
+
+- Rewrite all 13 computer/robotics missions with plain-language goals, numbered actions, observations, optional hints and vocabulary help.
+- Rename computer controls, explain register labels and simplify the first two computer screens.
+
+
 ## 0.3.0 — 2026-10-18
 
 - Add seven 8-bit computer missions and six robotics missions under Circuit Lab, plus two working sandboxes.

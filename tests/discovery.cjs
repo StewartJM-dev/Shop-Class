@@ -45,3 +45,8 @@ let dock=S.rbNew('rb-01');dock.left=dock.right=60;for(let i=0;i<240;i++)S.rbStep
 let spin={robot:S.rbNew('rb-02'),mode:'program',queue:S.rbCompile('TURN RIGHT 90\nSTOP'),qi:0,wait:0,running:true};for(let i=0;i<100&&spin.running;i++)S.rbTick(spin);assert(S.RBMISSIONS[1].ok(spin));
 const embedded=fs.readFileSync('index.html','utf8');assert(embedded.includes(fs.readFileSync('extensions/computer-robotics.js','utf8').trim()));assert(embedded.includes(fs.readFileSync('extensions/computer-robotics.css','utf8').trim()));
 console.log('All 13 new mission objectives and embedded extension consistency pass');
+
+for(const mission of [...S.C8MISSIONS,...S.RBMISSIONS]){click('subj',{id:'lab'});click('lesson',{id:mission.id});const guide=doc.querySelector('.ds-howto');assert(guide,mission.id);assert(guide.querySelectorAll('li').length>=3);assert(guide.textContent.includes('What to notice'));assert(guide.textContent.includes('Need a hint?'));assert(guide.textContent.includes('New words, explained'));assert.equal(guide.querySelector('details').hasAttribute('open'),false);}
+click('subj',{id:'lab'});click('lesson',{id:'c8-01'});assert(doc.querySelector('.ds-beginner'));assert(doc.querySelector('[data-act="c8latch"]').textContent.includes('Copy switches into A'));
+click('lesson',{id:'c8-03'});assert(doc.querySelector('[data-act="c8assemble"]').textContent.includes('Load program & reset'));assert(doc.querySelector('[data-act="c8instruction"]').textContent.includes('Run one instruction'));
+console.log('All 13 missions have numbered beginner steps, observations, collapsed hints and vocabulary help; plain control labels render');
