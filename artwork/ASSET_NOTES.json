@@ -1,0 +1,40 @@
+{
+  "mode": "Built-in image generation",
+  "purpose": "Decorative cover artwork. Interactive technical diagrams remain code-rendered.",
+  "prompts": [
+    {
+      "id": "elec",
+      "subject": "Electronics fundamentals: a carefully arranged macro still life of a blue electrolytic capacitor, three axial striped resistors with bent silver leads, an unlit clear red LED, a small black transistor and a premium handheld digital multimeter with red and black leads. Loose components on a warm cream work mat; no assembled circuit board, no laptop."
+    },
+    {
+      "id": "lab",
+      "subject": "Circuit Lab: a white solderless breadboard with one bright golden lit LED, an axial resistor and carefully routed short red and dark teal jumper wires, powered by a small 9V battery. A green circuit board with copper traces sits partly behind it. Focus on building, working connections and the glowing light. No multimeter, no loose scattered parts."
+    },
+    {
+      "id": "auto",
+      "subject": "Auto Mechanics: a convincing professionally machined single-cylinder four-stroke engine educational cutaway displayed on a workbench. Curved cast aluminum cooling fins and cylinder head, exposed polished piston and ring grooves inside the bore, one slender connecting rod linked to a steel crankshaft below, two overhead poppet valves and a ceramic spark plug above. Recognizable real engine proportions and material detail, warm light inside the cutaway, a small socket wrench nearby. Avoid toy cubes, arbitrary gears or impossible clusters of rods. A decorative cover illustration, not a labeled diagram."
+    },
+    {
+      "id": "game",
+      "subject": "Game Lab: a premium slim modern laptop showing a polished colorful contemporary 3D garage adventure game, a cheerful little mechanic robot collecting a golden wrench among rubber tires in a miniature garage. A small wireless game controller in the foreground. The screen shows the game world only, no code. Modern smooth cinematic graphics, not pixel art, no retro arcade."
+    },
+    {
+      "id": "faith",
+      "subject": "Faith and Trail: an open well-used Bible with cream pages, a brass compass on a folded topographic map and a neatly coiled small length of outdoor rope, on a weathered wooden trail table. Soft pine forest and distant mountain ridge blurred behind. Gentle warm morning sunlight. No human figures, no official logos, no readable printed page text."
+    },
+    {
+      "id": "code",
+      "subject": "Coding workshop: a modern slim laptop on a tidy desk, screen split between an elegant dark code editor with colorful abstract code lines and a bright modern web page preview with cards, a mountain photograph and a large green button. A small miniature website window floats just above the screen as a creative dimensional detail. No game character, no controller, no blocky pixel styling, no readable text."
+    }
+  ],
+  "sharedPrompt": "Premium photorealistic 3D still-life illustration for a polished learning web app; tactile material textures; soft studio key light from upper left, warm golden accents; teal, cream, copper and amber palette. Wide 16:9 centered composition, uncluttered environment and soft depth of field. No text, logos, watermarks, borders, collages, flat vectors, low-poly shapes or pixel art.",
+  "generationPromptTemplate": "Use case: stylized-concept. Asset type: decorative workshop cover illustration for a polished learning web app. Primary request: {subject} Style: premium photorealistic 3D still-life illustration with the inviting tactile richness of an electronics learning advertisement, fine material textures, rounded real-world forms, rich dimensional light and soft shadows, sophisticated contemporary design. Composition: wide landscape 16:9, subject centered with room around silhouette, fills the middle 80 percent, clean uncluttered composition suitable for a small app card. Palette: deep teal and forest green with warm cream, copper and golden amber highlights. Lighting: soft studio key light from upper left, golden accent light, subtle depth of field, crisp main subject. Background: softly blurred warm cream and muted teal workshop environment. Constraints: NO text, NO letters, NO logos, NO watermark, no app UI chrome, no borders, no split panel, no collage. No flat vector or low-poly look, no pixel art or 1980s computer graphics.",
+  "savedFiles": {
+    "elec": "artwork/elec.webp",
+    "lab": "artwork/lab.webp",
+    "auto": "artwork/auto.webp",
+    "game": "artwork/game.webp",
+    "faith": "artwork/faith.webp",
+    "code": "artwork/code.webp"
+  }
+}

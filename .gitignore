@@ -1,0 +1,5 @@
+node_modules/
+Shop-Class-Backup-*.json
+*.log
+.DS_Store
+coverage/

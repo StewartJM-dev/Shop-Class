@@ -1,0 +1,16 @@
+{
+  "name": "shop-class",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A browser-based family learning workshop for electronics, mechanics, coding, games and trail skills.",
+  "scripts": {
+    "test": "node tests/regression.cjs && node tests/game-sandbox.cjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@napi-rs/canvas": "1.0.11",
+    "linkedom": "0.18.13"
+  }
+}
