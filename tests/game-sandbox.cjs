@@ -6,6 +6,10 @@ const c={document,window,DOMParser,console,Date:class extends Date{constructor(.
 function click(act,extra={}){const el={dataset:{act,...extra}};listeners.click.find(l=>!l.c).f({target:{closest:()=>el}})}
 const profiles=JSON.parse(store['shopclass.v1']).profiles;click('pick',{id:profiles[0].id});
 
+click('subj',{id:'auto'});
+const feature=parseHTML(S.vHome()).document.querySelector('.bench-feature');
+assert.equal(feature.querySelector('[data-act="subj"]').dataset.id,'auto');
+console.log('Fresh-profile home features the last workshop visited');
 S.state().subj='game';click('subj',{id:'game'});console.log('before',S.state().s,!!S.state().gm);click('gmfree',{id:'free'});console.log('after',S.state().s,!!S.state().gm);
 assert.equal(S.state().s,'game');assert(S.state().gm);assert(doc.querySelector('#gmcv'));assert(doc.querySelector('[data-act="gmplay"]'));console.log('Fresh-profile Sandbox click opens the Game Studio and canvas');
 S.state().wb=null;click('subj',{id:'code'});click('wbfree',{id:'free'});assert.equal(S.state().s,'web');assert(doc.querySelector('#wbframe'));console.log('Fresh-profile My Pages sandbox opens without first opening a lesson');

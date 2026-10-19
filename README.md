@@ -15,7 +15,7 @@ A learning workshop built for the Stewart boys and their interests. It runs in a
 | Faith & Trail, including Knot Lab | 41 |
 | Coding, including Python and Web Lab | 57 |
 
-The build includes six illustrated workshop covers, 12 progress badges, a personal project shelf, four saved game slots and four saved web-page slots per learner, and export/restore of browser-local progress.
+The build includes six illustrated workshop covers, 34 progress badges, a personal project shelf, four saved game slots and four saved web-page slots per learner, and export/restore of browser-local progress.
 
 ## Run the app
 

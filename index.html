@@ -16,6 +16,7 @@
 .pydiff{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 8px}.pydiff i{font-style:normal;font-weight:800;font-size:12px;color:var(--muted)}.pydiff pre{margin:2px 0 0;padding:8px;border-radius:10px;background:#1d2127;color:#e8ecf1;font:600 13px/1.4 ui-monospace,Menlo,monospace;white-space:pre-wrap;word-break:break-word}
 
 .python-support{margin-top:15px;font-size:13px;color:#4a665e}.python-support summary{font-weight:750;cursor:pointer}.python-support p{line-height:1.6}#pycode{border-color:#577b72;box-shadow:inset 0 1px 5px #061b2d55;tab-size:4}.pyout{border:1px solid #3a6b60;background:linear-gradient(140deg,#153c40,#102c36);font-family:var(--fm)}.insb{border-width:1px;box-shadow:0 2px 0 #c5d1c7}.pytests{border-left:4px solid #b28d47}
+.shelf-empty{padding:12px 14px!important;gap:12px!important}.shelf-empty-art{display:none!important}.shelf-empty h3{font-size:17px!important;margin:0 0 4px!important}.shelf-empty p{margin:0!important;font-size:14px!important}
 </style><style>@font-face {
   font-family: 'Bricolage Grotesque';
   font-style: normal;
@@ -5285,7 +5286,7 @@ document.addEventListener("click",function(e){
       else v.del=id;
       break;
     case "tab":v.s=id;break;
-    case "subj":v.subj=id;v.s="path";break;
+    case "subj":v.subj=id;v.s="path";if(me()&&me().lastSubj!==id){me().lastSubj=id;save()}break;
     case "back":v.s=(v.s==="brief"||v.s==="lab"||v.s==="digi"||v.s==="eng"||v.s==="game"||v.s==="solder"||v.s==="web"||v.s==="knot"||v.s==="py")?(gmSaveNow(),wbSaveNow(),"path"):"home";break;
     case "lesson":{
       var sj=subj(v.subj),ls0=sj.lessons.find(function(z){return z.id===id}),lk=(ls0&&ls0.kind)||sj.kind;
@@ -5407,7 +5408,7 @@ function workshopArt(id){
 }
 function vHome(){
  var p=me(),g=Math.min(100,Math.round(dayXp(p)/DAILY_GOAL*100)),draft=p.resume;
- var featured=draft&&subj(draft.subj)||subj('lab'),lesson=featured.lessons.find(function(l){return !p.done[l.id]})||featured.lessons[0];
+ var featured=draft&&subj(draft.subj)||(p.lastSubj&&subj(p.lastSubj))||subj('lab'),lesson=featured.lessons.find(function(l){return !p.done[l.id]})||featured.lessons[0];
  var h='<div class="wrap workbench">'+topbar(p)+'<div class="bench-title"><span class="eyebrow">SHOP CLASS / YOUR NEXT DISCOVERY</span><h1>Your workbench.</h1><p>Build it. Understand it. Make it yours.</p></div>';
  h+='<section class="bench-feature"><div class="feature-copy"><span class="eyebrow">'+(draft?'BACK TO YOUR PROJECT':'READY WHEN YOU ARE')+'</span><h2>'+esc(featured.name)+'</h2><p>'+esc(draft?draft.title:lesson.title)+'</p><button class="btn small" data-act="'+(draft?'resume':'subj')+'" data-id="'+featured.id+'">'+(draft?'Continue building':'Open workshop')+' <span aria-hidden="true">→</span></button></div><div class="feature-art">'+workshopArt(featured.id)+'</div></section>';
  h+='<section class="card goal"><div class="row"><span>Today’s progress</span><span>'+Math.min(dayXp(p),DAILY_GOAL)+' / '+DAILY_GOAL+' XP</span></div><div class="bar"><i style="width:'+g+'%"></i></div></section>';
@@ -8493,6 +8494,35 @@ document.addEventListener("keydown",function(e){
 
 
 
+var BADGE_COLORS={elec:"#E8890C",lab:"#1C7ED6",game:"#7048E8",auto:"#C92A2A",faith:"#2F9E44",code:"#6B42D6",gen:"#F08C00"};
+function badgeList(){
+ var L=[];
+ function add(id,name,desc,color,sym,test){L.push({id:id,name:name,desc:desc,color:color,sym:sym,test:test})}
+ function done(p,id){return Number(p.done&&p.done[id])>0}
+ function nDone(p,ids){return ids.filter(function(i){return done(p,i)}).length}
+ add("g1","First Step","Finish your first lesson.",BADGE_COLORS.gen,"1",function(p){return Object.keys(p.done||{}).length>=1});
+ add("x100","Rising Star","Earn 100 XP.",BADGE_COLORS.gen,"100",function(p){return p.xp>=100});
+ add("x500","Regular","Earn 500 XP.",BADGE_COLORS.gen,"500",function(p){return p.xp>=500});
+ add("x1500","Shop Pro","Earn 1500 XP.",BADGE_COLORS.gen,"1.5k",function(p){return p.xp>=1500});
+ add("s3","3 Day Streak","Learn 3 days in a row.",BADGE_COLORS.gen,"3d",function(p){return Math.max(p.bestStreak||0,p.streak||0)>=3});
+ add("s7","Week Warrior","Learn 7 days in a row.",BADGE_COLORS.gen,"7d",function(p){return Math.max(p.bestStreak||0,p.streak||0)>=7});
+ SUBJECTS.forEach(function(s){
+  var ids=s.lessons.map(function(l){return l.id}),c=BADGE_COLORS[s.id]||BADGE_COLORS.gen,tag=s.name.replace(/[^A-Za-z]/g,"").slice(0,2);
+  add(s.id+"3",s.name+" Starter","Finish 3 lessons in "+s.name+".",c,tag,function(p){return nDone(p,ids)>=3});
+  add(s.id+"all",s.name+" Master","Finish every lesson in "+s.name+".",c,"★",function(p){return ids.length>0&&nDone(p,ids)===ids.length})
+ });
+ var py=(typeof PYC!=="undefined"?PYC:[]).map(function(c){return c.id});
+ add("py1","Hello, World","Finish the first Python challenge.",BADGE_COLORS.code,"Py",function(p){return done(p,"pl1")});
+ add("py8","Loop Master","Add 1 to 100 with a loop.",BADGE_COLORS.code,"∞",function(p){return done(p,"pl8")});
+ add("py11","Function Builder","Write your first function.",BADGE_COLORS.code,"f()",function(p){return done(p,"pl11")});
+ add("pyall","Python Pro","Beat every Python challenge.",BADGE_COLORS.code,"Py★",function(p){return py.length>0&&nDone(p,py)===py.length});
+ var fs=SUBJECTS.find(function(s){return s.id==="faith"}),kn=fs?fs.lessons.filter(function(l){return /^k[a-z]\d+$/.test(l.id)}).map(function(l){return l.id}):[];
+ add("kn1","Knot Learner","Finish 5 knot lessons.",BADGE_COLORS.faith,"Kn",function(p){return nDone(p,kn)>=5});
+ add("knall","Knot Master","Finish every Knot Lab lesson.",BADGE_COLORS.faith,"Kn★",function(p){return kn.length>0&&nDone(p,kn)===kn.length});
+ add("mk","Maker","Save a game or web page in a studio slot.",BADGE_COLORS.game,"+",function(p){return (p.studio||[]).some(Boolean)||(p.webStudio||[]).some(Boolean)});
+ return L;
+}
+
 /* Badge progress is derived from unique, known lesson completions. */
 var WORKSHOP_BADGES=[
  {id:'first',name:'First discovery',goal:'Complete your first lesson or mission.',target:1,icon:'star',group:'all'},
@@ -8508,7 +8538,13 @@ var WORKSHOP_BADGES=[
  {id:'trail',name:'Trail learner',goal:'Complete 3 Faith & Trail lessons.',target:3,icon:'compass',group:'faith'},
  {id:'allrounder',name:'All-round explorer',goal:'Complete a lesson or mission in each of the 6 workshops.',target:6,icon:'star',group:'subjects'}
 ];
+function additionalWorkshopBadges(){
+ var skip={g1:true,elec3:true,faith3:true};
+ return badgeList().filter(function(b){return !skip[b.id]}).map(function(b){return {id:b.id,name:b.name,goal:b.desc,target:1,icon:/^py/.test(b.id)?'code':/^kn/.test(b.id)?'compass':b.id==='mk'?'game':'star',test:b.test}});
+}
+function allWorkshopBadges(){return WORKSHOP_BADGES.concat(additionalWorkshopBadges())}
 function badgeProgress(p,b){
+ if(b.test)return b.test(p)?b.target:0;
  var ls=SUBJECTS.reduce(function(a,s){return a.concat(s.lessons.map(function(l){return {l:l,s:s.id}}))},[]),ids;
  function done(id){return Number(p.done&&p.done[id])>0}
  if(b.ids)ids=b.ids;
@@ -8517,14 +8553,18 @@ function badgeProgress(p,b){
  else if(b.group==='digital')ids=DG.map(function(c){return c.id});
  else if(b.group==='game')ids=GM.map(function(c){return c.id});
  else if(b.group==='web')ids=WBM.map(function(c){return c.id});
- else ids=ls.filter(function(x){if(b.group==='all')return true;if(b.group==='python')return /^py-c\d+$/.test(x.l.id);return x.s===b.group}).map(function(x){return x.l.id});
+ else ids=ls.filter(function(x){if(b.group==='all')return true;if(b.group==='python')return /^(py-c|pl)\d+$/.test(x.l.id);return x.s===b.group}).map(function(x){return x.l.id});
  return Math.min(b.target,Array.from(new Set(ids)).filter(done).length);
 }
-function badgeState(p){return WORKSHOP_BADGES.map(function(b){var n=badgeProgress(p,b);return {badge:b,count:n,earned:n>=b.target}})}
+function badgeState(p){return allWorkshopBadges().map(function(b){var n=badgeProgress(p,b),earned=n>=b.target||!!(p.workshopBadges&&p.workshopBadges[b.id]);return {badge:b,count:earned?Math.max(n,b.target):n,earned:earned}})}
 function syncBadges(p,quiet){
  if(!p)return [];var added=[];p.workshopBadges=p.workshopBadges||{};
+ var changed=false,best=Math.max(Number(p.bestStreak)||0,Number(p.streak)||0);
+ if(p.bestStreak!==best){p.bestStreak=best;changed=true}
+ // Preserve streak milestones already displayed by the uploaded badge strip.
+ ['s3','s7'].forEach(function(id){if(p.badgesSeen&&p.badgesSeen[id]&&!p.workshopBadges[id]){p.workshopBadges[id]=Date.now();changed=true}});
  badgeState(p).forEach(function(s){if(s.earned&&!p.workshopBadges[s.badge.id]){p.workshopBadges[s.badge.id]=Date.now();added.push(s.badge)}});
- if(added.length){save();if(!quiet)v.badgeNotice={owner:p.id,names:added.map(function(b){return b.name})}}return added;
+ if(added.length||changed)save();if(added.length&&!quiet)v.badgeNotice={owner:p.id,names:added.map(function(b){return b.name})};return added;
 }
 function badgeMedal(b,earned){
  var shapes={star:'<path d="m36 18 5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z"/>',bolt:'<path d="M39 17 25 37h10l-3 17 16-24H37z"/>',resistor:'<path d="M16 36h10m20 0h10"/><rect x="26" y="28" width="20" height="16" rx="4"/><path d="M31 29v14m6-14v14m5-14v14"/>',logic:'<path d="M22 25h12a11 11 0 0 1 0 22H22zM15 30h7m-7 12h7m23-6h12"/><circle cx="49" cy="36" r="3"/>',piston:'<rect x="23" y="20" width="26" height="20" rx="3"/><path d="M24 25h24m-24 5h24m-12 10v9"/><circle cx="36" cy="53" r="5"/>',wrench:'<path d="m24 19 2 9 9 3 6-6-3-9c10 2 13 13 6 20l-2 1-15 17a5 5 0 0 1-7-7l16-16-7 1-7-6z"/>',solder:'<path d="m22 20 8-4 17 24-8 5zM39 45l10 8m-27 0h23m-17-4v4"/>',game:'<path d="M24 26h24l7 21c1 5-6 8-9 3l-5-6H31l-5 6c-3 5-10 2-9-3zM23 35h10m-5-5v10"/><circle cx="44" cy="34" r="2"/><circle cx="48" cy="39" r="2"/>',code:'<path d="m27 25-11 11 11 11m18-22 11 11-11 11m-6-28-7 34"/>',compass:'<circle cx="36" cy="36" r="19"/><path d="m43 23-3 17-17 9 9-17zM36 12v5m0 38v5"/>'};
@@ -8539,7 +8579,7 @@ var badgesHome=vHome;vHome=function(){return badgesHome().replace('<section clas
 function badgeNoticeHtml(){var n=v.badgeNotice;return n&&me()&&n.owner===me().id?'<aside class="badge-notice" role="status"><span><strong>Badge earned!</strong> '+n.names.map(esc).join(' · ')+'</span><button data-act="badgedismiss" aria-label="Dismiss badge announcement">Got it</button></aside>':''}
 db.profiles.forEach(function(p){syncBadges(p,true)});
 var badgesRender=render;render=function(){syncBadges(me(),false);badgesRender()};
-if(window.ShopLab)Object.assign(window.ShopLab,{WORKSHOP_BADGES:WORKSHOP_BADGES,badgeState:badgeState,badgeProgress:badgeProgress,syncBadges:syncBadges,workshopBadges:workshopBadges,vHome:vHome});
+if(window.ShopLab)Object.assign(window.ShopLab,{WORKSHOP_BADGES:WORKSHOP_BADGES,allWorkshopBadges:allWorkshopBadges,badgeState:badgeState,badgeProgress:badgeProgress,syncBadges:syncBadges,workshopBadges:workshopBadges,vHome:vHome});
 
 /* Scope: merge the uploaded Knot Lab without replacing newer artwork or features.
    Teaching references: Scouting America Basic Knots (square knot is a binding knot),

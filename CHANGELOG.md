@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0 — 2026-10-18
+
+- Merge workshop memory, a compact empty shelf, and expanded achievements into one 34-badge cabinet.
+- Keep earned badges permanent, preserve earlier streak achievements, and count only known completed lessons.
+- Retain fresh-profile Game Lab and My Pages sandbox entry fixes.
+
+
 ## 0.1.0 — 2026-10-18
 
 - Save the current 236-entry Shop Class app as the initial GitHub baseline.

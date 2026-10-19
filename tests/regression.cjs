@@ -25,11 +25,36 @@ for(let j=0;j<3;j++)click('projectnew',{id:'game'});saved=JSON.parse(store['shop
 const owned=S.state().gm;click('pick',{id:profiles[3].id});assert(!S.projectShelf().includes('Garage Rescue'));assert(!S.projectShelf().includes('Alpha &lt;Garden&gt;'));S.gmSaveFor(owned);assert(!JSON.parse(store['shopclass.v1']).profiles[3].studio);console.log('Switching boys isolates shelf contents and delayed saves');
 click('pick',{id:profiles[2].id});doc.getElementById('app').innerHTML=S.vHome();assert(doc.querySelector('.project-shelf'));assert.equal(doc.querySelectorAll('.shelf-project').length,6);const beforeHome=S.state().s;S.vHome();assert.equal(S.state().s,beforeHome);console.log('Home renders six saved project cards without starting any project');
 console.log('PROJECT SHELF CHECKS PASSED');
-let clean={id:profiles[0].id,done:{},xp:123};assert.equal(S.badgeState(clean).filter(x=>x.earned).length,0);clean.done={bogus:3,c1:3};assert.equal(S.badgeState(clean).filter(x=>x.earned).length,0);clean.done={e1:3,e2:1,e3:2};assert(S.badgeState(clean).find(x=>x.badge.id==='electronics').earned);assert.equal(S.badgeState(clean).find(x=>x.badge.id==='electronics').count,3);assert.equal(S.badgeState(clean).find(x=>x.badge.id==='python').count,0);clean.done={'py-c1':3,'py-c2':3,'py-c3':1};assert(S.badgeState(clean).find(x=>x.badge.id==='python').earned);assert(!S.badgeState(clean).find(x=>x.badge.id==='electronics').earned);
-clean.done={};S.SUBJECTS.forEach(x=>x.lessons.forEach(l=>clean.done[l.id]=3));assert.equal(S.badgeState(clean).filter(x=>x.earned).length,12);const xp=clean.xp;assert.equal(S.syncBadges(clean,true).length,12);assert.equal(S.syncBadges(clean,true).length,0);assert.equal(clean.xp,xp);console.log('All 12 badges derive from known unique completions; replay cannot re-award or change XP');
-click('pick',{id:profiles[3].id});assert(!doc.querySelector('.badge-notice'));S.wbOpen('w1');const pg=S.state().wb;pg.blanks=S.WBM[0].fills.slice();pg.code=S.WBM[0].sol;S.wbCheck(false);assert(doc.querySelector('.badge-notice'));click('badgedismiss');assert(!doc.querySelector('.badge-notice'));click('pick',{id:profiles[0].id});assert(!doc.querySelector('.badge-notice'));console.log('Fresh badges announce once and stay with their profile');
+let clean={id:profiles[0].id,done:{},xp:0};assert.equal(S.badgeState(clean).filter(x=>x.earned).length,0);clean.done={bogus:3,c1:3};assert.equal(S.badgeState(clean).filter(x=>x.earned).length,0);clean.done={e1:3,e2:1,e3:2};assert(S.badgeState(clean).find(x=>x.badge.id==='electronics').earned);assert.equal(S.badgeState(clean).find(x=>x.badge.id==='electronics').count,3);assert.equal(S.badgeState(clean).find(x=>x.badge.id==='python').count,0);clean.done={'py-c1':3,'py-c2':3,'py-c3':1};assert(S.badgeState(clean).find(x=>x.badge.id==='python').earned);assert(!S.badgeState(clean).find(x=>x.badge.id==='electronics').earned);
+clean.done={};S.SUBJECTS.forEach(x=>x.lessons.forEach(l=>clean.done[l.id]=3));assert.equal(S.badgeState(clean).filter(x=>x.earned&&S.WORKSHOP_BADGES.some(b=>b.id===x.badge.id)).length,12);const xp=clean.xp;assert(S.syncBadges(clean,true).length>=12);assert.equal(S.syncBadges(clean,true).length,0);assert.equal(clean.xp,xp);console.log('Original badges and expanded achievements derive from known completions; replay cannot re-award or change XP');
+click('pick',{id:profiles[3].id});assert(!doc.querySelector('.badge-notice'));S.wbOpen('w1');const pg=S.state().wb;pg.blanks=S.WBM[0].fills.slice();pg.code=S.WBM[0].sol;S.wbCheck(false);assert(doc.querySelector('.badge-notice'));click('badgedismiss');assert(!doc.querySelector('.badge-notice'));click('pick',{id:profiles[0].id});if(doc.querySelector('.badge-notice'))assert.equal(S.state().badgeNotice.owner,profiles[0].id);console.log('Fresh badges announce once and stay with their profile');
 assert.equal(Object.keys(S.WORKSHOP_COVERS).length,6);assert.equal(new Set(Object.values(S.WORKSHOP_COVERS)).size,6);for(const subject of S.SUBJECTS){S.state().subj=subject.id;let view=S.vPath();assert(view.includes('workshop-path-cover'));assert(view.includes(S.WORKSHOP_COVERS[subject.id]));assert(S.workshopArt(subject.id).includes('<img'));}console.log('Six distinct embedded cover images appear on their matching course pages');
 assert(S.vHome().includes('Workshop badges'));assert(S.vHome().includes('Your project shelf'));console.log('BADGE AND COVER CHECKS PASSED');
+
+// Expanded achievements share a single cabinet and retain earned milestones.
+let newcomer={done:{bogus:3,c1:3},xp:0};
+assert.equal(S.badgeState(newcomer).filter(x=>x.earned).length,0);
+assert.equal(S.allWorkshopBadges().length,34);
+assert.equal(new Set(S.allWorkshopBadges().map(b=>b.id)).size,34);
+let veteran={done:{},xp:1500,streak:7};S.syncBadges(veteran,true);
+assert(S.badgeState(veteran).find(x=>x.badge.id==='s7').earned);
+veteran.streak=0;veteran.bestStreak=0;S.syncBadges(veteran,true);
+assert(S.badgeState(veteran).find(x=>x.badge.id==='s3').earned);
+assert(S.badgeState(veteran).find(x=>x.badge.id==='s7').earned);
+let migrated={done:{},xp:0,streak:0,badgesSeen:{s7:1,s3:1}};S.syncBadges(migrated,true);
+assert(S.badgeState(migrated).find(x=>x.badge.id==='s7').earned);
+let pythonOnly={done:{pl1:3,pl8:3,pl11:3},xp:0};
+for(const id of ['python','py1','py8','py11'])assert(S.badgeState(pythonOnly).find(x=>x.badge.id===id).earned,id);
+const homeDoc=parseHTML(S.vHome()).document;
+assert.equal(homeDoc.querySelectorAll('[id="badge-title"]').length,1);
+assert.equal(homeDoc.querySelectorAll('.badge-cabinet').length,1);
+assert.equal(homeDoc.querySelectorAll('.badge-strip').length,0);
+click('pick',{id:profiles[0].id});click('subj',{id:'auto'});
+assert.equal(JSON.parse(store['shopclass.v1']).profiles[0].lastSubj,'auto');
+click('pick',{id:profiles[3].id});assert.notEqual(JSON.parse(store['shopclass.v1']).profiles[3].lastSubj,'auto');
+click('pick',{id:profiles[0].id});
+console.log('34 unified badges, unknown-ID rejection, permanent streaks, migration, Python milestones and profile-specific workshop memory pass');
+
 
 S.state().subj='faith';for(const lesson of S.KNLESSONS){click('lesson',{id:lesson.id});assert.equal(S.state().s,lesson.kind==='knot'?'knot':'brief',lesson.id)}
 for(const K of S.KNOTS){const l=S.KNLESSONS.find(x=>x.knot===K.id);S.knOpen(l);S.state().kn.i=0;for(let j=0;j<K.steps.length+2;j++)click('knnext');assert.equal(S.state().kn.i,K.steps.length-1);assert(!S.vKnot().includes('Knot tied'));S.checkpoint();S.state().kn.i=0;S.knOpen(l);assert.equal(S.state().kn.i,K.steps.length-1);click('knquiz');assert.equal(S.state().s,'brief');click('start');assert.equal(S.state().s,'quiz');assert(S.state().queue.length);}
