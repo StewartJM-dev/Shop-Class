@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0 — 2026-10-18
+
+- Add seven 8-bit computer missions and six robotics missions under Circuit Lab, plus two working sandboxes.
+- Expose computer registers, memory, carry, flags, clock transfers and a bounded original assembly interpreter.
+- Add a differential-drive rover, distance and line sensors, feedback rule presets, route-command blocks, and parsed route programs.
+- Preserve profile ownership, progress IDs and version 2 backups. Save programs and settings per learner; reset simulations on reopening.
+- Add arithmetic, assembler, motion, sensor, mission-solution, entry, ownership and resume regression checks.
+
+
 ## 0.2.0 — 2026-10-18
 
 - Merge workshop memory, a compact empty shelf, and expanded achievements into one 34-badge cabinet.

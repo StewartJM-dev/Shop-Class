@@ -4,12 +4,12 @@ A learning workshop built for the Stewart boys and their interests. It runs in a
 
 ## Current baseline
 
-236 lesson entries across six workshops:
+249 lesson entries across six workshops:
 
 | Workshop | Entries |
 | --- | ---: |
 | Electronics | 24 |
-| Circuit Lab, including digital logic and soldering | 53 |
+| Circuit Lab, including logic, soldering, computer and robotics | 66 |
 | Game Lab | 20 |
 | Auto Mechanics, including Engine Lab | 41 |
 | Faith & Trail, including Knot Lab | 41 |
@@ -60,3 +60,12 @@ Keep progress backups and personal learner data out of this repository.
 ## Artwork
 
 Optimized cover originals are in `artwork/`; the same images are embedded in `index.html`. `artwork/ASSET_NOTES.json` records the generation prompts and asset mapping. Interactive technical diagrams are rendered in code.
+
+
+### Computer and robotics labs
+
+Open Circuit Lab for two new lab entries and 13 guided missions: seven SC-8 computer missions and six rover missions. Both include a sandbox. The computer supports byte switches, a latch, assembly, 256 bytes of RAM, clock stepping, flags, a carry breakdown, and output history. The rover supports differential wheel controls, distance/line sensors, feedback rule presets, command blocks, and a small parsed route language.
+
+SC-8 is an original educational architecture, not a 6502 emulator or a transistor-level computer. Rover commands are not Python. The rover model uses ideal motion and a single front distance ray; it does not model tire slip, motor electronics, or sensor noise. Programs and controller settings are saved per learner; reopening resets the experiment. Backups include these saved programs.
+
+`extensions/computer-robotics.js` and `.css` mirror the code embedded in the standalone HTML. After editing those sources, run `node scripts/sync-discovery.cjs`, then `npm test`. Keep the marked extension block when merging transistor and motor-control lessons. The integration hooks add the cpu8/robot views, lesson routing, delegated actions and inputs.
