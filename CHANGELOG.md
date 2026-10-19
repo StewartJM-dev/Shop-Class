@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.1 — 2026-10-18
+
+- Fix startup failure when an older build saved game/page studios as objects. Preserve the original data and move recognized projects into saved slots.
+- Apply compatibility repair on backup restore and guard badge checks against legacy studio shapes.
+- Add full-document navigation tests with active saved profiles and real delegated DOM clicks.
+
+
 ## 0.4.0 — 2026-10-18
 
 - Merge Claude’s eight transistor/motor-control lessons into the current computer/robotics build: 257 entries and one 35-badge collection.

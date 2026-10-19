@@ -750,6 +750,26 @@ function load(){
 var db=load();
 var storageIssue=false;
 function save(){try{localStorage.setItem(KEY,JSON.stringify(db));storageIssue=false}catch(e){storageIssue=true;if(typeof v!=="undefined"&&v)v.notice="This browser could not save your work. Export a backup before closing."}}
+/* Older builds saved one studio object instead of a four-slot array.
+   Preserve the original verbatim and expose recognized projects in slots. */
+function normalizeStudioHistory(p){
+ var changed=false;
+ ['studio','webStudio'].forEach(function(key){
+  var old=p[key];if(old==null||Array.isArray(old))return;
+  p.legacyStudios=p.legacyStudios||{};
+  if(!Object.prototype.hasOwnProperty.call(p.legacyStudios,key))p.legacyStudios[key]=old;
+  var slots=[null,null,null,null];
+  if(old&&typeof old==='object'){
+   var indexed=false;for(var j=0;j<4;j++){if(Object.prototype.hasOwnProperty.call(old,String(j))){slots[j]=old[j];indexed=true}}
+   if(!indexed&&(typeof old.code==='string'||typeof old.name==='string'||old.prog||old.cfg))slots[0]=old;
+  }
+  p[key]=slots;changed=true;
+ });
+ return changed;
+}
+var studioHistoryChanged=false;
+db.profiles.forEach(function(p){if(normalizeStudioHistory(p))studioHistoryChanged=true});
+if(studioHistoryChanged)save();
 function me(){return db.profiles.find(function(p){return p.id===db.active})||null}
 function dstr(d){return d.toLocaleDateString("en-CA")}
 function today(){return dstr(new Date())}
@@ -5318,7 +5338,7 @@ document.addEventListener("click",function(e){
     case "backup":exportBackup();break;
     case "restore":document.getElementById("restore-file").click();return;
     case "restorecancel":v.restorePending=null;v.notice="Restore cancelled.";break;
-    case "restoreconfirm":if(v.restorePending){db=v.restorePending;v.restorePending=null;db.active=null;save();v.s="who";v.notice="Backup restored."}break;
+    case "restoreconfirm":if(v.restorePending){db=v.restorePending;db.profiles.forEach(normalizeStudioHistory);v.restorePending=null;db.active=null;save();v.s="who";v.notice="Backup restored."}break;
     case "pick":db.active=id;save();v.s="home";break;
     case "switch":db.active=null;save();v.s="who";v.edit=false;break;
     case "edit":v.edit=!v.edit;v.del=null;break;
@@ -8567,7 +8587,7 @@ function badgeList(){
  var fs=SUBJECTS.find(function(s){return s.id==="faith"}),kn=fs?fs.lessons.filter(function(l){return /^k[a-z]\d+$/.test(l.id)}).map(function(l){return l.id}):[];
  add("kn1","Knot Learner","Finish 5 knot lessons.",BADGE_COLORS.faith,"Kn",function(p){return nDone(p,kn)>=5});
  add("knall","Knot Master","Finish every Knot Lab lesson.",BADGE_COLORS.faith,"Kn★",function(p){return kn.length>0&&nDone(p,kn)===kn.length});
- add("mk","Maker","Save a game or web page in a studio slot.",BADGE_COLORS.game,"+",function(p){return (p.studio||[]).some(Boolean)||(p.webStudio||[]).some(Boolean)});
+ add("mk","Maker","Save a game or web page in a studio slot.",BADGE_COLORS.game,"+",function(p){return (Array.isArray(p.studio)&&p.studio.some(Boolean))||(Array.isArray(p.webStudio)&&p.webStudio.some(Boolean))});
  return L;
 }
 

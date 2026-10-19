@@ -80,3 +80,5 @@ Claude supplied the initial lessons. The merged version retains the newer comput
 Editable sources are `extensions/transistor-motor.js` and `.css`; `node scripts/sync-discovery.cjs` embeds both extensions before `npm test`. The transistor tests traverse all eight lessons through their UI actions and check models, ownership, resume, and replay behavior.
 
 Technical review references: [onsemi P2N2222A datasheet](https://www.onsemi.com/download/data-sheet/pdf/p2n2222a-d.pdf) (saturation test currents versus ordinary gain); [TI inductive-load application report](https://www.ti.com/lit/an/slvaes9a/slvaes9a.pdf) (inductive-load discharge).
+
+Older single-object and numbered-object game/page studios are converted into four-slot arrays on startup and restore. The original is retained under each profile’s legacyStudios field; XP and completions are unchanged. Full-document navigation tests exercise actual delegated DOM clicks with these saved-state shapes.

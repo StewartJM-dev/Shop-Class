@@ -1,10 +1,10 @@
 {
   "name": "shop-class",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "private": true,
   "description": "A browser-based family learning workshop for electronics, mechanics, coding, games and trail skills.",
   "scripts": {
-    "test": "node tests/regression.cjs && node tests/game-sandbox.cjs && node tests/discovery.cjs && node tests/transistor.cjs"
+    "test": "node tests/regression.cjs && node tests/game-sandbox.cjs && node tests/discovery.cjs && node tests/transistor.cjs && node tests/navigation.cjs"
   },
   "engines": {
     "node": ">=22"
