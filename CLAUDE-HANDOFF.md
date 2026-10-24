@@ -1,25 +1,29 @@
-# Shop Class v0.7.0 — current handoff
+# Shop Class v0.8.0 — current handoff
 
-Source of truth: private `StewartJM-dev/Shop-Class`, branch `development`. This merge builds on `6e2326db20c6cf1e5649e374125817f6b5b78a20` (v0.6.0). Read AGENTS.md and CHANGELOG.md. Use current GitHub files, not an older uploaded standalone file.
+Source of truth: private `StewartJM-dev/Shop-Class`, branch `development`. This update builds on `e57af3b27ce7a7e429a8f85160b0e50026bd00f8` (v0.7.0). Read AGENTS.md and CHANGELOG.md. Use current GitHub files; the supplied v0.5.0-based packages are historical inputs.
 
 ## Current build
 
-288 lesson entries, seven workshops, 42 badges. The seventh workshop is Writing Desk: eight writing templates plus blank writing, offline checker, custom words, sentence-context capture and Spelling Quest. The mixed quest and five game choices use each learner’s misspelled words, falling back to starter words. Browser speech is optional; Spell it falls back to look-and-remember.
+302 lesson entries, eight workshops, 45 badges. Workshops: Electronics 24; Circuit Lab 77 (computer/robotics/transistors included); Game Lab 20; Auto Mechanics 49; Faith & Trail 41; Coding 71; Writing Desk 16; Money Lab 4. All previous IDs remain.
 
-All v0.6.0 content is retained, including 31 practical Python challenges, parts drills, computer/robotics/transistor activities, saved-project migration and isolated runners, four fuel foundations, Shop Detective: No Crank and the six-discovery carburetor cutaway. Carburetor progress remains per learner with a one-time 25 XP award; its flow values remain illustrative.
+Auto Mechanics adds `inj1` (kind/view inj): six interactive fuel-injection discoveries. Change pulse width, step needle movement, compare port/direct placement, vary RPM, remove fuel supply and restrict a nozzle. The timing bar is an ECU command, not a voltage trace. Flow/pressure values are relative teaching estimates with separate normalized system references, not actual calibration, AFR or real engine predictions.
 
-## Integration and progress
+`nc2` (kind/view ns), Shop Detective: Cranks, Won’t Start, is a fictional port-injected one-fault case: an open pump ground-return wire. Nine evidence checks cover scan/spark/mechanical/tank/pressure and battery/feed/return/across-motor readings. Diagnosis gates key-off inspection and repair. Starting alone is insufficient: new pressure, powered-ground and running-scan evidence precede the explanation/award. The initial drawing hides the break until earned inspection. No real gasoline procedures are taught. Case specifications, voltages and pressure are fictional, with ideal good wires and a conventional connected DC motor/relay.
 
-Preserve standalone `index.html`, lesson IDs and `shopclass.v1`. Writing fields are `docs`, `mywords`, `sq`, `wdBig`, `sqQuiet`, stored in the owning profile and carried by backups. Input saves immediately; delayed refresh checks captured owner/document. No automatic document deletion at 300 entries. Template first finish earns 25 XP, new pieces of the same template 5 XP, blank pages 10 XP; re-finishing the same document earns zero. Quest rounds award 10 XP, capped at 30/day; a word advances at most once/day.
+The later supplied ZIP adds templates wt9–wt16 (editorial, news, persuasive essay, speech, poem, biography, interview, devotion). Section checks recognize numbered and Q/A headings. Poetry checks count lines/words; rhyme, syllables and acrostic form need parent review. Existing Writing Desk, offline checker and Spelling Quest are retained.
 
-Editable sources live in `extensions/`; Writing Desk source/CSS are included in `scripts/sync-discovery.cjs`. Run `node scripts/sync-discovery.cjs` then `npm test`. Supplied dictionary build tools are retained, but require source Hunspell/frequency inputs; they are not needed to run the app. See WRITING-DESK-HANDOFF.md for the incoming package details.
+Money Lab: mn1 Campout cook; mn2 Gas money; mn3 Family groceries; mn4 First month on your own. All support owner-bound draft/resume, permanent best stars and first-completion-only 25 XP. The monthly surprise is fixed for an attempt, not rerolled by repeated checks. Supplied dated prices/source notes are preserved as practice values, not independently verified live quotes. Shared device price edits validate values and clear stale result overlays; progress stars remain. Zero item prices are allowed, zero wage rejected. Meal/month assumptions and prepaid/startup exclusions are explicit in the UI. See MONEY-LAB-IMPORT.md for original reported notes.
 
-## Validation and remaining work
+## Storage and source
 
-All automated Node/DOM/canvas/worker checks pass, including all 288 lesson routes, all 31 Python references, legacy studio migration, carburetor discoveries, writing edits/corrections, all six spelling choices, XP/replay/daily limits, profile isolation/resume, large writing collections, backup restore and extension sync. These are not actual browser/device tests. Chromium installation failed due to unavailable download bytes; layout, printing and actual speech output require manual acceptance testing.
+Preserve `shopclass.v1`, lesson IDs and standalone `index.html`. Existing writing, projects, runner isolation, migration and earned progress are retained. New owner-bound draft keys are `inj:inj1`, `ns:nc2`, and `mn:mn1`–`mn:mn4`. Reopening injection/no-start releases held live controls. Money stars use `p.mnStars`. Price overrides use separate device-wide `shopclass.prices.v1`; they are not included in progress backups.
 
-The hosted preview is unchanged. Time Pass remains OFF and unconfigured. Continue on development or a feature branch. Do not change repository visibility or hosting audience.
+Editable extension JS/CSS and writing-templates-2.js are embedded with markers. Run `node scripts/sync-discovery.cjs`, then `npm test`. Keep all original extensions and hooks when merging another upload. Dictionary rebuild utilities require the source inputs described in the older writing handoff; they are not runtime dependencies.
 
-## Proposed next work (not implemented)
+## Validation and limits
 
-Interactive fuel injection: injector pulse width, port versus direct injection. Then Shop Detective: Cranks, Won’t Start. Diagnose with evidence; pump noise or choke response alone does not prove a failed part.
+All automated checks pass: 302 lesson routes; all 31 Python references and serialized workers; game isolation; legacy studio migration; original computer/robotics/transistor/knot/no-crank/carburetor behavior; writing corrections, profile saves and daily XP caps; both new fuel activities through complete/replay paths; repair order and fresh post-repair verification; 16 templates; all four 3-star budget solutions; unit/convoy/month math; price edits/reset; stable surprises; owner isolation/resume; backup restore; embedded source consistency.
+
+Fuel SVGs and browser screenshots were rendered and visually inspected. Real Chromium 153 checks (`tests/browser-fuel.cjs`) completed both fuel activities with native controls at 1366×768 and 390×844 viewports; Money Lab plan/prices, writing saves, range focus and no horizontal overflow passed with no page script errors. Scoped width rules prevent older layout CSS from squeezing desktop labs. Actual hardware, Safari/ChromeOS-specific behavior, speech output and printing are still unverified. The optional browser test uses separately installed Playwright/Chromium, with PLAYWRIGHT_MODULE_PATH and SHOP_CLASS_CHROMIUM overrides; they are not learner runtime dependencies.
+
+Time Pass remains OFF and unconfigured. The hosted preview is unchanged. Work on development or a feature branch; no visibility/hosting changes or main promotion are included.

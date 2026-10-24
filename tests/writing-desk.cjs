@@ -10,7 +10,7 @@ function input(id,value){const el=document.getElementById(id);assert(el,id);el.v
 function flush(){timers.splice(0).forEach(f=>f())}
 function dismiss(){if(document.querySelector('[data-act="badgedismiss"]'))act('badgedismiss')}
 function home(){dismiss();if(!document.querySelector('[data-act="tab"][data-id="home"]'))act('back');act('tab','home')}
-act('pick',profiles[0].id);act('subj','write');assert.equal(document.querySelectorAll('.wdtpl').length,9);
+act('pick',profiles[0].id);act('subj','write');assert.equal(document.querySelectorAll('.wdtpl').length,17);
 assert.equal(L.wde().check('I have a freind.').filter(x=>x.k==='spell').length,1);
 assert(L.wde().suggest('freind').includes('friend'));
 act('wdnew','blank');const firstId=V.wd.id;
@@ -37,7 +37,7 @@ assert.equal(profile().sq.words.friend.box,1,'Repeated same-day practice advance
 const endXP=profile().xp;L.sqClick('sqkey','ENTER');assert.equal(profile().xp,endXP);
 act('back');assert.equal(V.s,'path');act('back');assert.equal(V.s,'home');act('subj','auto');act('cbopen');assert(document.querySelector('#cb-diagram svg'),'Carburetor retained alongside writing');
 for(const ext of ['writing-desk.js','writing-desk.css'])assert(html.includes(fs.readFileSync('extensions/'+ext,'utf8').trim()));
-assert(!html.includes('<<<<<<<'));assert.equal(L.SUBJECTS.length,7);assert.equal(L.allWorkshopBadges().length,42);
+assert(!html.includes('<<<<<<<'));assert.equal(L.SUBJECTS.length,8);assert.equal(L.allWorkshopBadges().length,45);
 // Restore keeps new writing/spelling data, established XP and large writing collections.
 const backup=data(),restored=backup.profiles[0],savedXP=restored.xp;
 while(restored.docs.length<301)restored.docs.push({id:'kept'+restored.docs.length,tpl:'blank',title:'Kept',text:'A kept page.',created:1,updated:1,fin:false,ign:{}});

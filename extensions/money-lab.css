@@ -1,0 +1,22 @@
+/* BEGIN MONEY LAB STYLES */
+.mnstory p{margin:0 0 8px}.mnstory p:last-child{margin:0}
+.mnbar{position:sticky;top:6px;z-index:5;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin:10px 0;box-shadow:0 6px 16px #0002}.mnbar.over{border-color:#c92a2a}.mnbar.warn{border-color:#f08c00}
+.mnbar-t{display:flex;justify-content:space-between;gap:8px;font-weight:700;font-size:15px;margin-bottom:6px}.mnbar.over .mnleft{color:#c92a2a}.mnleft{color:#2b8a3e}
+.mnbar .bar{height:8px}.mnbar .bar i{background:var(--c)}.mnbar.over .bar i{background:#c92a2a}
+.mnneeds{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}.mnneed{font-size:12px;font-weight:700;padding:3px 8px;border-radius:99px;background:#fff4e6;color:#9c3b00}.mnneed.ok{background:#d3f9d8;color:#2b8a3e}
+.mngrp{margin:16px 0 6px;font-size:16px}.mngrp small{font-weight:600;color:var(--muted);font-size:12px}
+.mnitems{display:flex;flex-direction:column;gap:6px}.mnitem{display:flex;align-items:center;gap:10px;padding:10px 12px;border:2px solid var(--line);border-radius:14px;background:var(--surface)}.mnitem.on{border-color:var(--c)}
+.mni-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.mni-t b{font-size:15px}.mni-t small{color:var(--muted);font-weight:600;font-size:12px}
+.mnstep{display:flex;align-items:center;gap:6px}.mnstep button{width:40px;height:40px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font-size:22px;font-weight:800;cursor:pointer;line-height:1}.mnstep button:disabled{opacity:.35;cursor:default}.mnstep span{min-width:22px;text-align:center;font-weight:800;font-size:17px}
+.mnfb ul{margin:4px 0 8px;padding-left:20px}.mnfb li{margin:3px 0;font-size:14px}.mnfb p{margin:6px 0}
+.mnmath p{margin:6px 0;font-size:14px}.mnsmall{margin:6px 0 0;font-size:12px;color:var(--muted);font-weight:600}
+.mnopts{display:grid;gap:6px}.mnopt{display:grid;grid-template-columns:1fr auto;gap:2px 10px;text-align:left;padding:10px 12px;border:2px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);cursor:pointer;font:inherit;text-transform:none}.mnopt.on{border-color:var(--c);background:#ebfbee}.mnopt b{font-size:15px}.mnopt span{font-weight:800}.mnopt small{grid-column:1/-1;color:var(--muted);font-weight:600;font-size:12px}
+.mntab{width:100%;border-collapse:collapse;margin-top:8px;font-size:14px}.mntab td{padding:4px 0;border-bottom:1px solid var(--line)}.mntab td:last-child{text-align:right}
+.mnsrc{font-size:12px;font-weight:600;margin-top:14px}.linkbtn{border:0;background:none;color:var(--c);font:inherit;font-weight:800;text-decoration:underline;cursor:pointer;padding:0}
+.mnlist{display:flex;flex-direction:column;gap:8px;margin:12px 0}.mnmis{display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;text-align:left;font:inherit;box-shadow:0 3px 0 var(--line);text-transform:none}
+.mnnum{width:34px;height:34px;border-radius:50%;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex:0 0 auto}.mnmt{flex:1;display:flex;flex-direction:column;gap:2px}.mnmt b{font-size:16px}.mnmt small{color:var(--muted);font-weight:600;font-size:12px}.mnst{color:#f08c00;font-size:17px;letter-spacing:1px}.mnst i{font-style:normal;color:var(--line)}
+.mnbook{display:flex;flex-direction:column;gap:6px;margin:12px 0}.mnrow{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}.mnrow span{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}.mnrow b{font-size:14px}.mnrow small{font-size:11px;color:var(--muted);font-weight:600}.mnrow input{width:92px;font-size:16px;padding:8px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink);text-align:right}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .mnopt.on{background:#1f4a2b}:root:not([data-theme="light"]) .mnneed{background:#4a3520;color:#ffd8a8}:root:not([data-theme="light"]) .mnneed.ok{background:#1f4a2b;color:#b2f2bb}}
+
+#app .wrap.mn,#app .wrap.mnhome{width:100%;max-width:800px}.wrap.mnhome.path{display:flex;flex-direction:column}.mn :focus-visible,.mnhome :focus-visible{outline:3px solid #bb842b;outline-offset:3px}.mn .mnrow input{flex:0 0 92px}.mn .mnsrc{line-height:1.7}.mn .mnsrc a{color:var(--c)}
+/* END MONEY LAB STYLES */

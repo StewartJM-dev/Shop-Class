@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.8.0 — 2026-10-24
+
+- Add Fuel Injection Lab (inj1): six discoveries with pulse width, needle movement, port/direct location, RPM, missing fuel pressure and nozzle restriction.
+- Add Shop Detective Case 02 (nc2): cranking/no-start reports, pump circuit, paired meter readings, evidence-gated return-wire diagnosis, key-off inspection/repair and fresh verification.
+- Save both activities per learner; release live controls on resume; award 25 XP once.
+- Merge the newer supplied Writing Desk/Money Lab package: eight more writing templates and four budgeting missions.
+- Correct numbered/Q&A section boundaries and make poem checklists count lines/words rather than claim to verify rhyme or haiku syllables.
+- Save money drafts/resume/stars per learner; guard XP; keep a stable surprise per attempt; validate price edits and recalculate old result overlays.
+- Label supplied prices as dated practice inputs with original source notes, not verified live quotes. State simplified meal/month assumptions.
+- Total: 302 entries, eight workshops, 45 badges; all earlier IDs, learner data, runner isolation and disabled Time Pass retained.
+- Extend extension synchronization and full-document tests; visually inspect SVGs and browser screenshots. Real Chromium completes both new fuel activities at Chromebook/phone viewport sizes and checks Money Lab, prices, writing saves, focus and layout. Physical devices, Safari/ChromeOS-specific behavior, speech and printing remain unverified. Hosted preview unchanged.
+
 ## 0.7.0 — 2026-10-24
 
 - Merge the uploaded Writing Desk and Spelling Quest into the current v0.6.0 carburetor build.

@@ -220,7 +220,7 @@ function wdWords(t){return (String(t).match(/[A-Za-z0-9'’]+/g)||[]).length}
 function wdParas(t){return String(t).split(/\n\s*\n/).filter(function(p){return wdWords(p)>=5}).length}
 function wdSec(text,label){
  var L=String(text).split('\n'),i,re=new RegExp('^\\s*'+label.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\s*:\\s*(.*)$','i'),out=null;
- for(i=0;i<L.length;i++){var m=re.exec(L[i]);if(m){out=m[1];for(var j=i+1;j<L.length;j++){if(/^\s*[A-Z][A-Za-z ()\/,'-]{1,40}:\s*/.test(L[j])&&!/^\s*\d/.test(L[j]))break;out+='\n'+L[j]}break}}
+ for(i=0;i<L.length;i++){var m=re.exec(L[i]);if(m){out=m[1];for(var j=i+1;j<L.length;j++){if(/^\s*[A-Z][A-Za-z0-9 ()\/,'-]{0,40}:\s*/.test(L[j]))break;out+='\n'+L[j]}break}}
  return out===null?null:out.trim();
 }
 function wdFilled(text,label,n){var s=wdSec(text,label);return s!==null&&wdWords(s.replace(/^\s*-\s*$/gm,''))>=(n||1)}

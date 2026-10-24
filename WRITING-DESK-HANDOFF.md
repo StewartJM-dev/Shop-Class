@@ -1,3 +1,7 @@
+# Writing Desk import history — see CLAUDE-HANDOFF.md for v0.8.0
+
+Current build: 16 writing templates, eight workshops, 302 total lesson entries and 45 badges. The original eight-template package and v0.7.0 notes below are historical; later updates preserve the writing-save fixes and add Money Lab.
+
 # Integrated into Shop Class v0.7.0
 
 The original v0.5.0-based package below was merged into GitHub development v0.6.0. Current totals: 288 entries, seven workshops, 42 badges. Writing now saves immediately, delayed refresh checks owner/document, older documents are retained beyond 300, and round-end awards are guarded. See CLAUDE-HANDOFF.md for authoritative current validation and remaining work.

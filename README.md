@@ -4,19 +4,20 @@ A learning workshop built for the Stewart boys and their interests. It runs in a
 
 ## Current baseline
 
-288 lesson entries across seven workshops:
+302 lesson entries across eight workshops:
 
 | Workshop | Entries |
 | --- | ---: |
 | Electronics | 24 |
 | Circuit Lab, including logic, soldering, computer, robotics and transistors | 77 |
 | Game Lab | 20 |
-| Auto Mechanics, including Engine Lab | 47 |
+| Auto Mechanics, including Engine Lab | 49 |
 | Faith & Trail, including Knot Lab | 41 |
 | Coding, including Python and Web Lab | 71 |
-| Writing Desk | 8 |
+| Writing Desk | 16 |
+| Money Lab | 4 |
 
-The build includes six illustrated workshop covers, 42 progress badges, a personal project shelf, four saved game slots and four saved web-page slots per learner, and export/restore of browser-local progress.
+The build includes six illustrated workshop covers, 45 progress badges, a personal project shelf, four saved game slots and four saved web-page slots per learner, and export/restore of browser-local progress.
 
 ## Run the app
 
@@ -121,3 +122,32 @@ A template earns 25 XP on its first finished piece, then 5 XP for a new finished
 Editable sources: `extensions/writing-desk.js` and `.css`. Run `node scripts/sync-discovery.cjs` after edits. Dictionary rebuild utilities from the supplied package are retained in `tools/`; they require the source dictionary/frequency data described in `WRITING-DESK-HANDOFF.md`, and are not runtime dependencies.
 
 Writing saves immediately on input; delayed UI refresh is tied to its owner and document. Opening new writing never truncates older work. Automated tests cover typing/correction, captured practice words, all game choices, per-profile saves and resume, template/replay XP, daily limits, badges, large document collections and backup restore. Browser/device layout, printing and speech output still require manual acceptance testing. A Chromium download was unavailable in this environment. The hosted preview has not been updated by this merge.
+
+
+## Fuel Injection Lab and Shop Detective Case 02 (v0.8.0)
+
+Auto Mechanics now includes `inj1`, **Fuel Injection Lab: pulse & spray**. Six guided discoveries cover pulse width, needle opening/closing, port versus direct injection, RPM versus events per second, a command with no fuel supply, and a restricted nozzle with the same command. Sliders update the diagram, command bar and readouts without replacing the active input.
+
+The model commands one event per cylinder per four-stroke cycle. Fuel values are relative per-event/per-second estimates with a fixed illustrative opening delay, not calibrated flow, fuel trims or AFR. The timing bar is an ECU ON/OFF command, not a measured voltage trace. Each injection type uses its own normalized pressure reference; identical percentages do not mean identical real pressures or injectors.
+
+`nc2`, **Shop Detective: Cranks, Won’t Start**, presents a fictional port-injected engine with one open pump-ground-return wire. Learners collect scan, spark, compression/timing, tank, pressure and paired meter evidence. A pump feed measured against battery negative does not prove voltage exists across the motor. Diagnosis precedes key-off inspection/repair, followed by new pressure, powered-ground and running-scan evidence before completion. The initial schematic hides the wire condition until inspection.
+
+Case readings and specifications are fictional training values, not limits for a particular vehicle. The simplified circuit has a conventional relay and connected DC motor, with ideal good wires and fixed cranking/running voltages. Prime timing, retained pressure, PWM modules, battery depletion, intermittent faults and real gasoline handling are outside the model.
+
+Both activities award 25 XP on first completion and zero on replay. Drafts, controls and notebook evidence stay with the captured learner; reopening releases the held pulse/START control. Existing progress backups carry these drafts. Editable files: `extensions/fuel-injection.js`/`.css` and `extensions/crank-no-start.js`/`.css`.
+
+Technical references: [Bosch port injection](https://www.bosch-mobility.com/en/solutions/powertrain/gasoline/gasoline-port-fuel-injection/), [Bosch direct injection](https://www.bosch-mobility.com/en/solutions/powertrain/gasoline/gasoline-direct-injection/), [Snap-on injector commands and movement](https://www.snapon.com/EN/US/Diagnostics/News-Center/Technical-Focus-Archive/Fuel-Injector-Current-and-Voltage-Tests), and [Delphi fuel-pump electrical diagnosis](https://www.delphiautoparts.com/resource-center/article/how-to-perform-a-voltage-drop-test).
+
+## Additional writing and Money Lab (v0.8.0)
+
+The newer supplied package adds writing templates wt9–wt16: editorial, news article, persuasive essay, speech, poem, biography, interview and devotion journal. Section checks now stop at numbered headings and Q/A headings. Poetry checks count lines/words; a parent reviews rhymes, haiku syllables and acrostic form. The eight earlier templates, checker, Spelling Quest and immediate owner-bound writing saves remain.
+
+Money Lab adds four missions: Campout cook, Gas money for the trip, Family groceries, and First month on your own. They compare package/unit prices, seats/cargo/fuel costs, recurring monthly income/expenses, saving and a surprise bill. Mission drafts and best stars are saved per learner with guarded first-completion XP. Rechecking a monthly plan keeps the same surprise; it cannot reroll for an easier result. A completed mission can be replayed for better stars without more XP.
+
+The price book retains the supplied package’s values and dated source notes as practice inputs. They have not been independently verified as current local prices or offers. Price overrides affect all learners on one device under `shopclass.prices.v1`, separately from progress backups; zero-price donated items are supported, zero wage and invalid prices are rejected. Edits invalidate an old result overlay and recalculate the plan. Check current costs/terms for real purchases.
+
+Serving targets are simplified budget-puzzle units, not complete nutrition plans. The monthly scenario uses a fixed 16% pay deduction, allocated prepaid-phone costs, and already-covered startup deposits. It omits many real expenses and is not a personal tax or financial plan. [BLS average-price guidance](https://www.bls.gov/cpi/factsheets/average-prices.htm) and [CFPB emergency-fund guidance](https://www.consumerfinance.gov/an-essential-guide-to-building-an-emergency-fund/) are linked in the price book. Original package notes are retained in `MONEY-LAB-IMPORT.md`.
+
+The current total is **302 entries, eight workshops and 45 badges**. The original six photographic workshop covers are retained; Writing Desk and Money Lab use embedded SVG illustrations.
+
+`npm test` includes all original checks plus full delegated injection/no-start traversals, repair/verification/replay gates, restored progress, 16 writing templates, all four budget solutions, price edits/reset, monthly surprise stability and owner isolation. SVG diagrams were rendered and visually inspected. Additional real Chromium 153 checks completed both fuel activities with native controls at 1366×768 and 390×844 viewports, and exercised Money Lab, price edits and writing saves with no script errors or horizontal overflow. The new desktop labs use the full available width. Actual hardware, Safari/ChromeOS-specific behavior, speech output and printing remain to be checked. The hosted preview has not been updated. Optional browser tests: `npm run test:browser` with Playwright/Chromium installed for development; `PLAYWRIGHT_MODULE_PATH` and `SHOP_CLASS_CHROMIUM` may point to existing installations.

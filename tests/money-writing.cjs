@@ -1,0 +1,37 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert'),{parseHTML,DOMParser}=require('linkedom');
+const html=fs.readFileSync('index.html','utf8'),{window,document}=parseHTML(html),store={};
+window.scrollTo=()=>{};window.matchMedia=()=>({matches:false});
+const c={window,document,DOMParser,console,Blob,URL,localStorage:{getItem:k=>store[k],setItem:(k,v)=>store[k]=v,removeItem:k=>delete store[k]},setInterval(){},clearInterval(){},setTimeout(){},clearTimeout(){},requestAnimationFrame(){}};
+vm.createContext(c);vm.runInContext(document.querySelector('script').textContent,c);
+const L=window.ShopLab,V=L.state(),data=()=>JSON.parse(store['shopclass.v1']),profiles=data().profiles;
+const saved=id=>data().profiles.find(p=>p.id===id),me=()=>saved(data().active);
+function act(a,id){const el=document.querySelector('[data-act="'+a+'"]'+(id!==undefined?'[data-id="'+id+'"]':''));assert(el,a+' '+id);assert(!el.hasAttribute('disabled'),'enabled '+a);el.dispatchEvent(new window.Event('click',{bubbles:true}))}
+function dismiss(){if(document.querySelector('[data-act="badgedismiss"]'))act('badgedismiss')}
+function home(){dismiss();if(!document.querySelector('[data-act="tab"][data-id="home"]'))act('back');act('tab','home')}
+function pick(id){home();act('switch');act('pick',id)}
+function input(id,value,type='input'){const el=document.querySelector(id);assert(el,id);el.value=value;el.dispatchEvent(new window.Event(type,{bubbles:true}))}
+act('pick',profiles[0].id);act('subj','write');assert.equal(document.querySelectorAll('.wdtpl').length,17);assert.equal(L.WDT.length,16);
+for(const t of L.WDT.slice(8)){act('wdnew',t.id);assert.equal(V.s,'wd');assert(document.querySelector('#wdchecks'));assert(!t.checks.every(c=>c[1](typeof t.start==='function'?t.start():t.start)),'Blank template must not pass '+t.id);act('back')}
+// Numbered headings and single-letter Q/A delimit sections; later text cannot satisfy an empty earlier reason.
+const editorial=L.WDT.find(t=>t.id==='wt9'),reasons=editorial.checks.find(c=>c[0].startsWith('Three reasons'));
+assert(!reasons[1]('Reason 1:\n\nReason 2:\nHere are many words with an example and a reason.\nReason 3:\nHere are many words with an example and a reason.'));
+assert(reasons[1]('Reason 1:\nHere are many words with an example and a reason.\nReason 2:\nHere are many words with an example and a reason.\nReason 3:\nHere are many words with an example and a reason.'));
+const poem=L.WDT.find(t=>t.id==='wt13'),haiku='Quiet autumn leaves\nRest beside the narrow trail\nMorning birds awake';assert(poem.checks.every(c=>c[1](haiku)),'A short poem is not forced to have 20 words or a rhyme');
+home();act('subj','money');assert.equal(document.querySelectorAll('.mnmis').length,4);assert(document.body.textContent.includes('practice prices'));act('lesson','mn1');assert.equal(V.s,'mn');act('mncheck');assert(V.mn.check.miss.length);assert(!V.mn.res);
+act('mnq','hotdog:1');assert.equal(me().drafts['mn:mn1'].q.hotdog,1,'Basket saves immediately');const own=V.mn;pick(profiles[1].id);act('subj','money');act('lesson','mn1');assert(!V.mn.q.hotdog);L.mnSave(own);assert(!saved(profiles[1].id).drafts['mn:mn1'].q.hotdog);pick(profiles[0].id);act('resume');assert.equal(V.s,'mn');assert.equal(V.mn.q.hotdog,1);
+function fill(q){for(const [k,n]of Object.entries(q))while((V.mn.q[k]||0)<n)act('mnq',k+':1')}
+const camp={hotdog:1,pb:1,bread:1,buns:1,bananas:2,potatoes:2,water:1,mallow:1,graham:1,choc:1,propane:1,wood:2,plates:1};fill(camp);const campCheck=L.mnCheckShop(L.mnMission('mn1'),V.mn);assert.equal(campCheck.stars,3);assert(campCheck.spent<=63);const xp=me().xp;act('mncheck');assert.equal(me().mnStars.mn1,3);assert.equal(me().xp,xp+25);assert.equal(V.mn.xp,25);L.mnClick('mncheck');assert.equal(me().xp,xp+25,'Money replay cannot award more XP');dismiss();act('mndone');
+act('lesson','mn3');fill({pb:1,beans:1,eggs:1,rice:4,potatoes:6,bananas:4,oranges:3,milk:1});assert.equal(L.mnCheckShop(L.mnMission('mn3'),V.mn).stars,3);act('mncheck');assert.equal(me().mnStars.mn3,3);dismiss();act('mndone');
+act('lesson','mn2');act('mnv','sedan:1');act('mncheck');assert(!V.mn.res,'Seats and cargo must both fit');act('mnv','sedan:-1');act('mnv','van:1');const trip=L.mnTrip(V.mn),best=L.mnTripBest();assert(trip.ok);assert.equal(trip.cost,Math.round(180/13*4.48*100)/100);assert.equal(trip.cost,best.cost);act('mncheck');assert.equal(me().mnStars.mn2,3);dismiss();act('mndone');
+act('lesson','mn4');act('mncheck');assert(!V.mn.res,'All monthly categories must be chosen');
+for(const [k,n]of Object.entries({home:0,net:1,phone:0,car:0,food:0,give:0,save:0,fun:0}))act('mnpick',k+':'+n);
+const month=L.mnMonth(V.mn);assert.equal(month.inc.gross,2600);assert.equal(month.inc.net,2184);assert(month.chosen&&month.left>=0);assert.equal(month.save,500);assert(month.left+month.save>=350);const surprise=V.mn.surprise;act('mncheck');assert.equal(V.mn.surprise,surprise);assert.equal(me().mnStars.mn4,3);assert(document.body.textContent.includes(L.MN_SURPRISE[surprise][0]));const paid=me().xp;L.mnClick('mncheck');assert.equal(me().xp,paid);assert.equal(V.mn.surprise,surprise,'Repeated checks cannot reroll an easier surprise');dismiss();assert(L.badgeState(me()).find(s=>s.badge.id==='penny').earned);act('mnagain');
+// Bad actions cannot insert unavailable items or corrupt option indices.
+L.mnClick('mnpick','home:99');assert.equal(V.mn.pick.home,0);L.mnClick('mnv','bogus:1');assert(!V.mn.veh.bogus);L.mnClick('mnq','wood:1');assert(!V.mn.q.wood);
+// Price overrides are deliberately device-wide, use decimal precision, and refresh in-progress calculations.
+act('mnbook');input('[data-mnp="wage"]','20','change');assert.equal(L.mnPrice('wage'),20);assert.equal(me().drafts['mn:mn4'].res,null);input('[data-mnp="kwh"]','.3','change');assert.equal(L.mnPrice('kwh'),.3);input('[data-mnp="gas"]','0','change');assert.equal(L.mnPrice('gas'),0);input('[data-mnp="wage"]','0','change');assert.equal(L.mnPrice('wage'),20,'Zero wage rejected');input('[data-mnp="gas"]','-1','change');assert.equal(L.mnPrice('gas'),0,'Negative prices rejected');
+act('mnpback');assert.equal(V.s,'mn');assert.equal(L.mnMonth(V.mn).inc.gross,3467);act('mnbook');act('mnpreset');assert.equal(L.mnPrice('wage'),15);assert.equal(L.mnPrice('gas'),4.48);assert.equal(L.mnPrice('kwh'),.266);act('mnpback');
+const beforeRestore=data();V.restorePending=beforeRestore;const restore=document.createElement('button');restore.dataset.act='restoreconfirm';document.body.appendChild(restore);restore.dispatchEvent(new window.Event('click',{bubbles:true}));act('pick',profiles[0].id);assert.equal(me().mnStars.mn1,3);assert.equal(me().mnStars.mn4,3);act('resume');assert.equal(V.s,'mn');assert.equal(V.mn.id,'mn4');assert.equal(V.mn.pick.save,0);assert.equal(V.mn.surprise,surprise);assert.equal(me().xp,paid);
+for(const base of ['money-lab.js','money-lab.css','writing-templates-2.js'])assert(html.includes(fs.readFileSync('extensions/'+base,'utf8').trim()));
+const ids=L.SUBJECTS.flatMap(s=>s.lessons.map(l=>l.id));assert.equal(ids.length,302);assert.equal(ids.length,new Set(ids).size);assert.equal(L.SUBJECTS.length,8);assert.equal(L.allWorkshopBadges().length,45);
+console.log('Money/writing: 16 templates, numbered-section boundaries and short poems; all four 3-star missions; unit-cost/convoy/month math; price edits/reset; stable surprises; XP, owner, resume and backup guards; embedded sources and 302 unique lessons pass.');

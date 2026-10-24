@@ -2,6 +2,13 @@
 const fs=require('fs');
 const file='index.html';let html=fs.readFileSync(file,'utf8');
 for(const [start,end,path] of [
+ ['/* BEGIN MONEY LAB */','/* END MONEY LAB */','extensions/money-lab.js'],
+ ['/* BEGIN MONEY LAB STYLES */','/* END MONEY LAB STYLES */','extensions/money-lab.css'],
+ ['/* BEGIN WRITING TEMPLATES TWO */','/* END WRITING TEMPLATES TWO */','extensions/writing-templates-2.js'],
+ ['/* BEGIN FUEL INJECTION LAB */','/* END FUEL INJECTION LAB */','extensions/fuel-injection.js'],
+ ['/* BEGIN FUEL INJECTION STYLES */','/* END FUEL INJECTION STYLES */','extensions/fuel-injection.css'],
+ ['/* BEGIN CRANK NO START CASE */','/* END CRANK NO START CASE */','extensions/crank-no-start.js'],
+ ['/* BEGIN CRANK NO START STYLES */','/* END CRANK NO START STYLES */','extensions/crank-no-start.css'],
  ['/* BEGIN WRITING DESK */','/* END WRITING DESK */','extensions/writing-desk.js'],
  ['/* BEGIN WRITING DESK STYLES */','/* END WRITING DESK STYLES */','extensions/writing-desk.css'],
  ['/* BEGIN CARBURETOR LAB */','/* END CARBURETOR LAB */','extensions/carburetor.js'],
