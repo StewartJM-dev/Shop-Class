@@ -37,6 +37,7 @@ for(const kind of ['new','game-object','web-object','numbered-object','unsupport
  S.state().restorePending={schema:2,active:null,profiles:[{...profile,webStudio:project}]};
  const action=document.createElement('button');action.dataset.act='restoreconfirm';document.body.appendChild(action);action.dispatchEvent(new window.Event('click',{bubbles:true}));
  const restored=JSON.parse(store['shopclass.v1']).profiles[0];assert(Array.isArray(restored.webStudio));assert.equal(restored.webStudio[0].name,'Kept project');assert.equal(restored.xp,125);
- console.log('Full-document startup, six workshops, Learn/Crew and preserved progress pass: '+kind);
+ console.log('Full-document startup, seven workshops, Learn/Crew and preserved progress pass: '+kind);
 }
+
 

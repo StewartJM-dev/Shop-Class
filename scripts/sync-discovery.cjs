@@ -2,6 +2,8 @@
 const fs=require('fs');
 const file='index.html';let html=fs.readFileSync(file,'utf8');
 for(const [start,end,path] of [
+ ['/* BEGIN WRITING DESK */','/* END WRITING DESK */','extensions/writing-desk.js'],
+ ['/* BEGIN WRITING DESK STYLES */','/* END WRITING DESK STYLES */','extensions/writing-desk.css'],
  ['/* BEGIN CARBURETOR LAB */','/* END CARBURETOR LAB */','extensions/carburetor.js'],
  ['/* BEGIN CARBURETOR STYLES */','/* END CARBURETOR STYLES */','extensions/carburetor.css'],
  ['/* Shop Detective —', '/* END SHOP DETECTIVE */','extensions/shop-detective.js'],
@@ -16,4 +18,5 @@ for(const [start,end,path] of [
  const src=fs.readFileSync(path,'utf8').trim();html=html.slice(0,a)+src+html.slice(b+end.length);
 }
 fs.writeFileSync(file,html);
+
 

@@ -4,7 +4,7 @@ A learning workshop built for the Stewart boys and their interests. It runs in a
 
 ## Current baseline
 
-280 lesson entries across six workshops:
+288 lesson entries across seven workshops:
 
 | Workshop | Entries |
 | --- | ---: |
@@ -14,8 +14,9 @@ A learning workshop built for the Stewart boys and their interests. It runs in a
 | Auto Mechanics, including Engine Lab | 47 |
 | Faith & Trail, including Knot Lab | 41 |
 | Coding, including Python and Web Lab | 71 |
+| Writing Desk | 8 |
 
-The build includes six illustrated workshop covers, 37 progress badges, a personal project shelf, four saved game slots and four saved web-page slots per learner, and export/restore of browser-local progress.
+The build includes six illustrated workshop covers, 42 progress badges, a personal project shelf, four saved game slots and four saved web-page slots per learner, and export/restore of browser-local progress.
 
 ## Run the app
 
@@ -106,3 +107,17 @@ The moving SVG cutaway includes the upstream choke, downstream throttle, vented 
 This is a qualitative model. Flow indicators are relative comparisons, not measured units, calibrated air/fuel ratios, RPM or a prediction of a real engine. Fuel use and refilling are separate demonstration actions. No real gasoline-handling procedure is taught.
 
 Editable source: `extensions/carburetor.js` and `.css`. `npm test` includes a full-document delegated-control traversal of all six discoveries, slider stability, model relationships, progress ownership, resume, replay XP and embedded source consistency. The SVG has also been rendered and visually inspected. Actual browser/device layout testing remains outstanding.
+
+
+
+## Writing Desk and Spelling Quest (v0.7.0)
+
+The seventh workshop adds eight guided writing templates (stories, friendly/formal letters, thank-you notes, trail journals, outing reports, how-to guides and book/Bible reports) plus a blank page. The offline checker offers spelling suggestions, explanations, names/custom words and guided corrections. Corrected words feed each learner’s Spelling Quest with sentence context.
+
+Spelling Quest has a mixed Daily Quest and five game choices: Spell it, Fix it, Missing letters, Scramble and Campfire. Without browser speech support, Spell it uses look-and-remember practice. Writing and spelling data stay inside each profile in `shopclass.v1` and travel with existing backups. They are saved locally, not sent to a server. The checker is a learning aid and may miss errors or flag unfamiliar names.
+
+A template earns 25 XP on its first finished piece, then 5 XP for a new finished piece of the same type. A blank page earns 10 XP. Finishing the same document again earns no additional XP. Spelling rounds earn 10 XP, capped at 30 per day; repeated correct practice does not advance a word more than once per day. Three new writing/spelling badges plus two workshop badges bring the collection to 42. Previously earned progress is preserved.
+
+Editable sources: `extensions/writing-desk.js` and `.css`. Run `node scripts/sync-discovery.cjs` after edits. Dictionary rebuild utilities from the supplied package are retained in `tools/`; they require the source dictionary/frequency data described in `WRITING-DESK-HANDOFF.md`, and are not runtime dependencies.
+
+Writing saves immediately on input; delayed UI refresh is tied to its owner and document. Opening new writing never truncates older work. Automated tests cover typing/correction, captured practice words, all game choices, per-profile saves and resume, template/replay XP, daily limits, badges, large document collections and backup restore. Browser/device layout, printing and speech output still require manual acceptance testing. A Chromium download was unavailable in this environment. The hosted preview has not been updated by this merge.

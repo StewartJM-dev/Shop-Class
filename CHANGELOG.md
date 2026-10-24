@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.7.0 — 2026-10-24
+
+- Merge the uploaded Writing Desk and Spelling Quest into the current v0.6.0 carburetor build.
+- Add eight writing templates, a blank editor, offline spelling help and personalized spelling practice across six choices.
+- Total: 288 entries, seven workshops and 42 badges.
+- Preserve all prior lesson IDs, carburetor challenges, learner-owned saves, isolated runners and disabled Time Pass.
+- Save writing immediately, guard delayed refresh by owner/document, retain documents beyond 300 and prevent repeated round-end awards.
+- Include writing extension sync, dictionary rebuild tools and delegated writing/spelling/backup regression tests.
+- All automated tests pass; browser/device layout, printing and speech output remain unverified. Hosted preview unchanged.
+
 ## 0.6.0 — 2026-10-24
 
 - Add the interactive carburetor cutaway and six guided discoveries (cb1) under Auto Mechanics.
@@ -65,4 +75,5 @@
 - Include regression checks for lesson routing, simulation goals, project ownership, badges and isolated program execution.
 
 Browser and physical-device acceptance testing remains outstanding. Electronics depth, transistors, an interactive 8-bit computer and robotics are possible future work, not features of this baseline.
+
 
