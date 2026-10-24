@@ -4,18 +4,18 @@ A learning workshop built for the Stewart boys and their interests. It runs in a
 
 ## Current baseline
 
-257 lesson entries across six workshops:
+279 lesson entries across six workshops:
 
 | Workshop | Entries |
 | --- | ---: |
 | Electronics | 24 |
-| Circuit Lab, including logic, soldering, computer, robotics and transistors | 74 |
+| Circuit Lab, including logic, soldering, computer, robotics and transistors | 77 |
 | Game Lab | 20 |
-| Auto Mechanics, including Engine Lab | 41 |
+| Auto Mechanics, including Engine Lab | 46 |
 | Faith & Trail, including Knot Lab | 41 |
-| Coding, including Python and Web Lab | 57 |
+| Coding, including Python and Web Lab | 71 |
 
-The build includes six illustrated workshop covers, 35 progress badges, a personal project shelf, four saved game slots and four saved web-page slots per learner, and export/restore of browser-local progress.
+The build includes six illustrated workshop covers, 37 progress badges, a personal project shelf, four saved game slots and four saved web-page slots per learner, and export/restore of browser-local progress.
 
 ## Run the app
 
@@ -82,3 +82,17 @@ Editable sources are `extensions/transistor-motor.js` and `.css`; `node scripts/
 Technical review references: [onsemi P2N2222A datasheet](https://www.onsemi.com/download/data-sheet/pdf/p2n2222a-d.pdf) (saturation test currents versus ordinary gain); [TI inductive-load application report](https://www.ti.com/lit/an/slvaes9a/slvaes9a.pdf) (inductive-load discharge).
 
 Older single-object and numbered-object game/page studios are converted into four-slot arrays on startup and restore. The original is retained under each profile’s legacyStudios field; XP and completions are unchanged. Full-document navigation tests exercise actual delegated DOM clicks with these saved-state shapes.
+
+
+## October 24 additions (v0.5.0)
+
+- Fourteen Python Lab 2 challenges (pl18–pl31), bringing Python practice to 31 challenges.
+- Know your parts: component identification, resistor color bands, and transistor lead identification.
+- Badge celebration dialog, collapsible course units and a course Continue button.
+- Auto Mechanics: four fuel-system lessons (fuel1–fuel4) covering carburetors, choke/rich/lean, gasoline injection and crank/no-start diagnosis.
+- Auto Mechanics: Shop Detective Case 01 (nc1), an interactive no-crank diagnosis with a DC meter, schematic, evidence notebook, repair and verification.
+- Optional Systems Seven Time Pass scaffolding. It is OFF by default and is not a configured integration. Signed passes and parent origins require setup.
+
+The standalone export retains the saved-project compatibility repair from v0.4.1. Run `node scripts/sync-discovery.cjs` after editing extension sources, then `npm test`.
+
+Validation uses Node, DOM/canvas mocks and serialized Python/game workers. Browser/device visual testing remains outstanding.

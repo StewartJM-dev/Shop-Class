@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.0 — 2026-10-24
+
+- Combine the uploaded Python Lab 2, parts drills, badge celebrations, foldable course units and Continue button with development.
+- Add Shop Detective: No Crank and four carburetor/fuel injection foundation lessons.
+- Total: 279 entries and 37 badges; all existing progress IDs retained.
+- Restore v0.4.1 saved-project migration at startup and backup restore.
+- Keep optional Time Pass setup disabled by default; skip its initialization when disabled.
+- Extend route, badge, parts and no-crank regression coverage; validate all 31 Python reference programs.
+
 ## 0.4.1 — 2026-10-18
 
 - Fix startup failure when an older build saved game/page studios as objects. Preserve the original data and move recognized projects into saved slots.
@@ -48,3 +57,4 @@
 - Include regression checks for lesson routing, simulation goals, project ownership, badges and isolated program execution.
 
 Browser and physical-device acceptance testing remains outstanding. Electronics depth, transistors, an interactive 8-bit computer and robotics are possible future work, not features of this baseline.
+

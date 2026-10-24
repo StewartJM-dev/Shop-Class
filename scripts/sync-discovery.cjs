@@ -2,6 +2,9 @@
 const fs=require('fs');
 const file='index.html';let html=fs.readFileSync(file,'utf8');
 for(const [start,end,path] of [
+ ['/* Shop Detective —', '/* END SHOP DETECTIVE */','extensions/shop-detective.js'],
+ ['/* Fuel delivery foundations —', '/* END FUEL FOUNDATIONS */','extensions/fuel-foundations.js'],
+ ['.nc{max-width:1200px;', '/* END SHOP DETECTIVE STYLES */','extensions/shop-detective.css'],
  ['/* BEGIN TRANSISTOR MOTOR LAB:', '/* END TRANSISTOR MOTOR LAB */','extensions/transistor-motor.js'],
  ['/* BEGIN COMPUTER & ROBOTICS','/* END COMPUTER & ROBOTICS */','extensions/computer-robotics.js'],
  ['/* BEGIN TRANSISTOR MOTOR STYLES */','/* END TRANSISTOR MOTOR STYLES */','extensions/transistor-motor.css'],
@@ -11,3 +14,4 @@ for(const [start,end,path] of [
  const src=fs.readFileSync(path,'utf8').trim();html=html.slice(0,a)+src+html.slice(b+end.length);
 }
 fs.writeFileSync(file,html);
+

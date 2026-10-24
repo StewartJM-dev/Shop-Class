@@ -37,6 +37,7 @@ click('subj',{id:'lab'});action('lesson','xt1');let before=JSON.parse(store['sho
 click('subj',{id:'lab'});action('lesson','xt2');action('xtnext','');action('xtrb',1000000);action('xtsig',1);S.checkpoint();const old=S.state().xt;click('pick',{id:profiles[1].id});S.xtSaveFor(old);assert(!JSON.parse(store['shopclass.v1']).profiles[1].drafts);action('lesson','xt2');assert.equal(S.state().xt.i,0);click('pick',{id:profiles[0].id});click('resume');assert.equal(S.state().s,'xt');assert.equal(S.state().xt.i,1);assert.equal(S.state().xt.ws[1].rb,1000000);
 const stale=S.state().xt;click('pick',{id:profiles[1].id});stale.i=stale.L.steps.length-1;S.state().xt=stale;assert.equal(S.xtClick('xtnext',''),false);assert(!JSON.parse(store['shopclass.v1']).profiles[1].done.xt2);
 // Preserve newer labs, unified badges and fresh studio entry fixes.
-assert.equal(S.allWorkshopBadges().length,35);assert.equal(S.C8MISSIONS.length,7);assert.equal(S.RBMISSIONS.length,6);click('subj',{id:'game'});action('gmfree','free');assert.equal(S.state().s,'game');click('subj',{id:'code'});action('wbfree','free');assert.equal(S.state().s,'web');
+assert.equal(S.allWorkshopBadges().length,37);assert.equal(S.C8MISSIONS.length,7);assert.equal(S.RBMISSIONS.length,6);click('subj',{id:'game'});action('gmfree','free');assert.equal(S.state().s,'game');click('subj',{id:'code'});action('wbfree','free');assert.equal(S.state().s,'web');
 const file=fs.readFileSync('index.html','utf8');assert(file.includes(fs.readFileSync('extensions/transistor-motor.js','utf8').trim()));assert(file.includes(fs.readFileSync('extensions/transistor-motor.css','utf8').trim()));
 console.log('All eight transistor lessons, model checks, finish/replay guards, draft ownership and merged-feature preservation pass');
+

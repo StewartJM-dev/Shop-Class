@@ -15,6 +15,19 @@ for(const kind of ['new','game-object','web-object','numbered-object','unsupport
  const S=window.ShopLab;
  function tap(selector){const el=document.querySelector(selector);assert(el,selector);assert(!el.hasAttribute('disabled'),'enabled: '+selector);el.dispatchEvent(new window.Event('click',{bubbles:true}));}
  for(const s of S.SUBJECTS){tap('[data-act="subj"][data-id="'+s.id+'"]');assert.equal(S.state().s,'path');assert(document.querySelector('.path'));tap('[data-act="tab"][data-id="home"]');assert(document.querySelector('.workbench'));tap('[data-act="tab"][data-id="crew"]');assert.equal(S.state().s,'crew');tap('[data-act="tab"][data-id="home"]');}
+ if(kind==='new'){
+  tap('[data-act="subj"][data-id="auto"]');
+  let unit=document.querySelector('.unitbtn'),name=unit.dataset.id,was=unit.getAttribute('aria-expanded');
+  tap('[data-act="unitfold"][data-id="'+name+'"]');
+  assert.notEqual(document.querySelector('[data-act="unitfold"][data-id="'+name+'"]').getAttribute('aria-expanded'),was);
+  assert.equal(JSON.parse(store['shopclass.v1']).profiles[0].fold['auto|'+name],was==='true');
+  assert(document.querySelector('.workshop-path-cover'),'Continue button preserves cover insertion');
+  tap('.pathcont [data-act]');assert.equal(S.state().s,'brief');
+  tap('[data-act="back"]');tap('[data-act="ncopen"]');assert.equal(S.state().s,'nc');
+  tap('[data-act="nckey"]');assert(S.state().nc.key);
+  tap('[data-act="back"]');assert.equal(S.state().s,'path');
+  tap('[data-act="tab"][data-id="home"]');
+ }
  const saved=JSON.parse(store['shopclass.v1']).profiles[0];assert.equal(saved.xp,125);assert.equal(saved.done.e1,3);assert.equal(saved.done.pl1,3);
  if(kind==='game-object'){assert.deepEqual(saved.legacyStudios.studio,project);assert.deepEqual(saved.studio[0],project)}
  if(kind==='web-object'){assert.deepEqual(saved.legacyStudios.webStudio,project);assert.deepEqual(saved.webStudio[0],project)}
@@ -26,3 +39,4 @@ for(const kind of ['new','game-object','web-object','numbered-object','unsupport
  const restored=JSON.parse(store['shopclass.v1']).profiles[0];assert(Array.isArray(restored.webStudio));assert.equal(restored.webStudio[0].name,'Kept project');assert.equal(restored.xp,125);
  console.log('Full-document startup, six workshops, Learn/Crew and preserved progress pass: '+kind);
 }
+
