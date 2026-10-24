@@ -4,14 +4,14 @@ A learning workshop built for the Stewart boys and their interests. It runs in a
 
 ## Current baseline
 
-279 lesson entries across six workshops:
+280 lesson entries across six workshops:
 
 | Workshop | Entries |
 | --- | ---: |
 | Electronics | 24 |
 | Circuit Lab, including logic, soldering, computer, robotics and transistors | 77 |
 | Game Lab | 20 |
-| Auto Mechanics, including Engine Lab | 46 |
+| Auto Mechanics, including Engine Lab | 47 |
 | Faith & Trail, including Knot Lab | 41 |
 | Coding, including Python and Web Lab | 71 |
 
@@ -96,3 +96,13 @@ Older single-object and numbered-object game/page studios are converted into fou
 The standalone export retains the saved-project compatibility repair from v0.4.1. Run `node scripts/sync-discovery.cjs` after editing extension sources, then `npm test`.
 
 Validation uses Node, DOM/canvas mocks and serialized Python/game workers. Browser/device visual testing remains outstanding.
+
+## Interactive carburetor (v0.6.0)
+
+Auto Mechanics now includes **Inside the carburetor: cutaway** (`cb1`), positioned after the carburetor foundation lesson. It offers six guided discoveries: venturi, throttle airflow, cold-start choke, opening choke after warm-up, float/inlet-needle operation, and comparing a clear main jet with a restriction.
+
+The moving SVG cutaway includes the upstream choke, downstream throttle, vented float bowl, main jet/nozzle and separate idle passage. Controls update without rebuilding the active slider. Drafts/resume belong to the captured learner; completion earns 25 XP once. The optional Time Pass remains disabled.
+
+This is a qualitative model. Flow indicators are relative comparisons, not measured units, calibrated air/fuel ratios, RPM or a prediction of a real engine. Fuel use and refilling are separate demonstration actions. No real gasoline-handling procedure is taught.
+
+Editable source: `extensions/carburetor.js` and `.css`. `npm test` includes a full-document delegated-control traversal of all six discoveries, slider stability, model relationships, progress ownership, resume, replay XP and embedded source consistency. The SVG has also been rendered and visually inspected. Actual browser/device layout testing remains outstanding.

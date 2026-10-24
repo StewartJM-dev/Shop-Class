@@ -2,6 +2,8 @@
 const fs=require('fs');
 const file='index.html';let html=fs.readFileSync(file,'utf8');
 for(const [start,end,path] of [
+ ['/* BEGIN CARBURETOR LAB */','/* END CARBURETOR LAB */','extensions/carburetor.js'],
+ ['/* BEGIN CARBURETOR STYLES */','/* END CARBURETOR STYLES */','extensions/carburetor.css'],
  ['/* Shop Detective —', '/* END SHOP DETECTIVE */','extensions/shop-detective.js'],
  ['/* Fuel delivery foundations —', '/* END FUEL FOUNDATIONS */','extensions/fuel-foundations.js'],
  ['.nc{max-width:1200px;', '/* END SHOP DETECTIVE STYLES */','extensions/shop-detective.css'],

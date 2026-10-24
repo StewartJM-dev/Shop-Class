@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.0 — 2026-10-24
+
+- Add the interactive carburetor cutaway and six guided discoveries (cb1) under Auto Mechanics.
+- Show moving choke/throttle plates, venturi, fuel flow, vented bowl, float/needle and idle passage.
+- Preserve slider focus during updates; save discoveries and controls per learner; prevent repeat XP awards.
+- Total: 280 lesson entries and 37 badges.
+- Add full-document carburetor UI/model/ownership/replay tests and visually inspect the rendered SVG.
+
 ## 0.5.0 — 2026-10-24
 
 - Combine the uploaded Python Lab 2, parts drills, badge celebrations, foldable course units and Continue button with development.
