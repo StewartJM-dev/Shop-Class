@@ -58,6 +58,12 @@
       ],
       "generator": "Built-in ImageGen",
       "use": "Decorative workshop-card and course-cover art"
+    },
+    {
+      "id": "bike",
+      "path": "artwork/bicycle.webp",
+      "method": "Built-in ImageGen",
+      "prompt": "Use case: photorealistic-natural. Asset type: wide 16:9 cover for Bicycle Workshop in a children's hands-on learning app. A beautiful forest-green bicycle with realistic drivetrain and two wheels mounted on a sturdy repair stand in a warm sunlit wooden garage. Neatly arranged bicycle tools, tire pump and patch kit on a workbench; open garage doorway reveals a lush green woodland trail. Inviting practical craftsmanship, cinematic natural light, crisp rich detail, warm wood and deep greens matching a family workshop photographic card collection. Main bicycle clearly readable at thumbnail size. No people, text, logos, watermark. This is a photographic cover, not an instructional diagram."
     }
   ],
   "sharedPrompt": "Premium photorealistic 3D still-life illustration for a polished learning web app; tactile material textures; soft studio key light from upper left, warm golden accents; teal, cream, copper and amber palette. Wide 16:9 centered composition, uncluttered environment and soft depth of field. No text, logos, watermarks, borders, collages, flat vectors, low-poly shapes or pixel art.",

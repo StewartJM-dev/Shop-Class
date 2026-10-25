@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.10.0 — 2026-10-24
+
+- Add Bicycle Workshop: 24 lessons, gear/index/limit bench, five brake schematics, pressure constraints, tube-repair sequence and two diagnostic cases.
+- Include practical maintenance, front/rear derailleurs, side-pull/center-pull brakes, pedal retention, donor-tube repairs, wheels, bearings, fit, tools and restoration.
+- Save learner-owned My Bicycle information, service log and lesson drafts/resume; preserve backups and award 25 XP once per entry.
+- Generate a photographic bicycle-workshop cover, embed it offline and preserve all existing covers and v0.9.1 sound behavior.
+- Total: 361 entries, ten workshops and 52 badges. Add full completion/model/ownership/backup tests and phone/Chromebook browser checks.
+
+
 ## 0.9.1 — 2026-10-24
 
 - Merge Claude’s Word Machine sound fix: voice selection, retained utterances, resumed audio and Test sound.

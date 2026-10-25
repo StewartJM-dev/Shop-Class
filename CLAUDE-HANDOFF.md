@@ -1,3 +1,17 @@
+# Shop Class v0.10.0 — Bicycle Workshop
+
+Source: public StewartJM-dev/Shop-Class, development. Builds on bce995bdd41b6fb2757926df49526982ad032a85. GitHub Pages publishes development; main and the older Sites preview remain unchanged.
+
+361 entries, ten workshops, 52 badges. Bicycle Workshop adds bike01–bike24, kind/view bike. Includes interactive gear/index/limit controls, five schematic brake types, example tire/rim pressure limits, ordered tube-patch rehearsal, maintenance content and two Bike Detective cases. Front derailleur/cantilever instruction is textual; schematic models do not supply real component settings or calibrated physics.
+
+My Bicycle data: p.bicycle fields and log. Drafts: p.drafts['bike:'+lessonId], captured ownerId; existing resume and backups apply. 25 XP once per known lesson, no replay award. New cover artwork/bicycle.webp is embedded in workshop-covers.js and index.html; exact ImageGen prompt/method in artwork/ASSET_NOTES.json.
+
+Preserve the confirmed working v0.9.1 Word Machine sound code. An unpublished v0.9.2 speech experiment was deliberately excluded after the user confirmed sound working. Keep shopclass.v1, all previous progress IDs and isolated learner runners.
+
+Edit extensions/bicycle.js/.css, then run node scripts/sync-discovery.cjs and npm test. Optional npm run test:browser checks all workshops plus Bicycle at phone/Chromebook viewport sizes. Real bicycle procedures need component manuals and adult supervision. Physical-device speech/printing remain outside automated acceptance.
+
+Previous feature details follow.
+
 <!-- v0.9.1: Word Machine sound fix merged. GitHub Pages publishes development. -->
 # Shop Class v0.9.0 — current handoff
 

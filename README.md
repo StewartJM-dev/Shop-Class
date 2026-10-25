@@ -4,7 +4,7 @@ A learning workshop built for the Stewart boys and their interests. It runs in a
 
 ## Current baseline
 
-337 lesson entries across nine workshops:
+361 lesson entries across ten workshops:
 
 | Workshop | Entries |
 | --- | ---: |
@@ -17,8 +17,9 @@ A learning workshop built for the Stewart boys and their interests. It runs in a
 | Writing Desk | 16 |
 | Money Lab | 4 |
 | Trail Detective | 35 |
+| Bicycle Workshop | 24 |
 
-The build includes nine illustrated workshop covers, 48 progress badges, a personal project shelf, four saved game slots and four saved web-page slots per learner, and export/restore of browser-local progress.
+The build includes ten photographic workshop covers, 52 progress badges, a personal project shelf, four saved game slots and four saved web-page slots per learner, and export/restore of browser-local progress.
 
 ## Run the app
 
@@ -167,3 +168,13 @@ Writing Desk, Money Lab and Trail Detective now use newly generated photographic
 Editable sources: `extensions/trail-detective.js`/`.css`, the updated `writing-desk.js`/`.css`, and `workshop-covers.js`/`.css`. Run the sync script after source edits. Current total: **337 entries, nine workshops, 48 badges**. Existing fuel labs, both Shop Detective cases, Money Lab corrections, saved-project migration, runner isolation, writing templates and earned progress remain.
 
 New tests exercise all 35 selectable clues/answers, keyboard clue selection, first/replay XP, best stars/ranks/badges, profile switching/resume/restore, all four added spelling/code modes, muted Letter fallback, code shifts, asynchronous clipboard ownership, nine distinct image assets and three course headers. Real Chromium checks at 1366×768 and 390×844 verify loaded images, native detective/word-game controls and no page errors or horizontal overflow. Actual speech output, printing and physical-device/Safari testing remain open. Hosting is unchanged.
+
+## Bicycle Workshop (v0.10.0)
+
+24 entries bring the total to 361 lessons, ten workshops and 52 badges. Includes gear-ratio, indexing and travel-limit controls; five brake schematics (side-pull, center-pull, V-brake, disc and coaster); tire-pressure constraint practice; ordered tube-patch rehearsals; maintenance, pedal retention, wheels, bearings, fit, tools, restoration and two diagnosis cases. Front derailleur and cantilever details are explained in lessons; schematics are illustrative, not installation or force predictions.
+
+The pressure example uses a fictional 40–65 psi tire and 55 psi rim limit. It does not calculate a real bicycle setting. Real pressure and component adjustments require tire/wheel/component instructions. Improvised donor-tube patches are presented as a supervised practical repair with adhesive-compatibility and leak checks, not as equivalent to a matched commercial vulcanizing patch.
+
+My Bicycle stores each learner’s bike information and dated service entries in `p.bicycle`; unfinished lessons use owner-bound `drafts['bike:'+id]` and the existing resume/backup mechanism. Completion awards 25 XP once per lesson. The generated cover is `artwork/bicycle.webp`, with exact prompt and method in `artwork/ASSET_NOTES.json`.
+
+Editable sources: `extensions/bicycle.js`, `extensions/bicycle.css`. Run the sync script, `npm test`, and optionally `npm run test:browser`. The live v0.9.1 Word Machine speech code is preserved; the unpublished v0.9.2 experiment is excluded. The earlier Sites preview and main remain unchanged.

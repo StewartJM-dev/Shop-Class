@@ -2,6 +2,8 @@
 const fs=require('fs');
 const file='index.html';let html=fs.readFileSync(file,'utf8');
 for(const [start,end,path] of [
+ ['/* BEGIN BICYCLE WORKSHOP */','/* END BICYCLE WORKSHOP */','extensions/bicycle.js'],
+ ['/* BEGIN BICYCLE STYLES */','/* END BICYCLE STYLES */','extensions/bicycle.css'],
  ['/* BEGIN TRAIL DETECTIVE */','/* END TRAIL DETECTIVE */','extensions/trail-detective.js'],
  ['/* BEGIN TRAIL DETECTIVE STYLES */','/* END TRAIL DETECTIVE STYLES */','extensions/trail-detective.css'],
  ['/* BEGIN NEW WORKSHOP COVERS */','/* END NEW WORKSHOP COVERS */','extensions/workshop-covers.js'],

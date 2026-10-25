@@ -1,11 +1,11 @@
 {
   "name": "shop-class",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "private": true,
   "description": "A browser-based family learning workshop for electronics, mechanics, coding, games and trail skills.",
   "scripts": {
-    "test": "node tests/regression.cjs && node tests/game-sandbox.cjs && node tests/discovery.cjs && node tests/transistor.cjs && node tests/navigation.cjs && node tests/shop-detective.cjs && node tests/carburetor.cjs && node tests/writing-desk.cjs && node tests/fuel-systems.cjs && node tests/money-writing.cjs && node tests/trail-spelling.cjs",
-    "test:browser": "node tests/browser-fuel.cjs && node tests/browser-workshops.cjs"
+    "test": "node tests/regression.cjs && node tests/game-sandbox.cjs && node tests/discovery.cjs && node tests/transistor.cjs && node tests/navigation.cjs && node tests/shop-detective.cjs && node tests/carburetor.cjs && node tests/writing-desk.cjs && node tests/fuel-systems.cjs && node tests/money-writing.cjs && node tests/trail-spelling.cjs && node tests/bicycle.cjs",
+    "test:browser": "node tests/browser-fuel.cjs && node tests/browser-workshops.cjs && node tests/browser-bicycle.cjs"
   },
   "engines": {
     "node": ">=22"
