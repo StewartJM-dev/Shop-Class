@@ -4,7 +4,7 @@ A learning workshop built for the Stewart boys and their interests. It runs in a
 
 ## Current baseline
 
-361 lesson entries across ten workshops:
+370 lesson entries across ten workshops:
 
 | Workshop | Entries |
 | --- | ---: |
@@ -19,7 +19,7 @@ A learning workshop built for the Stewart boys and their interests. It runs in a
 | Trail Detective | 35 |
 | Bicycle Workshop | 24 |
 
-The build includes ten photographic workshop covers, 52 progress badges, a personal project shelf, four saved game slots and four saved web-page slots per learner, and export/restore of browser-local progress.
+The build includes ten photographic workshop covers, 53 progress badges, a personal project shelf, four saved game slots and four saved web-page slots per learner, and export/restore of browser-local progress.
 
 ## Run the app
 
@@ -178,3 +178,13 @@ The pressure example uses a fictional 40–65 psi tire and 55 psi rim limit. It 
 My Bicycle stores each learner’s bike information and dated service entries in `p.bicycle`; unfinished lessons use owner-bound `drafts['bike:'+id]` and the existing resume/backup mechanism. Completion awards 25 XP once per lesson. The generated cover is `artwork/bicycle.webp`, with exact prompt and method in `artwork/ASSET_NOTES.json`.
 
 Editable sources: `extensions/bicycle.js`, `extensions/bicycle.css`. Run the sync script, `npm test`, and optionally `npm run test:browser`. The live v0.9.1 Word Machine speech code is preserved; the unpublished v0.9.2 experiment is excluded. The earlier Sites preview and main remain unchanged.
+
+## Game Lab heroes and Robot Builder (v0.11.0)
+
+Game Lab now offers person, puppy, dinosaur, robot and kitten heroes. Choose above a game or in Studio Customize; blocks/fill controls and typed `player.look` support the same choices. A program can override the starting choice. Per-learner `p.gmLook` supplies a default while each studio slot retains its own `cfg.look`. The current detailed person drawing and sandboxed game execution are preserved. Robot appearance is captured in `player.robot` from the owner’s saved design, so rendering a saved game never reads another learner’s robot. Collision radius and mission goals are unchanged.
+
+Robot Builder is in Circuit Lab: nine design-rule missions (rbb1–rbb9), live SVG, parts, up to three sensors, color/name, save and explanatory pass/fail feedback. Stats and mission results are illustrative, not measured engineering performance or executable autonomous control. Battery capacity/load determine real runtime; stored solar energy can work at night, but the model’s small solar pack is undersized for its night mission. Camera missions assume suitable programming and lighting. Material explanations distinguish magnetic steel from all steels.
+
+`p.robot` stores the explicitly saved design; `p.drafts.rbb` stores unfinished work with existing resume and backup support. Save/input/actions check the active owner. Successful missions award 25 XP once; replay gives none. Total: 370 lesson entries, ten workshops and 53 badges. All Bicycle Workshop and confirmed v0.9.1 sound behavior remains.
+
+Editable additions: extensions/robot-builder.js/.css. Core game changes remain in canonical index.html. Run sync-discovery, npm test and optional npm run test:browser. Import details: ROBOT-BUILDER-IMPORT.md.

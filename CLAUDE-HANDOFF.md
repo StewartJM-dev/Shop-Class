@@ -1,3 +1,17 @@
+# Shop Class v0.11.0 — Robot Builder and Game Lab heroes
+
+Source: public StewartJM-dev/Shop-Class, development; builds on 70a18009e532fe0a932e0b4e935effb2be06968c. Pages publishes development. 370 entries, ten workshops, 53 badges; Circuit Lab now has 86 entries. Main and the earlier Sites preview remain unchanged.
+
+Merged from the latest v0.5.0-based Claude ZIP: robot-builder.js/.css and the small Game Lab patch hunks only. Old standalone HTML, Writing Desk, Money Lab and Trail Detective were not substituted. Preserve Bicycle Workshop and confirmed working v0.9.1 sound.
+
+Heroes: person, puppy, dinosaur, robot, kitten. player.look works in worker programs and block/fill controls. The later detailed gmDraw override is extended (the earlier flat painter alone is insufficient). Per-profile gmLook is the default; cfg.look is saved in each studio slot. player.robot captures the owner’s saved robot for rendering; gmBody never reads another currently selected learner. Existing code may override the picker during setup.
+
+Robot Builder: rbb1–rbb9 under Circuit Lab, kind/view rbb; explicit saved design p.robot; immediate draft p.drafts.rbb; existing resume/backup support. Sensor cap reports rather than silently drops a sensor. Inputs, save and actions check captured owner. First completion 25 XP, replay zero. Stats/challenges are a design-rule model with stated energy/terrain/software/lighting assumptions, not calibrated performance or real autonomous code.
+
+Edit extensions/robot-builder.js/.css and canonical index.html core Game Lab hooks. Run node scripts/sync-discovery.cjs, npm test, and optional npm run test:browser. New tests cover all nine default failures and successful/replay paths, owner/backup/resume, five distinct final canvas drawings, defaults/slots and serialized worker look; browser checks cover phone/Chromebook controls.
+
+Prior release details follow.
+
 # Shop Class v0.10.0 — Bicycle Workshop
 
 Source: public StewartJM-dev/Shop-Class, development. Builds on bce995bdd41b6fb2757926df49526982ad032a85. GitHub Pages publishes development; main and the older Sites preview remain unchanged.

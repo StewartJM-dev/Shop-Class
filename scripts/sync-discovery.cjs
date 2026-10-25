@@ -2,6 +2,8 @@
 const fs=require('fs');
 const file='index.html';let html=fs.readFileSync(file,'utf8');
 for(const [start,end,path] of [
+ ['/* BEGIN ROBOT BUILDER */','/* END ROBOT BUILDER */','extensions/robot-builder.js'],
+ ['/* BEGIN ROBOT BUILDER STYLES */','/* END ROBOT BUILDER STYLES */','extensions/robot-builder.css'],
  ['/* BEGIN BICYCLE WORKSHOP */','/* END BICYCLE WORKSHOP */','extensions/bicycle.js'],
  ['/* BEGIN BICYCLE STYLES */','/* END BICYCLE STYLES */','extensions/bicycle.css'],
  ['/* BEGIN TRAIL DETECTIVE */','/* END TRAIL DETECTIVE */','extensions/trail-detective.js'],

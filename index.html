@@ -178,6 +178,21 @@
 .bike-course-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}.bike-course-grid .card{padding:20px;margin:0}.bike-lesson-link{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;background:#f1f7f0;color:#173b30;text-align:left;border:1px solid #bcd4c4;border-radius:12px;padding:14px;margin-top:10px;font:700 15px/1.5 inherit}.bike-lesson-link span{min-width:0;overflow-wrap:anywhere}.bike-course .workshop-path-cover{margin-top:18px;height:auto;aspect-ratio:16/9}.bike-course .workshop-path-cover img{height:100%;width:100%;object-fit:cover}.bike-course .bike-home-intro{padding:20px}.bike-course .pathhead>div{min-width:0}.bike-course .bike-home-intro .btn{white-space:normal}@media(max-width:600px){.bike-course-grid{grid-template-columns:1fr}.bike-course-grid .card{padding:16px}}
 /* END BICYCLE STYLES */
 
+/* BEGIN ROBOT BUILDER STYLES */
+.gmlooks{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 0}.gmlooks>span{font-weight:800;font-size:13px;margin-right:4px}.gmlook{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:56px;padding:6px 6px 4px;border:2px solid var(--line);border-radius:12px;background:var(--surface);font-size:24px;line-height:1;cursor:pointer;color:var(--ink)}.gmlook small{font-size:11px;font-weight:700;text-transform:none}.gmlook.on{border-color:var(--c);background:#e6fcf5;box-shadow:0 2px 0 var(--c)}
+.rbb-top{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center;margin:8px 0}.rbb-view{background:#fff4e6;border:2px solid #ffd8a8;border-radius:16px;padding:6px;color:#7c2d12}.rbb-svg{width:100%;height:auto;display:block}
+.rbb-stats{display:flex;flex-direction:column;gap:6px}.rbb-stat{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700}.rbb-stat i{display:flex;gap:3px}.rbb-stat b{width:14px;height:10px;border-radius:3px;background:var(--line)}.rbb-stat b.on{background:var(--c)}
+.rbb-name{display:flex;gap:6px;align-items:center;font-size:13px;font-weight:700}.rbb-name input{flex:1;min-width:0;font-size:16px;padding:6px 8px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.rbb-colors{display:flex;gap:5px;flex-wrap:wrap}.rbb-col{width:24px;height:24px;border-radius:50%;border:2px solid #0003;cursor:pointer}.rbb-col.on{box-shadow:0 0 0 3px var(--surface),0 0 0 5px var(--c)}
+.rbb-parts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.rbb-part{display:flex;flex-direction:column;gap:3px;text-align:left;padding:10px;border:2px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);cursor:pointer;font:inherit;text-transform:none}.rbb-part b{font-size:14px}.rbb-part small{font-size:12px;color:var(--muted);font-weight:600;line-height:1.35}.rbb-part.on{border-color:var(--c);background:#fff4e6;box-shadow:0 2px 0 var(--c)}
+.rbb-chs{display:flex;flex-direction:column;gap:8px}.rbb-ch{display:flex;align-items:center;gap:10px;padding:10px 12px;border:2px solid var(--line);border-radius:14px;background:var(--surface)}.rbb-ch>div{flex:1;display:flex;flex-direction:column;gap:2px}.rbb-ch small{font-size:12px;color:var(--muted);font-weight:600}.rbb-ch.done{border-color:#2f9e44}.rbb-ch .btn{text-transform:none}
+.rbb-res.ok{border-left:6px solid #2f9e44}.rbb-res.no{border-left:6px solid #e8590c}.rbb-res p{margin:6px 0 0}
+@media(max-width:520px){.rbb-top{grid-template-columns:1fr}.rbb-parts{grid-template-columns:1fr}}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .rbb-part.on{background:#4a2a14}:root:not([data-theme="light"]) .gmlook.on{background:#1f4a3b}:root:not([data-theme="light"]) .rbb-view{background:#3b2414;border-color:#7c2d12;color:#ffd8a8}}
+
+.rbb-ch>div{min-width:0}.rbb-ch .btn{flex-shrink:0}.rbb .card p{line-height:1.6}
+/* END ROBOT BUILDER STYLES */
+
 </style><style>@font-face {
   font-family: 'Bricolage Grotesque';
   font-style: normal;
@@ -1105,7 +1120,7 @@ function render(){
     case "ns":h=vNs();break;
     case "mn":h=vMn();break;
     case "mnp":h=vMnBook();break;
-    case "td":h=vTd();break;case "bike":h=vBike();break;
+    case "td":h=vTd();break;case "rbb":h=vRbb();break;case "bike":h=vBike();break;
     case "cpu8":h=c8View();break;
     case "robot":h=rbView();break;
     case "crew":h=vCrew();break;
@@ -3368,6 +3383,7 @@ var GMW=320,GMH=320;
 var GMCOL={blue:"#2F7BE0",red:"#D9463B",green:"#2E9E55",orange:"#F08A24",purple:"#8A4FD6",pink:"#E667A6",yellow:"#F2C230",white:"#F3F5F7",black:"#2B2F36"};
 var GMCOLORS=Object.keys(GMCOL);
 var GMHATS=["none","cap","helmet","crown","cowboy"];
+var GMLOOKS=["person","puppy","dinosaur","robot","kitten"];
 var GMTOOLS={wrench:"🔧",hammer:"🔨",bolt:"🔩",gold:"⭐"};
 var GMDIRS={right:[1,0],left:[-1,0],up:[0,-1],down:[0,1]};
 var GMDIFF={easy:{lives:5,tire:0.7},normal:{lives:3,tire:1},hard:{lives:2,tire:1.4}};
@@ -3466,7 +3482,7 @@ function gmNew(cfg,src,opts){
   var df=GMDIFF[cfg.difficulty]||GMDIFF.normal;
   var G={w:GMW,h:GMH,keys:{},botKeys:{},bot:!!opts.bot,state:"running",steps:0,t:0,tools:[],tires:[],say:null,err:"",log:[],cfg:cfg,
     mult:df.tire,rng:gmRng(opts.seed||(Date.now()&0x7fffffff)),beeps:0,
-    player:{x:160,y:282,r:11,speed:2,color:cfg.color||"blue",hat:cfg.hat||"cap",name:cfg.name||"Player",hit:0},
+    player:{x:160,y:282,r:11,speed:2,color:cfg.color||"blue",hat:cfg.hat||"cap",name:cfg.name||"Player",look:String(cfg.look||"person").slice(0,12),robot:cfg.robot||null,hit:0},
     vars:{score:0,lives:df.lives,level:1,time:0},lives0:df.lives,hooks:null,
     stats:{ran:true,collected:0,hits:0,golds:0,lifeUp:false,maxLevel:1,setupTires:0,won:false,lost:false,edges:{l:0,r:0,u:0,d:0},prevLives:df.lives,setupTools:0}};
   G.player.name=String(G.player.name).slice(0,12);
@@ -3633,10 +3649,7 @@ function gmDraw(c,G,opt){
   }
   if(!(P.hit>0&&Math.floor(G.steps/5)%2)){
     c.fillStyle="rgba(0,0,0,.25)";c.beginPath();c.ellipse(P.x,P.y+P.r-1,P.r*0.9,4,0,0,6.3);c.fill();
-    c.fillStyle=GMCOL[P.color]||(/^#[0-9a-f]{3,6}$/i.test(P.color)?P.color:GMCOL.blue);
-    c.beginPath();c.arc(P.x,P.y,P.r,0,6.3);c.fill();c.lineWidth=2;c.strokeStyle="rgba(0,0,0,.45)";c.stroke();
-    c.fillStyle="#fff";c.beginPath();c.arc(P.x-4,P.y-1,2.6,0,6.3);c.arc(P.x+4,P.y-1,2.6,0,6.3);c.fill();
-    c.fillStyle="#111";c.beginPath();c.arc(P.x-4,P.y-1,1.2,0,6.3);c.arc(P.x+4,P.y-1,1.2,0,6.3);c.fill();
+    gmBody(c,P);
     gmHat(c,P,P.hat);
   }
   c.font="800 11px sans-serif";c.fillStyle="#fff";c.strokeStyle="rgba(0,0,0,.65)";c.lineWidth=3;
@@ -3662,7 +3675,7 @@ function gmDraw(c,G,opt){
 /* ===== blocks ===== */
 var GBSEC=["setup","update","onCollect","onHit"];
 var GBSECNAME={setup:"When the game starts",update:"Every moment of the game",onCollect:"When I pick up a tool",onHit:"When a tire hits me"};
-var GBVARS=[["player.color","player color"],["player.hat","player hat"],["player.name","player name"],["player.speed","player speed"],["lives","lives"],["score","score"]];
+var GBVARS=[["player.look","player look"],["player.color","player color"],["player.hat","player hat"],["player.name","player name"],["player.speed","player speed"],["lives","lives"],["score","score"]];
 var GBCHG=[["score","score"],["lives","lives"],["player.speed","player speed"]];
 var GBKEYS=[["left","left"],["right","right"],["up","up"],["down","down"]];
 var GBDIRS=[["","choose"],["left","left"],["right","right"],["up","up"],["down","down"]];
@@ -3688,6 +3701,7 @@ function gbNum(x,d){var n=parseFloat(x);return isFinite(n)?n:(d||0)}
 function gbValFor(vname){
   if(vname==="player.color")return "blue";
   if(vname==="player.hat")return "none";
+  if(vname==="player.look")return "puppy";
   if(vname==="player.name")return "Player";
   if(vname==="player.speed")return "2";
   if(vname==="lives")return "3";
@@ -3700,7 +3714,7 @@ function gbLines(list,ind){
     var v=b.v||[],s="";
     switch(b.t){
       case "set":
-        if(v[0]==="player.color"||v[0]==="player.hat"||v[0]==="player.name")s=v[0]+" = "+JSON.stringify(String(v[1]))+";";
+        if(v[0]==="player.look"||v[0]==="player.color"||v[0]==="player.hat"||v[0]==="player.name")s=v[0]+" = "+JSON.stringify(String(v[1]))+";";
         else s=v[0]+" = "+gbNum(v[1])+";";
         out.push(pad+s);break;
       case "change":{var n=gbNum(v[1]);out.push(pad+v[0]+" = "+v[0]+(n<0?" - "+(-n):" + "+n)+";");break}
@@ -3911,7 +3925,7 @@ var gmRafOn=false,gmLastTs=0,gmAcc=0,gmCtx=null,gmCtxEl=null,gmSaveT=null,gmShow
 function gmMis(id){return GM.find(function(m){return m.id===id})}
 
 /* ---- opening a mission or the studio ---- */
-function gmStudioCfg(p){return {color:"blue",hat:"cap",name:(p&&p.name)||"Player",tireColor:"black",tireSize:"medium",difficulty:"normal"}}
+function gmStudioCfg(p){return {look:p&&GMLOOKS.includes(p.gmLook)?p.gmLook:"person",color:"blue",hat:"cap",name:(p&&p.name)||"Player",tireColor:"black",tireSize:"medium",difficulty:"normal"}}
 function gmLoadSlot(S,slot){
   var p=me(),sv;
   if(p){p.studio=p.studio||[null,null,null,null];sv=p.studio[slot]}
@@ -3928,6 +3942,8 @@ function gmOpen(id){
     else if(m.mode==="fill"){S.tpl=m.tpl;S.blanks=sv&&sv.blanks?sv.blanks.slice():[]}
     else S.code=sv&&typeof sv.code==="string"?sv.code:m.tpl;
   }else gmLoadSlot(S,(p&&p.studioSlot)||0);
+  if(!S.cfg.look&&p&&GMLOOKS.indexOf(p.gmLook)>=0)S.cfg.look=p.gmLook;
+  S.cfg.robot=typeof rbbDesign==='function'?rbbDesign():null;
   v.gm=S;v.s="game";
   gmPlay();gmEnsureLoop();
 }
@@ -4042,6 +4058,7 @@ function gmBlockHtml(S,list,path,i,editable){
       var vn=v_[0],val;
       if(vn==="player.color")val=gmFSel(r+":1",GMCOLORS.map(function(c){return [c,c]}),v_[1],lock);
       else if(vn==="player.hat")val=gmFSel(r+":1",GMHATS.map(function(c){return [c,c]}),v_[1],lock);
+      else if(vn==="player.look")val=gmFSel(r+":1",GMLOOKS.map(function(c){return [c,c]}),v_[1],lock);
       else if(vn==="player.name")val=gmFTxt(r+":1",v_[1],lock);
       else val=gmFNum(r+":1",v_[1],lock);
       h+='<span>set</span>'+gmFSel(r+":0",GBVARS,vn,lock)+'<span>to</span>'+val;break}
@@ -4130,7 +4147,7 @@ function gmCustomHtml(S){
   var c=S.cfg,h='<div class="card gcust"><b>Customize</b><div class="gcg">';
   function sel(k,label,opts){return '<label class="gl">'+label+'<select class="gf" data-gc="'+k+'">'+opts.map(function(o){return '<option'+(c[k]===o?" selected":"")+'>'+o+'</option>'}).join("")+'</select></label>'}
   h+='<label class="gl">Hero name<input class="gf txt wide" type="text" maxlength="12" data-gc="name" value="'+esc(c.name||"")+'" autocapitalize="off" spellcheck="false"></label>';
-  h+=sel("color","Hero color",GMCOLORS)+sel("hat","Hat",GMHATS)+sel("tireColor","Tire color",["black","red","white"])+sel("tireSize","Tire size",["small","medium","big"])+sel("difficulty","Difficulty",["easy","normal","hard"]);
+  h+=sel("look","Hero",GMLOOKS)+sel("color","Hero color",GMCOLORS)+sel("hat","Hat",GMHATS)+sel("tireColor","Tire color",["black","red","white"])+sel("tireSize","Tire size",["small","medium","big"])+sel("difficulty","Difficulty",["easy","normal","hard"]);
   return h+'</div><p class="muted" style="font-weight:600;font-size:13px;margin:0">Easy has 5 lives and slow tires. Hard has 2 lives and fast tires.</p></div>';
 }
 function gmEditorHtml(S){
@@ -4170,6 +4187,7 @@ function vGame(){
   h+='<div class="card mission"><p>'+esc(m?m.story:"Your own game workshop. This starts as the finished Shop Rescue. Change anything, make it your own, and save up to four games.")+'</p>';
   if(m)h+='<p class="goal-line '+(S.won?"won":"")+'"><span class="gi">'+(S.won?ICONS.check:"")+'</span><span>'+esc(m.goal)+'</span></p>';
   h+='</div>';
+  h+='<div class="gmlooks" role="group" aria-label="Choose your hero"><span>Your hero</span>'+GMLOOKS.map(function(k){var on=(S.cfg.look||"person")===k;return '<button class="gmlook'+(on?' on':'')+'" data-act="gmlook" data-id="'+k+'" aria-pressed="'+on+'" aria-label="'+k+'">'+GM_LOOK_EMOJI[k]+'<small>'+k+'</small></button>'}).join('')+'</div>';
   if(!m)h+=gmSlotsHtml(S)+gmCustomHtml(S);
   h+='<div class="gmgrid"><div class="gmprev"><canvas id="gmcv" width="640" height="640" aria-label="Game preview"></canvas>'+
      '<div class="gmbar"><button class="dp" data-key="left" aria-label="Left">◀</button><button class="dp" data-key="up" aria-label="Up">▲</button><button class="dp" data-key="down" aria-label="Down">▼</button><button class="dp" data-key="right" aria-label="Right">▶</button>'+
@@ -4216,6 +4234,7 @@ function gmClick(a,id,el){
   var S=v.gm;if(!S)return false;
   switch(a){
     case "gmfree":gmOpen("studio");return true;
+    case "gmlook":if(v.s!=="game"||S.ownerId!==db.active||GMLOOKS.indexOf(id)<0)return true;S.cfg.look=id;var plk=me();if(plk){plk.gmLook=id;save()}gmSaveNow();gmPlay();return true;
     case "gmplay":gmSaveNow();gmPlay();return true;
     case "gmauto":S.bot=!S.bot;if(S.G){S.G.bot=S.bot;S.G.botKeys={}}return true;
     case "gmpal":S.pal=S.pal===el.dataset.p?null:el.dataset.p;return true;
@@ -5507,7 +5526,7 @@ document.addEventListener("click",function(e){
       break;
     case "tab":v.s=id;break;
     case "subj":v.subj=id;v.s="path";if(me()&&me().lastSubj!==id){me().lastSubj=id;save()}break;
-    case "back":v.s=(v.s==="brief"||v.s==="lab"||v.s==="digi"||v.s==="eng"||v.s==="game"||v.s==="solder"||v.s==="web"||v.s==="knot"||v.s==="py"||v.s==="xt"||v.s==="sp"||v.s==="nc"||v.s==="cb"||v.s==="inj"||v.s==="ns"||v.s==="mn"||v.s==="mnp"||v.s==="td"||v.s==="bike"||v.s==="wd"||v.s==="sq")?(gmSaveNow(),wbSaveNow(),"path"):"home";break;
+    case "back":v.s=(v.s==="brief"||v.s==="lab"||v.s==="digi"||v.s==="eng"||v.s==="game"||v.s==="solder"||v.s==="web"||v.s==="knot"||v.s==="py"||v.s==="xt"||v.s==="sp"||v.s==="nc"||v.s==="cb"||v.s==="inj"||v.s==="ns"||v.s==="mn"||v.s==="mnp"||v.s==="td"||v.s==="bike"||v.s==="rbb"||v.s==="wd"||v.s==="sq")?(gmSaveNow(),wbSaveNow(),"path"):"home";break;
     case "lesson":{
       var sj=subj(v.subj),ls0=sj.lessons.find(function(z){return z.id===id}),lk=(ls0&&ls0.kind)||sj.kind;
       if(ls0&&ls0.kind==="knot"){knOpen(ls0)}
@@ -5529,6 +5548,7 @@ document.addEventListener("click",function(e){
       else if(lk==="mn"){mnOpen(id)}
       else if(lk==="td"){tdOpen(id)}
       else if(lk==="bike"){bikeOpen(id)}
+      else if(lk==="rbb"){rbbOpen(id)}
       else if(lk==="cpu8"||lk==="robot"){discoveryOpen(lk,id)}
       else{v.les=id;v.s="brief"}
       break}
@@ -5577,7 +5597,7 @@ document.addEventListener("click",function(e){
       else{v.state="ask";v.sel=null;v.ok=null;v.placed=[]}
       break;
     case "finish":v.s="path";break;
-    default:if(!((a.indexOf("bike")===0&&bikeClick(a,id))||(a.indexOf("td")===0&&tdClick(a,id))||(a.indexOf("mn")===0&&mnClick(a,id))||(a.indexOf("ij")===0&&ijClick(a,id))||(a.indexOf("ns")===0&&nsClick(a,id))||(a.indexOf("cb")===0&&cbClick(a,id))||(a.indexOf("wd")===0&&wdClick(a,id,el))||(a.indexOf("sq")===0&&sqClick(a,id,el))||(a.indexOf("nc")===0&&ncClick(a,id))||(a.indexOf("spot")===0&&spClick(a,id,el))||(a.indexOf("xt")===0&&xtClick(a,id,el))||(discoveryClick(a,id))||(a.indexOf("eng")===0&&engClick(a,id))||(a.indexOf("gm")===0&&gmClick(a,id,el))||(a.indexOf("sd")===0&&sdClick(a,id,el))||(a.indexOf("wb")===0&&wbClick(a,id,el))||(a.indexOf("kn")===0&&knClick(a))||(a.indexOf("py")===0&&pyClick(a,id,el))))return;
+    default:if(!((a.indexOf("rbb")===0&&rbbClick(a,id))||(a.indexOf("bike")===0&&bikeClick(a,id))||(a.indexOf("td")===0&&tdClick(a,id))||(a.indexOf("mn")===0&&mnClick(a,id))||(a.indexOf("ij")===0&&ijClick(a,id))||(a.indexOf("ns")===0&&nsClick(a,id))||(a.indexOf("cb")===0&&cbClick(a,id))||(a.indexOf("wd")===0&&wdClick(a,id,el))||(a.indexOf("sq")===0&&sqClick(a,id,el))||(a.indexOf("nc")===0&&ncClick(a,id))||(a.indexOf("spot")===0&&spClick(a,id,el))||(a.indexOf("xt")===0&&xtClick(a,id,el))||(discoveryClick(a,id))||(a.indexOf("eng")===0&&engClick(a,id))||(a.indexOf("gm")===0&&gmClick(a,id,el))||(a.indexOf("sd")===0&&sdClick(a,id,el))||(a.indexOf("wb")===0&&wbClick(a,id,el))||(a.indexOf("kn")===0&&knClick(a))||(a.indexOf("py")===0&&pyClick(a,id,el))))return;
   }
   if(v.s==="eng"&&v.en)engTrack(0);
   if(v.s==="lab"&&v.lab)labTick();
@@ -6064,6 +6084,7 @@ gmDraw=function(c,G,opt){
   gameDisc(c,0,0,r*.57,'#b7ccd1');gameDisc(c,0,0,r*.4,'#5d7f8e');for(var i=0;i<5;i++){var a=i*Math.PI*2/5;gameDisc(c,Math.cos(a)*r*.28,Math.sin(a)*r*.28,r*.085,'#e6eff0')}gameDisc(c,0,0,r*.14,'#d9e7e6');c.restore();
  });
  if(!(P.hit>0&&Math.floor(G.steps/5)%2)){
+  if(P.look&&P.look!=='person'){gmBody(c,P);gmHat(c,P,P.hat)}else{
   var moving=Object.keys(G.keys||{}).some(function(k){return G.keys[k]})||Object.keys(G.botKeys||{}).some(function(k){return G.botKeys[k]}),walk=moving?Math.sin(G.steps*.45)*2:0;
   c.fillStyle='#173d4444';c.beginPath();c.ellipse(P.x,P.y+9,10,3,0,0,7);c.fill();
   c.fillStyle='#203c4d';c.fillRect(P.x-7,P.y+6+walk,5,5);c.fillRect(P.x+2,P.y+6-walk,5,5);
@@ -6072,6 +6093,7 @@ gmDraw=function(c,G,opt){
   c.fillStyle='#fff5c636';c.beginPath();c.ellipse(P.x-3,P.y-5,6,3,-.4,0,7);c.fill();
   gameDisc(c,P.x,P.y-1,7,'#f3c39c');gameDisc(c,P.x-2.6,P.y-2,1,'#263941');gameDisc(c,P.x+2.6,P.y-2,1,'#263941');
   c.strokeStyle='#8c5e49';c.lineWidth=1;c.beginPath();c.arc(P.x,P.y,3,0.3,Math.PI-.3);c.stroke();gmHat(c,P,P.hat);
+  }
  }
  c.font='800 10px sans-serif';c.textAlign='center';c.textBaseline='middle';c.lineWidth=3;c.strokeStyle='#173842';c.strokeText(String(P.name),P.x,P.y+P.r+10);c.fillStyle='#fff8dc';c.fillText(String(P.name),P.x,P.y+P.r+10);
  c.fillStyle='#102f3b';c.fillRect(0,0,W,24);c.fillStyle='#ffe0a0';c.font='800 12px monospace';c.textAlign='left';c.fillText('TOOLS '+G.vars.score,8,13);
@@ -13252,6 +13274,173 @@ var tdCheckpointBefore=checkpoint;checkpoint=function(){if(v.s==='td'&&v.td&&v.t
 var tdResumeBefore=resumeWorkshop;resumeWorkshop=function(){var r=me()&&me().resume;if(r&&r.kind==='td'){tdOpen(r.id);return}tdResumeBefore()};
 if(window.ShopLab)Object.assign(window.ShopLab,{tdSave:tdSave,checkpoint:checkpoint,resumeWorkshop:resumeWorkshop,TDCASES:TDCASES,tdOpen:tdOpen,tdClick:tdClick,tdSentences:tdSentences,vPath:vPath});
 /* END TRAIL DETECTIVE */
+
+/* BEGIN ROBOT BUILDER */
+var GM_LOOK_EMOJI={person:'🙂',puppy:'🐶',dinosaur:'🦖',robot:'🤖',kitten:'🐱'};
+var GM_LOOK_NATURAL={puppy:'#C8894B',dinosaur:'#3FA34D',robot:'#9AA5B1',kitten:'#F08A24'};
+function gmBodyColor(P,look){
+ var col=GMCOL[P.color]||(/^#[0-9a-f]{3,6}$/i.test(P.color)?P.color:null);
+ if(look!=='person'&&(!col||P.color==='blue')){
+  if(look==='robot'){var rb=P.robot;if(rb&&rb.color&&GMCOL[rb.color])return GMCOL[rb.color]}
+  return GM_LOOK_NATURAL[look];
+ }
+ return col||GMCOL.blue;
+}
+function gmBody(c,P){
+ var look=GMLOOKS.indexOf(P.look)>=0?P.look:'person',x=P.x,y=P.y,r=P.r,col=gmBodyColor(P,look),dark='rgba(0,0,0,.45)';
+ function eyes(dx,dy,s){c.fillStyle='#fff';c.beginPath();c.arc(x-dx,y+dy,2.6*s,0,6.3);c.arc(x+dx,y+dy,2.6*s,0,6.3);c.fill();c.fillStyle='#111';c.beginPath();c.arc(x-dx,y+dy,1.2*s,0,6.3);c.arc(x+dx,y+dy,1.2*s,0,6.3);c.fill()}
+ c.lineWidth=2;c.strokeStyle=dark;
+ if(look==='person'){c.fillStyle=col;c.beginPath();c.arc(x,y,r,0,6.3);c.fill();c.stroke();eyes(4,-1,1);return}
+ if(look==='puppy'){
+  c.fillStyle='rgba(0,0,0,.35)';c.beginPath();c.ellipse(x-r+1,y-1,3.6,7,0.35,0,6.3);c.ellipse(x+r-1,y-1,3.6,7,-0.35,0,6.3);c.fill();
+  c.fillStyle=col;c.beginPath();c.arc(x,y,r,0,6.3);c.fill();c.stroke();
+  c.fillStyle='rgba(0,0,0,.28)';c.beginPath();c.ellipse(x-r+1.5,y,3.2,6.5,0.35,0,6.3);c.ellipse(x+r-1.5,y,3.2,6.5,-0.35,0,6.3);c.fill();
+  c.fillStyle='#F5E6D3';c.beginPath();c.ellipse(x,y+4,5.5,4,0,0,6.3);c.fill();
+  c.fillStyle='#E8586B';c.beginPath();c.ellipse(x+1,y+8.2,1.8,2.2,0,0,6.3);c.fill();
+  c.fillStyle='#111';c.beginPath();c.ellipse(x,y+2.2,2.2,1.6,0,0,6.3);c.fill();
+  eyes(4,-3,1);return}
+ if(look==='kitten'){
+  c.fillStyle=col;c.beginPath();c.moveTo(x-r+1,y-3);c.lineTo(x-r+2,y-r-5);c.lineTo(x-3,y-r+1);c.closePath();c.moveTo(x+r-1,y-3);c.lineTo(x+r-2,y-r-5);c.lineTo(x+3,y-r+1);c.closePath();c.fill();c.stroke();
+  c.beginPath();c.arc(x,y,r,0,6.3);c.fill();c.stroke();
+  c.fillStyle='#F7A8B8';c.beginPath();c.moveTo(x-1.6,y+2);c.lineTo(x+1.6,y+2);c.lineTo(x,y+3.6);c.closePath();c.fill();
+  c.strokeStyle='rgba(255,255,255,.85)';c.lineWidth=1;c.beginPath();c.moveTo(x-3,y+3);c.lineTo(x-10,y+1.5);c.moveTo(x-3,y+4);c.lineTo(x-10,y+5);c.moveTo(x+3,y+3);c.lineTo(x+10,y+1.5);c.moveTo(x+3,y+4);c.lineTo(x+10,y+5);c.stroke();
+  eyes(4,-2,1);return}
+ if(look==='dinosaur'){
+  c.fillStyle='#E9C46A';for(var i=-2;i<=2;i++){c.beginPath();var sx=x+i*4.2,sy=y-r+Math.abs(i)*1.3;c.moveTo(sx-2.6,sy+2.5);c.lineTo(sx,sy-4.5);c.lineTo(sx+2.6,sy+2.5);c.closePath();c.fill()}
+  c.fillStyle=col;c.beginPath();c.moveTo(x+r-2,y+3);c.quadraticCurveTo(x+r+9,y+7,x+r+11,y+1);c.quadraticCurveTo(x+r+6,y+9,x+r-3,y+8);c.closePath();c.fill();c.stroke();
+  c.beginPath();c.ellipse(x,y,r+1.5,r,0,0,6.3);c.fill();c.stroke();
+  c.fillStyle='rgba(255,255,255,.25)';c.beginPath();c.ellipse(x-1,y+4,6,3.5,0,0,6.3);c.fill();
+  c.strokeStyle='#1d3b1f';c.lineWidth=1.5;c.beginPath();c.moveTo(x-6,y+5);c.quadraticCurveTo(x,y+8.5,x+6,y+5);c.stroke();
+  c.fillStyle='#fff';c.beginPath();c.moveTo(x-3.5,y+6.2);c.lineTo(x-2.5,y+8.2);c.lineTo(x-1.5,y+6.6);c.moveTo(x+1.5,y+6.6);c.lineTo(x+2.5,y+8.2);c.lineTo(x+3.5,y+6.2);c.fill();
+  c.fillStyle='#1d3b1f';c.beginPath();c.arc(x-3,y+1.5,0.9,0,6.3);c.arc(x+3,y+1.5,0.9,0,6.3);c.fill();
+  eyes(4.5,-3,1.15);return}
+ if(look==='robot'){
+  var d=P.robot||{},hx=x-r,hy=y-r;
+  c.strokeStyle='#4C535C';c.lineWidth=1.5;c.beginPath();c.moveTo(x,hy);c.lineTo(x,hy-6);c.stroke();
+  c.fillStyle=(d.sensors||[]).indexOf('light')>=0?'#FFD43B':'#E8586B';c.beginPath();c.arc(x,hy-7,2.2,0,6.3);c.fill();
+  c.fillStyle=col;c.strokeStyle=dark;c.lineWidth=2;c.beginPath();if(c.roundRect)c.roundRect(hx,hy,r*2,r*2,4);else c.rect(hx,hy,r*2,r*2);c.fill();c.stroke();
+  c.fillStyle='#13202E';c.fillRect(x-r+3,y-4,r*2-6,6);
+  c.fillStyle='#7CFFB2';c.fillRect(x-6,y-3,3.5,4);c.fillRect(x+2.5,y-3,3.5,4);
+  c.fillStyle='rgba(0,0,0,.35)';[[-r+2.5,-r+2.5],[r-2.5,-r+2.5],[-r+2.5,r-2.5],[r-2.5,r-2.5]].forEach(function(o){c.beginPath();c.arc(x+o[0],y+o[1],1,0,6.3);c.fill()});
+  c.fillStyle='rgba(0,0,0,.35)';c.fillRect(x-4,y+5,8,1.6);
+  if(d.tool==='claw'){c.strokeStyle='#4C535C';c.lineWidth=2;c.beginPath();c.moveTo(x+r,y+2);c.lineTo(x+r+5,y+2);c.moveTo(x+r+5,y-1);c.lineTo(x+r+8,y-2);c.moveTo(x+r+5,y+5);c.lineTo(x+r+8,y+6);c.stroke()}
+  else if(d.tool==='magnet'){c.fillStyle='#D9463B';c.fillRect(x+r,y,5,4)}
+  return}
+}
+/* ---- Robot Builder ---- */
+var RBB_PARTS={
+ body:{n:'Body',pick:1,o:[['box','Box frame','Strong, easy to build, and lots of room for parts.'],['round','Round shell','Slides off walls and corners instead of getting stuck.'],['tall','Tall tower','A higher view may clear obstacles, but a high center of mass can reduce stability.']]},
+ move:{n:'Moves with',pick:1,o:[['wheels2','Two wheels and a caster','Like the Robot Lab rover. Quick on smooth floors and turns on the spot.'],['wheels4','Four wheels','Fast and steady. Handles bumpy dirt and gravel better than two wheels.'],['treads','Tank treads','Slow, but the long treads grip mud and crawl over small logs.'],['legs','Six legs','The slowest of all, but legs can step over rocks and logs, like a beetle.']]},
+ power:{n:'Power',pick:1,o:[['aa','AA battery pack','Cheap and easy to swap. Model endurance: short patrol. Real runtime depends on capacity and load.'],['liion','Rechargeable lithium battery','Light and strong. Model endurance: longer patrol. Real runtime depends on capacity and load.'],['solar','Solar panel and small battery','Model: sunlight replenishes a small battery; low reserve. Stored energy can work at night, but this pack is undersized for the night mission.']]},
+ sensors:{n:'Sensors (pick up to 3)',pick:3,o:[['distance','Distance sensor','Sends out a sound pulse and times the echo, like a bat, to measure how far away things are.'],['line','Line sensors','Point down at the floor to see a dark line and follow it.'],['bump','Bump switch','A button that clicks when the robot touches something.'],['light','Light sensor','This simple single-channel sensor measures brightness. Color sensors also exist.'],['camera','Camera','Sees colors and shapes, so the robot can recognize things.']]},
+ tool:{n:'Tool',pick:1,o:[['none','No tool','Lighter and faster.'],['claw','Claw gripper','Two fingers that close to grab and carry objects.'],['magnet','Electromagnet','Attracts suitable ferromagnetic materials, including iron and many steels. It will not lift this aluminum can.'],['scoop','Scoop','Pushes and carries loose things like balls, dirt or pinecones.']]}
+};
+var RBB_DEF={name:'Rover',color:'orange',body:'box',move:'wheels2',power:'aa',sensors:[],tool:'none'};
+function rbbDesign(){var p=me();if(!p||!p.robot||typeof p.robot!=='object'||Array.isArray(p.robot))return null;return rbbNormalize(p.robot)}
+function rbbNormalize(d){d=d||{};function part(k){return RBB_PARTS[k].o.some(function(x){return x[0]===d[k]})?d[k]:RBB_DEF[k]}return {name:String(d.name||'Rover').slice(0,14),color:GMCOLORS.includes(d.color)?d.color:'orange',body:part("body"),move:part("move"),power:part("power"),sensors:Array.isArray(d.sensors)?d.sensors.filter(function(s){return RBB_PARTS.sensors.o.some(function(o){return o[0]===s})}).slice(0,3):[],tool:part("tool")}}
+function rbbHas(d,s){return d.sensors.indexOf(s)>=0}
+function rbbStats(d){
+ var sp={wheels2:4,wheels4:4,treads:2,legs:1}[d.move]||2,rough={wheels2:1,wheels4:2,treads:4,legs:4}[d.move]||1;
+ if(d.tool!=='none')sp=Math.max(1,sp-(d.tool==='scoop'?0:0));
+ var bat={aa:1,liion:4,solar:3}[d.power]||1,smart=Math.min(4,d.sensors.length+(rbbHas(d,'camera')?1:0)),stab=({box:3,round:3,tall:1}[d.body]||2)+(d.move==='wheels4'||d.move==='treads'||d.move==='legs'?1:0);
+ return [['Speed',sp],['Rough ground',rough],['Battery',bat],['Smarts',smart],['Stability',Math.min(4,stab)]];
+}
+var RBB_CH=[
+ {id:'rbb1',t:'Hallway patrol',story:'Drive up and down the hallway all afternoon without crashing into walls.',test:function(d){return (rbbHas(d,'distance')||rbbHas(d,'bump'))?[true,'Your robot can sense the wall and turn before (or right when) it touches. The distance sensor works like a bat\'s echo.']:[false,'Your robot has no way to tell a wall is there, so it drives straight into it. Add a distance sensor or a bump switch.']}},
+ {id:'rbb2',t:'Follow the trail',story:'A dark tape line leads across the floor to the ranger station. Follow it.',test:function(d){return rbbHas(d,'line')?[true,'Line sensors look down at the floor. When the left one sees the dark tape, the robot steers left, and the same on the right.']:[false,'Without sensors pointing at the floor, your robot cannot see the line at all. Add line sensors.']}},
+ {id:'rbb3',t:'Cross the gravel lot',story:'Drive across the bumpy gravel parking lot to the troop trailer.',test:function(d){return d.move!=='wheels2'?[true,(d.move==='wheels4'?'Four wheels spread the weight and roll over the stones.':d.move==='treads'?'Treads spread the weight over a big area, so they do not sink.':'Legs step from stone to stone.')+' Your robot made it.']:[false,'The little caster wheel digs into the gravel and your robot gets stuck. Try four wheels, treads or legs.']}},
+ {id:'rbb4',t:'Fetch the steel wrench',story:'Someone dropped a steel wrench under the workbench. Bring it back.',test:function(d){return d.tool==='claw'||d.tool==='magnet'?[true,d.tool==='magnet'?'This example wrench is magnetic steel, so the model electromagnet grabs it. Some steel alloys are not strongly attracted.':'The claw closes around the handle and carries it out.']:[false,d.tool==='scoop'?'The wrench keeps sliding off the scoop. Try a claw or a magnet.':'Your robot has no way to pick anything up. Give it a tool.']}},
+ {id:'rbb5',t:'Recycle the soda can',story:'Pick up an empty aluminum soda can and bring it to the recycling bin.',test:function(d){return d.tool==='claw'||d.tool==='scoop'?[true,'Your '+(d.tool==='claw'?'claw grabs':'scoop carries')+' the can to the bin.']:[false,d.tool==='magnet'?'The magnet does nothing! Aluminum is not magnetic, just like gold in Dictionary Dunn\'s Magnet Treasure case. Try a claw or a scoop.':'Your robot needs a tool to carry the can.']}},
+ {id:'rbb6',t:'Guard the campsite all day',story:'Patrol the campsite from breakfast to supper on a sunny Saturday.',test:function(d){return d.power!=='aa'?[true,d.power==='solar'?'The model assumes enough sunlight to maintain the small battery during this patrol.':'This model assumes the larger rechargeable pack plus a lunch recharge meets the patrol energy budget.']:[false,'This model assigns the AA pack too little energy for this patrol. Actual AA and lithium runtime depends on capacity and load.']}},
+ {id:'rbb7',t:'Over the log',story:'A fallen log blocks the trail. Get over it without help.',test:function(d){return d.move==='legs'||d.move==='treads'?[true,d.move==='legs'?'Your robot lifts its legs and steps right over.':'The long treads tip up onto the log and crawl over it.']:[false,'Wheels bump into the log and spin. Treads or legs can climb it.']}},
+ {id:'rbb8',t:'Sort the blocks',story:'Put the red blocks in one box and the blue blocks in the other.',test:function(d){var ok=rbbHas(d,'camera')&&(d.tool==='claw'||d.tool==='scoop');return ok?[true,'With suitable lighting and programmed recognition, the camera tells red from blue, and the '+d.tool+' moves each block to the right box.']:[false,!rbbHas(d,'camera')?(rbbHas(d,'light')?'This selected brightness sensor does not distinguish the block colors. In this model, choose a camera.':'Your robot needs a camera to see colors.'):'It can see the colors, but it needs a claw or scoop to move the blocks.']}},
+ {id:'rbb9',t:'Night rescue',story:'Final challenge. Retrieve a backpack at a known waypoint on a floodlit woodland path after sunset.',test:function(d){
+  var miss=[];if(d.move!=='treads'&&d.move!=='legs'&&d.move!=='wheels4')miss.push('rough-ground wheels, treads or legs for the woods');
+  if(d.power!=='liion')miss.push(d.power==='solar'?'more stored energy for the night (the panel cannot replenish this small pack in darkness)':'a pack with enough modeled energy reserve');
+  if(!rbbHas(d,'distance')&&!rbbHas(d,'camera'))miss.push('a distance sensor or camera to find the backpack and dodge trees');
+  if(d.tool!=='claw')miss.push('a claw to grab the backpack straps');
+  if(d.body==='tall'&&d.move!=='treads')miss.push('a lower body so it does not tip over on the bumpy ground');
+  return miss.length?[false,'Not yet. Your robot still needs: '+miss.join('; ')+'.']:[true,'Your robot rolls through the dark woods, spots the backpack, grabs the straps and brings it home. A real rescue robot also needs suitable programming, terrain and payload testing, and a safe search plan.']}}
+];
+function rbbSvg(d){
+ d=d||RBB_DEF;var col=GMCOL[d.color]||GMCOL.orange,s='<svg class="rbb-svg" viewBox="0 0 245 240" role="img" aria-label="Your robot">';
+ s+='<ellipse cx="110" cy="214" rx="78" ry="9" fill="#0003"/>';
+ var top=d.body==='tall'?58:84,bot=d.body==='tall'?170:166;
+ if(d.power==='solar')s+='<path d="M110 40V'+(top+4)+'" stroke="#4C535C" stroke-width="4"/><g transform="rotate(-8 110 30)"><rect x="62" y="22" width="96" height="22" rx="3" fill="#1c3f8f" stroke="#0b1f4d" stroke-width="2"/><path d="M86 22v22M110 22v22M134 22v22M62 33h96" stroke="#5c8be0" stroke-width="1.5"/></g>';
+ /* movement */
+ if(d.move==='treads')s+='<rect x="34" y="'+(bot-6)+'" width="152" height="44" rx="22" fill="#2b2f36"/><rect x="40" y="'+bot+'" width="140" height="32" rx="16" fill="#3d434c"/>'+[58,90,130,162].map(function(cx){return '<circle cx="'+cx+'" cy="'+(bot+16)+'" r="11" fill="#868e96" stroke="#2b2f36" stroke-width="3"/>'}).join('');
+ else if(d.move==='legs'){var L='';[[60,-1],[110,0],[160,1]].forEach(function(l){var x0=l[0];L+='<path d="M'+x0+' '+(bot-4)+' l'+(l[1]*14-16)+' 22 l-6 26" stroke="#4C535C" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M'+x0+' '+(bot-4)+' l'+(l[1]*14+16)+' 22 l6 26" stroke="#4C535C" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'});s+=L}
+ else if(d.move==='wheels4')s+='<circle cx="52" cy="'+(bot+20)+'" r="22" fill="#2b2f36"/><circle cx="168" cy="'+(bot+20)+'" r="22" fill="#2b2f36"/><circle cx="80" cy="'+(bot+16)+'" r="17" fill="#1d2025"/><circle cx="140" cy="'+(bot+16)+'" r="17" fill="#1d2025"/>'+[52,168].map(function(cx){return '<circle cx="'+cx+'" cy="'+(bot+20)+'" r="9" fill="#adb5bd"/>'}).join('');
+ else s+='<circle cx="48" cy="'+(bot+18)+'" r="24" fill="#2b2f36"/><circle cx="172" cy="'+(bot+18)+'" r="24" fill="#2b2f36"/><circle cx="48" cy="'+(bot+18)+'" r="10" fill="#adb5bd"/><circle cx="172" cy="'+(bot+18)+'" r="10" fill="#adb5bd"/><circle cx="110" cy="'+(bot+32)+'" r="8" fill="#495057"/>';
+ /* body */
+ if(d.body==='round')s+='<ellipse cx="110" cy="'+((top+bot)/2)+'" rx="70" ry="'+((bot-top)/2+4)+'" fill="'+col+'" stroke="#0005" stroke-width="3"/>';
+ else if(d.body==='tall')s+='<rect x="66" y="'+top+'" width="88" height="'+(bot-top)+'" rx="10" fill="'+col+'" stroke="#0005" stroke-width="3"/>';
+ else s+='<rect x="42" y="'+top+'" width="136" height="'+(bot-top)+'" rx="10" fill="'+col+'" stroke="#0005" stroke-width="3"/>';
+ /* face / screen */
+ var cy=top+28;
+ s+='<rect x="80" y="'+(cy-14)+'" width="60" height="28" rx="6" fill="#13202E"/>';
+ if(rbbHas(d,'distance'))s+='<circle cx="94" cy="'+cy+'" r="10" fill="#dee2e6" stroke="#495057" stroke-width="3"/><circle cx="126" cy="'+cy+'" r="10" fill="#dee2e6" stroke="#495057" stroke-width="3"/><circle cx="94" cy="'+cy+'" r="4" fill="#495057"/><circle cx="126" cy="'+cy+'" r="4" fill="#495057"/>';
+ else s+='<rect x="90" y="'+(cy-5)+'" width="10" height="10" rx="2" fill="#7CFFB2"/><rect x="120" y="'+(cy-5)+'" width="10" height="10" rx="2" fill="#7CFFB2"/>';
+ if(rbbHas(d,'camera'))s+='<rect x="96" y="'+(top-14)+'" width="28" height="16" rx="4" fill="#343a40"/><circle cx="110" cy="'+(top-6)+'" r="6" fill="#1971c2" stroke="#dee2e6" stroke-width="2"/>';
+ if(rbbHas(d,'light'))s+='<path d="M'+(d.body==='tall'?140:160)+' '+top+' v-16" stroke="#4C535C" stroke-width="3"/><circle cx="'+(d.body==='tall'?140:160)+'" cy="'+(top-20)+'" r="6" fill="#FFD43B" stroke="#e67700" stroke-width="2"/>';
+ if(rbbHas(d,'bump'))s+='<rect x="'+(d.body==='tall'?58:36)+'" y="'+(bot-14)+'" width="'+(d.body==='tall'?104:148)+'" height="10" rx="5" fill="#343a40"/>';
+ if(rbbHas(d,'line'))s+='<circle cx="98" cy="'+(bot+2)+'" r="3.5" fill="#E8586B"/><circle cx="110" cy="'+(bot+2)+'" r="3.5" fill="#E8586B"/><circle cx="122" cy="'+(bot+2)+'" r="3.5" fill="#E8586B"/>';
+ if(d.power==='aa')s+='<rect x="'+(d.body==='tall'?78:58)+'" y="'+(bot-40)+'" width="34" height="20" rx="3" fill="#343a40"/><rect x="'+(d.body==='tall'?82:62)+'" y="'+(bot-36)+'" width="12" height="12" fill="#f08c00"/><rect x="'+(d.body==='tall'?96:76)+'" y="'+(bot-36)+'" width="12" height="12" fill="#f08c00"/>';
+ if(d.power==='liion')s+='<rect x="'+(d.body==='tall'?78:58)+'" y="'+(bot-38)+'" width="40" height="16" rx="3" fill="#2b8a3e"/><path d="M'+(d.body==='tall'?96:76)+' '+(bot-35)+'l-4 6h5l-3 6" stroke="#fff" stroke-width="2" fill="none"/>';
+ /* tool on the right arm */
+ var ax=d.body==='tall'?154:178,ay=top+50;
+ if(d.tool!=='none')s+='<path d="M'+ax+' '+ay+' h22" stroke="#4C535C" stroke-width="8" stroke-linecap="round"/>';
+ if(d.tool==='claw')s+='<path d="M'+(ax+22)+' '+(ay-2)+' l12 -12 l8 6 M'+(ax+22)+' '+(ay+2)+' l12 12 l8 -6" stroke="#4C535C" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';
+ if(d.tool==='magnet')s+='<path d="M'+(ax+24)+' '+(ay-14)+' h10 a14 14 0 0 1 0 28 h-10" stroke="#D9463B" stroke-width="10" fill="none"/><rect x="'+(ax+20)+'" y="'+(ay-19)+'" width="8" height="10" fill="#dee2e6"/><rect x="'+(ax+20)+'" y="'+(ay+9)+'" width="8" height="10" fill="#dee2e6"/>';
+ if(d.tool==='scoop')s+='<path d="M'+(ax+18)+' '+(ay-6)+' l18 0 l4 26 l-26 0 z" fill="#ced4da" stroke="#495057" stroke-width="3" stroke-linejoin="round"/>';
+ s+='<text x="110" y="226" text-anchor="middle" font-size="14" font-weight="800" fill="currentColor" font-family="ui-monospace,Menlo,monospace">'+esc(d.name||'Rover')+'</text>';
+ return s+'</svg>';
+}
+function rbbOpen(ch){var p=me();if(!p||(ch&&!RBB_CH.some(function(c){return c.id===ch})))return;var d=rbbDesign()||JSON.parse(JSON.stringify(RBB_DEF));var dr=p.drafts&&p.drafts['rbb'];if(dr&&dr.d)d=rbbNormalize(dr.d);v.rbb={ownerId:db.active,d:d,ch:ch||null,res:null,saved:!!p.robot};v.s='rbb';v.subj='lab';p.lastSubj='lab';save()}
+function rbbSave(){var p=me();if(!p||v.s!=='rbb'||!v.rbb||v.rbb.ownerId!==db.active)return;p.robot=JSON.parse(JSON.stringify(v.rbb.d));v.rbb.saved=true;save()}
+function vRbb(){
+ var S=v.rbb,d=S.d,p=me(),done=RBB_CH.filter(function(c){return p.done[c.id]}).length;
+ var h='<div class="wrap rbb" style="--c:#C2410C;--cd:#7C2D12"><div class="pathhead"><button class="back" data-act="back" aria-label="Back">'+ICONS.back+'</button><div><h2>Robot Builder</h2><p class="muted" style="font-size:14px;font-weight:600">Design it, then test it. '+done+' of '+RBB_CH.length+' challenges passed.</p></div></div>';
+ h+='<div class="rbb-top"><div class="rbb-view">'+rbbSvg(d)+'</div><div class="rbb-stats">';
+ rbbStats(d).forEach(function(st){h+='<div class="rbb-stat"><span>'+st[0]+'</span><i>'+'<b class="on"></b>'.repeat(st[1])+'<b></b>'.repeat(4-st[1])+'</i></div>'});
+ h+='<label class="rbb-name">Name <input id="rbbname" maxlength="14" value="'+esc(d.name)+'" autocomplete="off"></label><div class="rbb-colors">'+GMCOLORS.map(function(c){return '<button class="rbb-col'+(d.color===c?' on':'')+'" style="background:'+GMCOL[c]+'" data-act="rbbcolor" data-id="'+c+'" aria-label="'+c+'"></button>'}).join('')+'</div>';
+ h+='<button class="btn small" data-act="rbbsave">'+(S.saved?'Saved ✓':'Save my robot')+'</button></div></div>';
+ h+='<p class="card">Design-rule simulation: stat bars and mission results illustrate tradeoffs; they are not measured performance. Tests assume suitable control software, routes and lighting for camera recognition.</p>';if(S.note)h+='<p role="status">'+esc(S.note)+'</p>';
+ if(S.res){var c0=RBB_CH.find(function(c){return c.id===S.res.id});h+='<div class="card rbb-res '+(S.res.ok?'ok':'no')+'" role="status"><b>'+(S.res.ok?'✓ Challenge passed: ':'✗ Not yet: ')+esc(c0.t)+'</b><p>'+esc(S.res.msg)+'</p>'+(S.res.xp?'<p class="xgoodp"><b>+'+S.res.xp+' XP</b></p>':'')+'</div>'}
+ Object.keys(RBB_PARTS).forEach(function(k){var g=RBB_PARTS[k];
+  h+='<h3 class="mngrp">'+esc(g.n)+'</h3><div class="rbb-parts">';
+  g.o.forEach(function(o){var on=k==='sensors'?rbbHas(d,o[0]):d[k]===o[0];h+='<button class="rbb-part'+(on?' on':'')+'" data-act="rbbpart" data-id="'+k+':'+o[0]+'" aria-pressed="'+on+'"><b>'+esc(o[1])+'</b><small>'+esc(o[2])+'</small></button>'});
+  h+='</div>'});
+ h+='<h3 class="mngrp">Challenges</h3><p class="muted" style="font-size:13px;font-weight:600;margin:0 0 6px">Change parts, then test. A real engineer tries, learns why it failed, and tries again.</p><div class="rbb-chs">';
+ RBB_CH.forEach(function(c,i){h+='<div class="rbb-ch'+(p.done[c.id]?' done':'')+'"><div><b>'+(i+1)+'. '+esc(c.t)+(p.done[c.id]?' ✓':'')+'</b><small>'+esc(c.story)+'</small></div><button class="btn small" data-act="rbbtest" data-id="'+c.id+'">Test</button></div>'});
+ h+='</div><p class="muted" style="font-size:13px;font-weight:600;margin-top:12px">Your saved robot also shows up as the robot hero in Game Lab.</p><div style="height:90px"></div></div>';
+ return h;
+}
+function rbbClick(a,id){
+ if(a==='rbbopen'){rbbOpen();return true}
+ var S=v.rbb;if(!S||v.s!=='rbb'||S.ownerId!==db.active)return false;var d=S.d;
+ switch(a){
+  case 'rbbpart':{var pr=String(id).split(':'),k=pr[0],val=pr[1],g=RBB_PARTS[k];if(!g||!Array.isArray(g.o)||!g.o.some(function(o){return o[0]===val}))return true;
+   if(k==='sensors'){var i=d.sensors.indexOf(val);if(i>=0)d.sensors.splice(i,1);else{if(d.sensors.length>=3){S.note='Remove a sensor before adding another (maximum three).';return true}d.sensors.push(val)}}else d[k]=val;
+   S.saved=false;S.res=null;return true}
+  case 'rbbcolor':if(GMCOL[id]){d.color=id;S.saved=false}return true;
+  case 'rbbsave':rbbSave();return true;
+  case 'rbbtest':{var c=RBB_CH.find(function(x){return x.id===id});if(!c)return true;var r=c.test(d),p=me(),xp=0;if(r[0]){rbbSave();if(!p.done[c.id])xp=awardLab(c.id)}S.res={id:id,ok:r[0],msg:r[1],xp:xp};window.scrollTo&&window.scrollTo({top:0,behavior:'smooth'});return true}
+ }
+ return false;
+}
+document.addEventListener('input',function(e){if(v.s==='rbb'&&v.rbb&&v.rbb.ownerId===db.active&&e.target&&e.target.id==='rbbname'){v.rbb.d.name=e.target.value.slice(0,14);v.rbb.saved=false;var b=document.querySelector('[data-act="rbbsave"]');if(b)b.textContent='Save my robot';var t=document.querySelector('.rbb-view text');if(t)t.textContent=v.rbb.d.name||'Rover'}});
+(function(){var ls=SUBJECTS.find(function(s){return s.id==='lab'});if(!ls)return;var at=ls.lessons.findIndex(function(l){return /^rb-/.test(l.id)});var add=RBB_CH.map(function(c){return {id:c.id,title:c.t,unit:'Robot Builder',kind:'rbb',open:true}});if(at<0)at=ls.lessons.length;ls.lessons.splice.apply(ls.lessons,[at,0].concat(add))})();
+WORKSHOP_BADGES.push({id:'engineer',name:'Robot engineer',goal:'Pass all nine Robot Builder challenges.',target:9,icon:'wrench',ids:RBB_CH.map(function(c){return c.id})});
+var pathBeforeRbb=vPath;vPath=function(){var h=pathBeforeRbb();if(v.subj!=='lab')return h;return h.replace('</section><div class="path">','<button data-act="rbbopen"><span class="ds-portal-icon">'+ICONS.chip+'</span><span><small>DESIGN AND TEST</small><b>Build a robot</b><em>Pick parts, pass nine challenges</em></span><span>→</span></button></section><div class="path">')};
+
+function rbbDraft(){var S=v.rbb,p=me();if(!p||v.s!=='rbb'||!S||S.ownerId!==db.active)return;p.drafts=p.drafts||{};p.drafts.rbb={d:JSON.parse(JSON.stringify(S.d)),ch:S.ch};p.resume={subj:'lab',kind:'rbb',id:S.ch||'rbb1',title:'Robot Builder'};save()}
+var rbbClickRaw=rbbClick;rbbClick=function(a,id){var ok=rbbClickRaw(a,id);if(ok)rbbDraft();return ok};
+var rbbCheckpointBefore=checkpoint;checkpoint=function(){if(v.s==='rbb'){rbbDraft();return}rbbCheckpointBefore()};
+var rbbResumeBefore=resumeWorkshop;resumeWorkshop=function(){var r=me()&&me().resume;if(r&&r.kind==='rbb'){rbbOpen(r.id);return}rbbResumeBefore()};
+document.addEventListener('input',function(e){if(e.target&&e.target.id==='rbbname')rbbDraft()});
+if(window.ShopLab)Object.assign(window.ShopLab,{rbbOpen:rbbOpen,rbbClick:rbbClick,RBB_CH:RBB_CH,RBB_PARTS:RBB_PARTS,rbbDesign:rbbDesign,rbbSave:rbbSave,rbbStats:rbbStats,rbbDraft:rbbDraft,GMLOOKS:GMLOOKS,gbGen:gbGen,gbValFor:gbValFor,gameWorkerSource:gameWorkerSource,rbbSvg:rbbSvg,gmBody:gmBody,vPath:vPath});
+/* END ROBOT BUILDER */
 
 /* BEGIN BICYCLE WORKSHOP */
 var BIKE_LESSONS=[{"id": "bike01", "title": "Meet your bicycle", "unit": "Know your bike", "lab": "parts", "body": "Follow the power from pedal to crank, chainring, chain, rear sprocket and wheel. The fork supports the front wheel; the headset lets it turn.", "steps": ["Trace the drivetrain without putting fingers near a moving chain.", "Find the valve, both brakes and wheel fasteners.", "Identify your brake and gear types before choosing instructions."], "q": "Which part carries drive from the chainring to the rear sprocket?", "options": ["Chain", "Brake cable", "Headset"]}, {"id": "bike02", "title": "Before you ride", "unit": "Know your bike", "lab": "check", "body": "Use a short inspection every ride: air, brakes, chain and secure wheels. A problem found in the garage is easier to handle than one found downhill.", "steps": ["Read tire and rim pressure guidance and use a gauge.", "Test each brake while walking the bike.", "Check wheels, steering and visible damage with an adult."], "q": "A brake lever reaches the handlebar without stopping the wheel. What next?", "options": ["Stop and get the brake repaired", "Ride slowly downhill", "Add chain oil to the rim"]}, {"id": "bike03", "title": "Gears in motion", "unit": "Gears & derailleurs", "lab": "gear", "body": "A small front chainring and large rear sprocket make a lower gear. The wheel turns fewer times per pedal revolution, trading speed for easier climbing.", "steps": ["Compare the lowest and highest combinations in the model.", "Shift while pedaling gently, easing pressure on the pedals.", "Avoid extreme cross-chain combinations on multi-ring bikes."], "q": "Which combination gives the lowest gear here?", "options": ["Small front, large rear", "Large front, small rear", "Both combinations are equal"]}, {"id": "bike04", "title": "Rear derailleur and indexing", "unit": "Gears & derailleurs", "lab": "index", "body": "The rear guide pulley steers the chain sideways; the sprung cage takes up slack. Indexing lines each shifter click up with a rear sprocket.", "steps": ["Inspect the hanger and cable before adjusting.", "On conventional cable derailleurs, small barrel changes alter cable tension.", "Test one click at a time using the component manual."], "q": "Which adjustment fine-tunes the position at each click?", "options": ["Cable tension with the barrel adjuster", "Tire pressure", "The wheel axle nut"]}, {"id": "bike05", "title": "Limit screws and the hanger", "unit": "Gears & derailleurs", "lab": "limit", "body": "Limit screws restrict end travel. They do not replace indexing. A bent hanger can cause poor shifting even when cable tension seems reasonable.", "steps": ["Identify H, L and B controls in the actual manual.", "H limits travel toward the smallest rear sprocket; L toward the largest.", "Stop if the derailleur approaches spokes; get the hanger checked."], "q": "The hanger is visibly bent. What should you do first?", "options": ["Have the hanger checked and corrected", "Keep turning the barrel adjuster", "Remove both limit screws"]}, {"id": "bike06", "title": "Front derailleur and chain rub", "unit": "Gears & derailleurs", "lab": "front", "body": "The front cage guides the chain between chainrings. Height, angle, limits and cable tension all matter; some shifters also have trim positions.", "steps": ["Identify whether the bicycle has a front derailleur.", "Check alignment using its manufacturer instructions.", "Use sensible gear combinations; do not chase every rub by opening limits."], "q": "What does the front derailleur move the chain between?", "options": ["Front chainrings", "Rear wheel spokes", "Brake pads"]}, {"id": "bike07", "title": "Side-pull caliper brakes", "unit": "Brakes that work", "lab": "brake", "body": "A side-pull caliper routes the cable to one side of its arms. Pads grip the wheel rim. Single-pivot and dual-pivot designs have different arm arrangements.", "steps": ["Inspect pad wear and the braking track.", "Pads must contact the rim, not the tire.", "Check centering and clearance; follow the specific brake manual."], "q": "Where should a rim-brake pad contact?", "options": ["The rim braking track", "The tire sidewall", "A spoke"]}, {"id": "bike08", "title": "Center-pull caliper brakes", "unit": "Brakes that work", "lab": "brake", "body": "A center-pull brake lifts a central yoke or straddle connection to draw the arms together. Cable layout differs from a side-pull caliper.", "steps": ["Identify the straddle cable and its secure attachment.", "Inspect pads, cables and proper clearance.", "Check the full installed system with an adult before riding."], "q": "What distinguishes this center-pull model?", "options": ["A central pull through a yoke", "Oil on the rim", "A pedal-operated hub"]}, {"id": "bike09", "title": "Cantilever and V-brakes", "unit": "Brakes that work", "lab": "brake", "body": "Cantilevers typically use a straddle cable. Linear-pull V-brakes use a noodle and a cable spanning the arms. They need a compatible cable-pull lever.", "steps": ["Identify cantilever versus linear-pull hardware.", "Inspect pad washers, cable and noodle seating.", "Do not swap levers without checking brake compatibility."], "q": "Can any cable brake lever be paired with any brake?", "options": ["No; cable pull and compatibility matter", "Yes; every lever is identical", "Only the paint color matters"]}, {"id": "bike10", "title": "Disc brakes: cable and hydraulic", "unit": "Brakes that work", "lab": "brake", "body": "Disc pads clamp a rotor at the hub. Mechanical brakes use a cable; hydraulic brakes use fluid pressure. Service procedures and fluids depend on the model.", "steps": ["Keep lubricant off pads and rotor.", "Check wear against the manufacturer limits.", "Do not pull a hydraulic lever with the wheel removed unless the correct spacer is fitted."], "q": "Where does a disc brake apply friction?", "options": ["On the rotor", "On the tire tread", "On the chainring"]}, {"id": "bike11", "title": "Coaster brakes", "unit": "Brakes that work", "lab": "brake", "body": "A coaster brake works inside the rear hub when the rider pushes the pedals backward. The reaction arm must be correctly secured to the frame.", "steps": ["Identify the brake arm and its mounting.", "Check operation while walking the bike.", "Internal service and reassembly need the hub instructions and an experienced adult."], "q": "What activates a typical coaster brake?", "options": ["Pedaling backward", "Turning the handlebars", "Shifting to a bigger chainring"]}, {"id": "bike12", "title": "Pedals, toe clips and clipless", "unit": "Know your bike", "lab": "check", "body": "Toe clips and straps retain the shoe on a platform pedal. Clipless pedals instead engage a cleat. Neither system guarantees better pedaling technique.", "steps": ["Learn the release method before riding.", "Practice supported and stationary with an adult.", "Flat pedals are a useful choice while learning balance and stopping."], "q": "Why practice releasing the shoe before a ride?", "options": ["So you can put a foot down when stopping", "To tighten the wheel bearings", "To increase tire pressure"]}, {"id": "bike13", "title": "Read a tire and choose pressure", "unit": "Tires & tubes", "lab": "pressure", "body": "Start with the tire and wheel instructions. Pressure depends on tire size, rider and luggage load, surface and tube/tubeless system. Maximum pressure is a limit, not a universal target.", "steps": ["Find the tire size and allowed pressure range.", "Observe the lower applicable tire or rim maximum.", "Use a gauge and manufacturer guidance; record your chosen setting."], "q": "Example tire: 40–65 psi; rim maximum: 55 psi. Which is within both limits?", "options": ["50 psi", "65 psi", "30 psi"]}, {"id": "bike14", "title": "Valves, pumps and tube sizes", "unit": "Tires & tubes", "lab": "check", "body": "Schrader valves resemble car valves. Presta valves have a small tip nut that opens before inflation. Match a tube to the tire diameter, width range and valve opening.", "steps": ["Read the tire size, preferably the ETRTO width and diameter.", "Use a suitable pump head; open a Presta tip gently.", "Do not drill a rim or force the wrong valve into it."], "q": "What must a replacement tube match?", "options": ["Wheel diameter, tire-width range and suitable valve", "Only the bicycle color", "Only the valve cap color"]}, {"id": "bike15", "title": "Patch a punctured tube", "unit": "Tires & tubes", "lab": "patch", "body": "Find and mark the leak. A matching patch and vulcanizing fluid form a repair system. Check whether the tube is butyl, latex or TPU before choosing a kit.", "steps": ["Inspect tire and rim for the cause; remove the sharp object carefully.", "Prepare a clean dry area, lightly roughen where the kit requires it and apply a thin film.", "Let the fluid dry as directed, press the patch, check the seal and reinstall without trapping the tube."], "q": "When should the patch go onto a conventional vulcanizing repair?", "options": ["After the fluid has dried as its instructions require", "While the tube is dirty and wet", "Before finding the puncture"]}, {"id": "bike16", "title": "An improvised old-tube patch", "unit": "Tires & tubes", "lab": "patch", "body": "An old tube can supply an improvised patch, as Dad has done. It lacks the special bonding layer of a manufactured patch, so adhesive compatibility and workmanship matter.", "steps": ["With an adult, cut a sound donor piece with rounded corners.", "Clean and prepare both surfaces; use an adhesive specified for those materials and follow its directions.", "Ventilate, keep solvents away from flame, leak-test the repair and replace it if it does not hold."], "q": "What is essential before trusting an improvised repair?", "options": ["Check material/adhesive compatibility and test that it holds", "Assume every rubber cement is interchangeable", "Skip finding the original cause"]}, {"id": "bike17", "title": "Clean, lubricate and check the chain", "unit": "Maintenance bench", "lab": "check", "body": "Dirt and excess lubricant make an abrasive mess. Clean gently, lubricate the chain rollers with a suitable product and wipe surplus from the outside.", "steps": ["Keep lubricant off braking surfaces.", "Inspect stiff links, rust and damaged links.", "Use a compatible chain-wear gauge and the chain maker replacement guidance."], "q": "Why wipe excess lubricant from the outside?", "options": ["To reduce dirt collecting on the chain", "To make the brake rotor slippery", "To remove all lubricant from inside the rollers"]}, {"id": "bike18", "title": "Wheels, spokes and truing", "unit": "Maintenance bench", "lab": "check", "body": "Spokes support the rim through balanced tension. A side-to-side wobble may involve rim trueness, seating or bearing play; do not diagnose from appearance alone.", "steps": ["Check that the tire is seated and the wheel installed correctly.", "Look for broken spokes, cracks and looseness.", "Learn truing with an adult, correct spoke key and small measured changes."], "q": "Should you tighten every spoke to fix a wobble?", "options": ["No; first identify the cause and assess tension", "Yes; as tight as possible", "Only tighten spokes beside the valve"]}, {"id": "bike19", "title": "Hubs, headset and bottom bracket", "unit": "Maintenance bench", "lab": "check", "body": "Bearings let parts rotate while supporting load. The hubs carry wheels, the headset allows steering and the bottom bracket supports the crank spindle.", "steps": ["Check play and roughness separately.", "Recognize adjustable cup-and-cone versus cartridge designs.", "Do not tighten every bearing until all movement disappears; follow its service method."], "q": "Loose steering with a knock needs what?", "options": ["A headset and related fastener inspection", "More tire sealant", "Extra chain oil"]}, {"id": "bike20", "title": "Bike fit and comfort", "unit": "Know your bike", "lab": "check", "body": "A bicycle should allow comfortable reach and controlled starts and stops. Saddle and handlebar adjustments have insertion limits and specified torque values.", "steps": ["Check frame size and clearance with an adult.", "Adjust height in small steps and test in a safe place.", "Keep seatposts/stems within their markings; ongoing pain needs a fit review."], "q": "Can a seatpost be raised beyond its minimum-insertion mark?", "options": ["No", "Yes, if the clamp is very tight", "Yes, for short rides"]}, {"id": "bike21", "title": "Tools, torque and fasteners", "unit": "Maintenance bench", "lab": "check", "body": "Use the correct tool and manufacturer torque specification. A torque wrench measures tightening torque; a longer wrench does not tell you the correct setting.", "steps": ["Seat hex/Torx tools fully and use the correct size.", "Inspect damaged threads and heads before proceeding.", "Check the manual for unusual threads, including the left pedal."], "q": "What determines the correct tightening torque?", "options": ["The component manufacturer specification", "How strong your arm is", "The longest available wrench"]}, {"id": "bike22", "title": "Bike Detective: hard to pedal", "unit": "Bike Detective", "lab": "case", "body": "The bike rolls poorly even with the chain in an easy gear. The rear wheel stops quickly when spun; one rim pad stays against the braking track.", "steps": ["Compare wheel drag with drivetrain resistance.", "Observe the rubbing pad before changing gears.", "Repair and verify the brake with an adult, then recheck that the wheel rolls and the brake stops it."], "q": "What best fits these observations?", "options": ["Brake drag", "A missing valve cap", "A larger saddle"]}, {"id": "bike23", "title": "Bike Detective: click and chatter", "unit": "Bike Detective", "lab": "case", "body": "One shifter click leaves the chain rattling between sprockets. The hanger appears straight, the cable is seated and the end gears are reachable.", "steps": ["Gather evidence before adjusting.", "Check indexing in small steps, then test across the gears.", "Persistent trouble needs cable, wear and hanger assessment."], "q": "What should you investigate first in this stated case?", "options": ["Indexing and cable tension", "Opening the L limit toward the spokes", "Inflating the tire to its maximum"]}, {"id": "bike24", "title": "Restore an old bicycle", "unit": "Maintenance bench", "lab": "restore", "body": "Inspect before buying parts. A shiny paint job cannot compensate for a cracked frame, unsafe brakes or incompatible replacement components.", "steps": ["List structural problems and get an adult assessment.", "Estimate compatible parts, tools and help before choosing the project.", "Repair in stages, verify on a stand, then test cautiously with an adult in a safe area."], "q": "What comes before spending the restoration budget?", "options": ["Inspect structure, safety and parts compatibility", "Buy decorative accessories", "Paint over every crack"]}];

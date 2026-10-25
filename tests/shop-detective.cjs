@@ -29,6 +29,6 @@ for(const subject of ['elec','lab','auto','game','faith','code']){if(!L.SUBJECTS
 
 click('subj','lab');click('lesson','sp1');assert.equal(V.s,'sp');assert(app.innerHTML.includes('Spot the part'));click('back');assert.equal(V.s,'path');
 for(const l of L.SUBJECTS.find(s=>s.id==='code').lessons.filter(l=>/^pl(1[89]|2\d|3[01])$/.test(l.id)))assert.equal(l.kind,'py');
-assert.equal(L.PYC.length,31);assert.equal(L.allWorkshopBadges().length,52);
-console.log('Parts drill entry, 31 Python challenges and 52 badges verified.');
+assert.equal(L.PYC.length,31);assert.equal(L.allWorkshopBadges().length,53);
+console.log('Parts drill entry, 31 Python challenges and 53 badges verified.');
 

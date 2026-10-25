@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.11.0 — 2026-10-24
+
+- Merge Claude’s five Game Lab hero choices and nine Robot Builder missions into current development.
+- Extend the final detailed game painter, block/fill/studio controls and sandboxed worker look state; preserve person art and mission goals.
+- Bind saved robot appearance to the owning game snapshot; keep hero defaults per learner and settings per studio slot.
+- Add normalized owner-bound robot saves, drafts/resume, immediate name drafts, sensor-cap feedback and first-only XP.
+- Clarify illustrative stats, battery/solar assumptions, camera software/lighting and magnetic materials.
+- Preserve all 24 bicycle lessons, ten covers, progress IDs, backups, runner isolation and confirmed v0.9.1 sound.
+- Total: 370 entries, ten workshops, 53 badges. Add challenge/ownership/worker/canvas tests and phone/Chromebook native-control checks.
+
+
 ## 0.10.0 — 2026-10-24
 
 - Add Bicycle Workshop: 24 lessons, gear/index/limit bench, five brake schematics, pressure constraints, tube-repair sequence and two diagnostic cases.
