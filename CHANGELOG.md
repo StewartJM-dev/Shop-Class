@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.1 — 2026-10-24
+
+- Merge Claude’s Word Machine sound fix: voice selection, retained utterances, resumed audio and Test sound.
+- Preserve narration across redraws; guard delayed speech by screen, learner and request.
+- Real iPhone audio requires device verification.
+
+
 ## 0.9.0 — 2026-10-24
 
 - Merge Claude’s 35 Trail Detective cases and four added spelling/code menu choices into current development.

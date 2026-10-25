@@ -265,9 +265,25 @@ function wdNew(tid){
 }
 function wdOpen(id){var p=wdP();if(!p||!wdDoc(id))return;v.wd={id:id,ownerId:db.active,sel:null,msg:'',guide:true,fin:false,xp:0,idea:''};v.s='wd';v.subj='write';p.lastSubj='write';save()}
 var wdTimer=null;
-function wdSay(text,o){o=o||{};try{if(!window.speechSynthesis)return false;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(String(text));u.rate=o.rate||0.9;u.pitch=o.pitch||1;u.lang='en-US';speechSynthesis.speak(u);return true}catch(e){return false}}
+var wdVoice=null,wdAudioOn=false,wdSpeechTimer=null,wdSpeechSeq=0;
+function wdPickVoice(){try{var vs=speechSynthesis.getVoices()||[];wdVoice=vs.find(function(x){return x.lang==='en-US'&&x.localService})||vs.find(function(x){return x.lang==='en-US'})||vs.find(function(x){return /^en/i.test(x.lang)})||null}catch(e){}}
+try{if(window.speechSynthesis){wdPickVoice();if(speechSynthesis.addEventListener)speechSynthesis.addEventListener('voiceschanged',wdPickVoice)}}catch(e){}
+/* iPhones only allow sound that starts from a tap: unlock speech and audio on the first touch. */
+function wdUnlockAudio(){
+ if(wdAudioOn)return;wdAudioOn=true;
+ try{var C=window.AudioContext||window.webkitAudioContext;if(C){sqAC=sqAC||new C();if(sqAC.state==='suspended')sqAC.resume();var b=sqAC.createBuffer(1,1,22050),s=sqAC.createBufferSource();s.buffer=b;s.connect(sqAC.destination);s.start(0)}}catch(e){}
+}
+['touchend','pointerup','click','keydown'].forEach(function(ev){document.addEventListener(ev,wdUnlockAudio,true)});
+function wdSay(text,o){o=o||{};try{
+ if(!window.speechSynthesis)return false;var ss=window.speechSynthesis;clearTimeout(wdSpeechTimer);var seq=++wdSpeechSeq,owner=db.active,screen=v.s;
+ var u=new SpeechSynthesisUtterance(String(text));u.rate=o.rate||0.9;u.pitch=o.pitch||1;u.lang='en-US';u.volume=1;
+ if(!wdVoice)wdPickVoice();if(wdVoice)u.voice=wdVoice;
+ window.wdLastUtterance=u;/* keep a reference so the browser does not drop it mid-sentence */
+ if(ss.speaking||ss.pending){ss.cancel();wdSpeechTimer=setTimeout(function(){if(seq!==wdSpeechSeq||owner!==db.active||screen!==v.s)return;try{ss.speak(u);if(ss.paused)ss.resume()}catch(e){}},120)}
+ else{ss.speak(u);if(ss.paused)ss.resume()}
+ return true}catch(e){return false}}
 function wdCanSpeak(){try{return !!window.speechSynthesis&&typeof SpeechSynthesisUtterance!=='undefined'}catch(e){return false}}
-function wdStop(){try{if(window.speechSynthesis)speechSynthesis.cancel()}catch(e){}}
+function wdStop(){clearTimeout(wdSpeechTimer);wdSpeechSeq++;try{if(window.speechSynthesis)speechSynthesis.cancel()}catch(e){}}
 var WD_LABEL={spell:'Spelling',name:'Name?',cap:'Capital letter',check:'Check this word',style:'Tidy up'};
 function wdSelIssue(is){
  var S=v.wd;if(!S||!S.sel||!is.length)return null;
@@ -524,7 +540,7 @@ function sqCtxFull(it){return it.ctx?it.ctx.replace('___',it.w):''}
 function sqSpeakWord(){var S=v.sq,it=S.list[S.i];if(!it||S.cur==='look'||S.cur==='fire'||S.cur==='code')return;if(!sqSoundOn())return;if(S.cur==='letter'){wdSay('Find the letter '+it.w.toUpperCase()+'.',{rate:0.8,pitch:0.7});return}if(S.cur==='sayit'){wdSay(it.w+'. '+it.w.split('').join(', ')+'. '+it.w+'. '+sqCtxFull(it),{rate:0.8,pitch:0.7});return}if(sqSoundOn())wdSay((S.cur==='spell'?'Spell ':'')+it.w+'. '+(sqCtxFull(it)?sqCtxFull(it)+' ':'')+(S.cur==='spell'?it.w+'.':''),{rate:0.85,pitch:0.7})}
 function sqSoundOn(){var p=me();return !(p&&p.sqQuiet)}
 var sqAC=null;
-function sqBeep(f,d,type){if(!sqSoundOn())return;try{var C=window.AudioContext||window.webkitAudioContext;if(!C)return;sqAC=sqAC||new C();var o=sqAC.createOscillator(),g=sqAC.createGain();o.type=type||'square';o.frequency.value=f;g.gain.value=0.04;o.connect(g);g.connect(sqAC.destination);var t=sqAC.currentTime;g.gain.setValueAtTime(0.04,t);g.gain.exponentialRampToValueAtTime(0.0001,t+(d||0.08));o.start(t);o.stop(t+(d||0.08)+0.02)}catch(e){}}
+function sqBeep(f,d,type){if(!sqSoundOn())return;try{var C=window.AudioContext||window.webkitAudioContext;if(!C)return;sqAC=sqAC||new C();if(sqAC.state==='suspended')sqAC.resume();var o=sqAC.createOscillator(),g=sqAC.createGain();o.type=type||'square';o.frequency.value=f;g.gain.value=0.04;o.connect(g);g.connect(sqAC.destination);var t=sqAC.currentTime;g.gain.setValueAtTime(0.04,t);g.gain.exponentialRampToValueAtTime(0.0001,t+(d||0.08));o.start(t);o.stop(t+(d||0.08)+0.02)}catch(e){}}
 function sqJingle(ok){if(ok){sqBeep(660,0.09);setTimeout(function(){sqBeep(880,0.09)},100);setTimeout(function(){sqBeep(1320,0.14)},200)}else{sqBeep(220,0.18,'sawtooth')}}
 function sqRecord(ok){
  var S=v.sq,it=S.list[S.i],p=wdP(),q=p.sq,t=today();
@@ -648,7 +664,7 @@ function vSq(){
    else h+=sqKeys();
   }
  }
- h+='</div><div class="sq-foot"><button class="btn ghost small" data-act="sqsound">'+(sqSoundOn()?'Sound: on':'Sound: off')+'</button></div><div style="height:90px"></div></div>';
+ h+='</div><div class="sq-foot"><button class="btn ghost small" data-act="sqsound">'+(sqSoundOn()?'Sound: on':'Sound: off')+'</button>'+(sqSoundOn()?'<button class="btn ghost small" data-act="sqtest">🔊 Test sound</button>':'')+'</div>'+(sqSoundOn()?'<p class="sq-help">No sound? Turn the volume up. On an iPhone, also make sure the ring/silent switch is not on silent.</p>':'')+'<div style="height:90px"></div></div>';
  return h;
 }
 function sqClick(a,id,el){
@@ -657,6 +673,7 @@ function sqClick(a,id,el){
  switch(a){
   case 'sqmode':sqBeep(880,0.05);sqStart(id);return true;
   case 'sqmenu':wdStop();v.sq={ownerId:db.active,phase:'menu'};return true;
+    case 'sqtest':sqBeep(660,0.1);wdSay('Hello! The Word Machine is ready.',{pitch:0.7});return true;
   case 'sqsound':{var p=me();p.sqQuiet=!p.sqQuiet;if(p.sqQuiet){wdStop();if(S.cur==='letter')S.revealed=true}save();return true}
   case 'sqsay':{var it=S.list&&S.list[S.i];if(it){if(S.cur==='look'&&S.phase==='ask')wdSay('Spell it from memory.',{pitch:0.7});else if(S.cur==='letter'||S.cur==='sayit')sqSpeakWord();else wdSay(it.w+'. '+sqCtxFull(it),{rate:0.85,pitch:0.7})}return true}
   case 'sqkey':sqType(id==='apos'?"'":id==='SPACE'?' ':id);return true;
@@ -698,7 +715,7 @@ var wdArtBefore=workshopArt;workshopArt=function(id){
  return '<svg viewBox="0 0 320 180" aria-hidden="true" class="work-art">'+h+'</svg>';
 };
 var pathBeforeWd=vPath;vPath=function(){if(v.subj==='write')return vWdHome();return pathBeforeWd()};
-var renderBeforeWd=render;render=function(){if(v.s!=='wd'&&v.s!=='sq')wdStop();renderBeforeWd();if(v.s==='wd')wdSize()};
+var wdPrevS=null,wdPrevOwner=null;var renderBeforeWd=render;render=function(){if(wdPrevS&&(wdPrevS!==v.s||wdPrevOwner!==db.active)&&/^(wd|sq|td)$/.test(wdPrevS))wdStop();wdPrevS=v.s;wdPrevOwner=db.active;renderBeforeWd();if(v.s==='wd')wdSize()};
 var checkpointBeforeWd=checkpoint;checkpoint=function(){var p=me();if(p&&v.s==='wd'&&v.wd&&v.wd.ownerId===db.active){var d=wdDoc(v.wd.id);if(d){p.resume={subj:'write',kind:'wd',id:d.id,title:d.title||'Untitled writing'};save();return}}checkpointBeforeWd()};
 var resumeBeforeWd=resumeWorkshop;resumeWorkshop=function(){var r=me()&&me().resume;if(r&&r.kind==='wd'){if(wdDoc(r.id))wdOpen(r.id);else{v.subj='write';v.s='path'}return}resumeBeforeWd()};
 if(window.ShopLab)Object.assign(window.ShopLab,{wde:wde,WDT:WDT,wdNew:wdNew,wdOpen:wdOpen,wdClick:wdClick,vWd:vWd,wdIssues:wdIssues,wdLearn:wdLearn,sqOpen:sqOpen,sqStart:sqStart,sqClick:sqClick,vSq:vSq,sqPick:sqPick,sqWrongs:sqWrongs,sqCode:sqCode,SQ_MODES:SQ_MODES,checkpoint:checkpoint,resumeWorkshop:resumeWorkshop,vPath:vPath});

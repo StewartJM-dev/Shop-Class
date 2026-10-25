@@ -1,6 +1,7 @@
+<!-- v0.9.1: Word Machine sound fix merged. GitHub Pages publishes development. -->
 # Shop Class v0.9.0 — current handoff
 
-Source of truth: private `StewartJM-dev/Shop-Class`, branch `development`. Builds on `61eac3049423fa456e364287bcd177e77bee316a` (v0.8.0). Read AGENTS.md and CHANGELOG.md. The v0.5.0-based ZIPs are import sources, not the current app.
+Source of truth: public `StewartJM-dev/Shop-Class`, branch `development`. Builds on `61eac3049423fa456e364287bcd177e77bee316a` (v0.8.0). Read AGENTS.md and CHANGELOG.md. The v0.5.0-based ZIPs are import sources, not the current app.
 
 ## Current build
 
