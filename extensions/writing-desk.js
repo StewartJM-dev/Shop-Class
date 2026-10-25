@@ -489,10 +489,13 @@ function sqBlanks(it){
  return idx.slice(0,n).sort(function(a,b){return a-b});
 }
 function sqScramble(w,seed){var a=w.split(''),s=seed||7,k=0,out;do{for(var i=a.length-1;i>0;i--){s=(s*9301+49297)%233280;var j=Math.floor(s/233280*(i+1)),t=a[i];a[i]=a[j];a[j]=t}out=a.join('');k++}while(out===w&&k<8&&w.length>1);return a}
-var SQ_MODES=[['quest','Daily quest','Mixed games picked for your words'],['spell','Spell it','Hear it, then type it'],['fix','Fix it','Pick the right spelling'],['miss','Missing letters','Fill in the gaps'],['scr','Scramble','Put the letters in order'],['fire','Campfire','Guess letters before the fire goes out']];
+var SQ_MODES=[['quest','Daily quest','Mixed games picked for your words'],['spell','Spell it','Hear it, then type it'],['fix','Fix it','Pick the right spelling'],['miss','Missing letters','Fill in the gaps'],['scr','Scramble','Put the letters in order'],['fire','Campfire','Guess letters before the fire goes out'],['sayit','Say it','Learn words: see them and hear them spelled'],['letter','Letter','Find the letter you hear'],['code','Secret code','Crack coded words'],['codemake','Code maker','Write a secret message']];
+function sqCode(s,k){return String(s).replace(/[a-z]/gi,function(c){var up=c>='A'&&c<='Z',b=up?65:97;return String.fromCharCode((c.charCodeAt(0)-b+k+26)%26+b)})}
 function sqOpen(){var p=wdP();if(!p)return;v.sq={ownerId:db.active,phase:'menu'};v.s='sq';v.subj='write';p.lastSubj='write';save()}
 function sqStart(mode){
- var p=wdP(),n=mode==='quest'?8:mode==='fire'?5:6;
+ var p=wdP(),n=mode==='quest'||mode==='sayit'?8:mode==='fire'?5:6;
+ if(mode==='codemake'){v.sq={ownerId:db.active,mode:mode,phase:'make',input:'',shift:3,res:[],list:[]};return}
+ if(mode==='letter'){v.sq={ownerId:db.active,mode:mode,list:sqShuffle('abcdefghijklmnopqrstuvwxyz'.split('')).slice(0,8).map(function(c){return {w:c,key:'letter:'+c,tmp:true,box:0,ctx:'',wrong:[]}}),i:0,res:[],phase:'ask'};sqEnter();return}
  var S=v.sq={ownerId:db.active,mode:mode,list:sqPick(p,n,mode),i:0,res:[],phase:'ask'};
  sqEnter();
 }
@@ -511,18 +514,22 @@ function sqEnter(){
  if(S.cur==='scr'){S.tiles=sqScramble(it.w.toLowerCase(),S.i*31+it.w.length*7+3);S.used=[]}
  if(S.cur==='fire'){S.guess={};S.bad=0}
  if(S.cur==='look'){S.phase='look'}
+ if(S.cur==='sayit')S.phase='show';
+ if(S.cur==='letter')S.revealed=!wdCanSpeak()||!sqSoundOn();
+ if(S.cur==='code')S.shift=1+sqLevel(wdP());
  sqSpeakWord();
 }
 function sqShuffle(a){return a.map(function(x){return {x:x,r:Math.random()}}).sort(function(a,b){return a.r-b.r}).map(function(o){return o.x})}
 function sqCtxFull(it){return it.ctx?it.ctx.replace('___',it.w):''}
-function sqSpeakWord(){var S=v.sq,it=S.list[S.i];if(!it||S.cur==='look'||S.cur==='fire')return;if(sqSoundOn())wdSay((S.cur==='spell'?'Spell ':'')+it.w+'. '+(sqCtxFull(it)?sqCtxFull(it)+' ':'')+(S.cur==='spell'?it.w+'.':''),{rate:0.85,pitch:0.7})}
+function sqSpeakWord(){var S=v.sq,it=S.list[S.i];if(!it||S.cur==='look'||S.cur==='fire'||S.cur==='code')return;if(!sqSoundOn())return;if(S.cur==='letter'){wdSay('Find the letter '+it.w.toUpperCase()+'.',{rate:0.8,pitch:0.7});return}if(S.cur==='sayit'){wdSay(it.w+'. '+it.w.split('').join(', ')+'. '+it.w+'. '+sqCtxFull(it),{rate:0.8,pitch:0.7});return}if(sqSoundOn())wdSay((S.cur==='spell'?'Spell ':'')+it.w+'. '+(sqCtxFull(it)?sqCtxFull(it)+' ':'')+(S.cur==='spell'?it.w+'.':''),{rate:0.85,pitch:0.7})}
 function sqSoundOn(){var p=me();return !(p&&p.sqQuiet)}
 var sqAC=null;
 function sqBeep(f,d,type){if(!sqSoundOn())return;try{var C=window.AudioContext||window.webkitAudioContext;if(!C)return;sqAC=sqAC||new C();var o=sqAC.createOscillator(),g=sqAC.createGain();o.type=type||'square';o.frequency.value=f;g.gain.value=0.04;o.connect(g);g.connect(sqAC.destination);var t=sqAC.currentTime;g.gain.setValueAtTime(0.04,t);g.gain.exponentialRampToValueAtTime(0.0001,t+(d||0.08));o.start(t);o.stop(t+(d||0.08)+0.02)}catch(e){}}
 function sqJingle(ok){if(ok){sqBeep(660,0.09);setTimeout(function(){sqBeep(880,0.09)},100);setTimeout(function(){sqBeep(1320,0.14)},200)}else{sqBeep(220,0.18,'sawtooth')}}
 function sqRecord(ok){
  var S=v.sq,it=S.list[S.i],p=wdP(),q=p.sq,t=today();
- S.res.push({w:it.w,ok:ok});
+ S.res.push({w:S.cur==='letter'?it.w.toUpperCase():it.w,ok:ok});
+ if(S.cur==='letter'||S.cur==='sayit')return;
  var rec=q.words[it.key];
  if(ok){
   if(rec){rec.right=(rec.right||0)+1;if((rec.next||t)<=t){rec.box=(rec.box||0)+1;if(rec.box>=4){delete q.words[it.key];if(q.mastered.indexOf(it.key)<0)q.mastered.push(it.key);S.mastered=(S.mastered||[]).concat([it.w])}else{var dd=new Date();dd.setDate(dd.getDate()+[0,1,3,7][rec.box]);rec.next=dstr(dd)}}}
@@ -537,21 +544,28 @@ function sqCheckTyped(ans){
  var S=v.sq,it=S.list[S.i];S.lastTry=ans;
  if(ans.toLowerCase()===it.w.toLowerCase()){S.phase='right';sqJingle(true);if(sqSoundOn())wdSay('That is correct!',{pitch:0.7});sqRecord(S.tries===0);return}
  S.tries++;
- if(S.tries<2){S.phase='ask';S.msg='TRY AGAIN';S.input='';if(S.cur==='miss')S.fill=[];if(S.cur==='scr')S.used=[];sqJingle(false);if(sqSoundOn())wdSay('Wrong. Try again.',{pitch:0.7})}
- else{S.phase='wrong';sqJingle(false);if(sqSoundOn())wdSay('That is incorrect. The correct spelling of '+it.w+' is '+it.w.split('').join(', ')+'.',{rate:0.85,pitch:0.7});sqRecord(false)}
+ if(S.tries<2){S.phase='ask';S.msg='TRY AGAIN';S.input='';if(S.cur==='letter')S.revealed=true;if(S.cur==='miss')S.fill=[];if(S.cur==='scr')S.used=[];sqJingle(false);if(sqSoundOn())wdSay('Wrong. Try again.',{pitch:0.7})}
+ else{S.phase='wrong';sqJingle(false);if(sqSoundOn())wdSay(S.cur==='letter'?'That is incorrect. This is the letter '+it.w.toUpperCase()+'.':'That is incorrect. The correct spelling of '+it.w+' is '+it.w.split('').join(', ')+'.',{rate:0.85,pitch:0.7});sqRecord(false)}
 }
 function sqEnd(){
- var S=v.sq;if(!S||S.ownerId!==db.active||S.phase==='end')return;var p=wdP(),q=p.sq;S.phase='end';q.rounds++;
+ var S=v.sq;if(!S||S.ownerId!==db.active||S.phase==='end')return;var p=wdP(),q=p.sq;S.phase='end';
+ if(S.mode==='sayit'){S.xp=0;if(sqSoundOn())wdSay('Good studying!',{pitch:0.7});return}
+ q.rounds++;
  if(!q.xpDay||q.xpDay.d!==today())q.xpDay={d:today(),xp:0};
  S.xp=0;if(q.xpDay.xp<30){S.xp=wdXp(10);q.xpDay.xp+=10}
  save();var n=S.res.filter(function(r){return r.ok}).length;if(sqSoundOn())wdSay(n===S.res.length?'Perfect score! Great job!':'You got '+n+' out of '+S.res.length+'.',{pitch:0.7});
 }
 function sqType(ch){
- var S=v.sq;if(!S||S.ownerId!==db.active||!S.list||S.phase==='end')return;var it=S.list[S.i];if(!it)return;
+ var S=v.sq;if(!S||S.ownerId!==db.active||S.phase==='end')return;
+ if(S.mode==='codemake'){if(ch==='ERASE')S.input=S.input.slice(0,-1);else if(ch==='ENTER'){}else if(S.input.length<60)S.input+=ch;sqBeep(520,0.03);return}
+ var it=S.list[S.i];if(!it)return;
+ if(S.phase==='show'){if(ch==='ENTER')sqNext();return}
+ if(S.cur==='letter'&&S.phase==='ask'){if(/^[a-z]$/.test(ch)){sqBeep(520,0.03);sqCheckTyped(ch)}return}
  if(S.phase==='right'||S.phase==='wrong'){if(ch==='ENTER')sqNext();return}
  if(S.phase==='look'){if(ch==='ENTER'){S.phase='ask'}return}
  if(S.cur==='fire'){if(/^[a-z']$/.test(ch))sqFireGuess(ch);return}
- if(S.cur==='spell'||S.cur==='look'){
+ if(S.cur==='spell'||S.cur==='look'||S.cur==='code'){
+  if(ch===' ')return;
   if(ch==='ERASE')S.input=S.input.slice(0,-1);else if(ch==='ENTER'){if(S.input)sqCheckTyped(S.input)}else if(S.input.length<24){S.input+=ch;S.msg=''}
   sqBeep(520,0.03);return;
  }
@@ -567,19 +581,24 @@ function sqFireGuess(ch){
  if(lw.indexOf(ch)>=0){sqBeep(700,0.05);if(lw.split('').every(function(c){return S.guess[c]||!/[a-z]/.test(c)})){S.phase='right';sqJingle(true);if(sqSoundOn())wdSay(it.w+'! You kept the fire lit!',{pitch:0.7});sqRecord(S.bad<=3)}}
  else{S.bad++;sqBeep(200,0.12,'sawtooth');S.lastTry='';if(S.bad>=6){S.phase='wrong';sqJingle(false);if(sqSoundOn())wdSay('The fire went out. The word was '+it.w+'. '+it.w.split('').join(', ')+'.',{rate:0.85,pitch:0.7});sqRecord(false)}}
 }
-function sqNext(){var S=v.sq;if(!S||S.ownerId!==db.active||!['right','wrong'].includes(S.phase))return;S.i++;if(S.i>=S.list.length)sqEnd();else sqEnter()}
+function sqNext(){var S=v.sq;if(!S||S.ownerId!==db.active||!['right','wrong','show'].includes(S.phase))return;S.i++;if(S.i>=S.list.length)sqEnd();else sqEnter()}
 function sqScreen(){
  var S=v.sq,p=wdP();
  if(S.phase==='menu'){
   var due=sqDue(p).length;
   return '<div class="sq-l1">WORD MACHINE</div><div class="sq-l2">'+(due?due+' WORD'+(due===1?'':'S')+' READY':'PICK A GAME')+'</div><div class="sq-l3">'+Object.keys(p.sq.words).length+' IN QUEST · '+p.sq.mastered.length+' MASTERED</div>';
  }
+ if(S.phase==='end'&&S.mode==='sayit')return '<div class="sq-l1">STUDY DONE</div><div class="sq-l2">'+S.list.length+' WORDS</div><div class="sq-l3">NOW TRY SPELL IT OR THE DAILY QUEST</div>';
  if(S.phase==='end'){
   var n=S.res.filter(function(r){return r.ok}).length;
   return '<div class="sq-l1">'+(n===S.res.length?'PERFECT!':'ROUND OVER')+'</div><div class="sq-l2">'+n+' / '+S.res.length+' CORRECT</div><div class="sq-l3">'+(S.xp?'+'+S.xp+' XP':'XP LIMIT REACHED TODAY')+(S.mastered&&S.mastered.length?' · MASTERED: '+esc(S.mastered.join(', ').toUpperCase()):'')+'</div>';
  }
+ if(S.mode==='codemake'){var enc=sqCode(S.input,S.dec?-S.shift:S.shift);return '<div class="sq-top">'+(S.dec?'CODE READER':'CODE MAKER')+' · KEY '+S.shift+'</div><div class="sq-l3">'+(S.dec?'TYPE THE SECRET CODE':'YOUR MESSAGE')+'</div><div class="sq-l2 sq-in">'+esc(S.input.toUpperCase())+'<i class="sq-cur"></i></div><div class="sq-l3">'+(S.dec?'THE MESSAGE SAYS':'SECRET CODE')+'</div><div class="sq-l1 sq-code">'+(esc(enc.toUpperCase())||'&nbsp;')+'</div>'+sqStrip(S.shift)}
  var it=S.list[S.i],ctx=it.ctx?'<div class="sq-ctx">'+esc(it.ctx)+'</div>':'';
- var top='<div class="sq-top">'+(S.i+1)+'/'+S.list.length+' · '+({spell:'SPELL IT',look:'LOOK AND SPELL',fix:'FIX IT',miss:'MISSING LETTERS',scr:'SCRAMBLE',fire:'CAMPFIRE'})[S.cur]+'</div>';
+ var top='<div class="sq-top">'+(S.i+1)+'/'+S.list.length+' · '+({spell:'SPELL IT',look:'LOOK AND SPELL',fix:'FIX IT',miss:'MISSING LETTERS',scr:'SCRAMBLE',fire:'CAMPFIRE',sayit:'SAY IT',letter:'LETTER',code:'SECRET CODE'})[S.cur]+'</div>';
+ if(S.cur==='sayit')return top+'<div class="sq-l1 sq-word">'+esc(it.w.toUpperCase())+'</div><div class="sq-l3">'+esc(it.w.toUpperCase().split('').join(' - '))+'</div>'+(it.ctx?'<div class="sq-ctx">'+esc(sqCtxFull(it))+'</div>':'');
+ if(S.cur==='letter'&&S.phase==='ask')return top+'<div class="sq-l3">'+(wdCanSpeak()&&sqSoundOn()?'LISTEN, THEN PRESS THE LETTER':'PRESS THIS LETTER')+'</div><div class="sq-l1 sq-big">'+(S.revealed?esc(it.w)+' '+esc(it.w.toUpperCase()):'?')+'</div><div class="sq-msg">'+esc(S.msg)+'</div>';
+ if(S.cur==='code'&&S.phase==='ask')return top+'<div class="sq-l3">CRACK THE CODE · KEY '+S.shift+': EACH LETTER MOVED '+S.shift+' FORWARD</div><div class="sq-l1 sq-code">'+esc(sqCode(it.w,S.shift).toUpperCase())+'</div>'+sqStrip(S.shift)+'<div class="sq-l2 sq-in">'+esc(S.input.toUpperCase())+'<i class="sq-cur"></i></div><div class="sq-msg">'+esc(S.msg)+'</div>';
  if(S.phase==='right')return top+'<div class="sq-l1">CORRECT!</div><div class="sq-l2 sq-word">'+esc(it.w.toUpperCase())+'</div>';
  if(S.phase==='wrong')return top+'<div class="sq-l1 sq-bad">'+(S.cur==='fire'?'FIRE OUT':'NOT QUITE')+'</div><div class="sq-l2 sq-word">'+esc(it.w.toUpperCase())+'</div><div class="sq-l3">'+esc(it.w.toUpperCase().split('').join(' - '))+'</div>';
  if(S.cur==='look'&&S.phase==='look')return top+'<div class="sq-l3">LOOK CAREFULLY, THEN PRESS ENTER</div><div class="sq-l1 sq-word">'+esc(it.w.toUpperCase())+'</div>'+ctx;
@@ -590,6 +609,7 @@ function sqScreen(){
  if(S.cur==='fire'){var lw=it.w.toLowerCase(),hh='';lw.split('').forEach(function(c){hh+='<span class="sq-gap'+(S.guess[c]||!/[a-z]/.test(c)?' f':'')+'">'+(S.guess[c]||!/[a-z]/.test(c)?esc(c.toUpperCase()):'_')+'</span>'});return top+'<div class="sq-fire">'+sqFireSvg(S.bad)+'<div><div class="sq-l1 sq-word">'+hh+'</div><div class="sq-l3">'+(6-S.bad)+' LOG'+(6-S.bad===1?'':'S')+' LEFT · '+esc(Object.keys(S.guess).filter(function(c){return lw.indexOf(c)<0}).join(' ').toUpperCase())+'</div></div></div>'}
  return top;
 }
+function sqStrip(k){var a='ABCDEFGHIJKLMNOPQRSTUVWXYZ';return '<div class="sq-strip" aria-label="Code key: each letter moves '+k+' forward"><div><span>PLAIN</span>'+a+'</div><div><span>CODE</span>'+sqCode(a,k)+'</div></div>'}
 function sqFireSvg(bad){
  var life=Math.max(0,6-bad)/6,s='<svg viewBox="0 0 80 80" class="sq-fsvg" aria-hidden="true">';
  for(var i=0;i<6;i++){var on=i<6-bad;s+='<rect x="'+(8+i*11)+'" y="66" width="9" height="8" rx="2" fill="'+(on?'#8a5a2b':'#3b2a1a')+'" opacity="'+(on?1:.35)+'"/>'}
@@ -601,8 +621,10 @@ function sqFireSvg(bad){
 function sqKeys(){
  var S=v.sq,h='<div class="sq-keys">',dis={};
  if(S.cur==='fire')Object.keys(S.guess||{}).forEach(function(c){dis[c]=1});
+ var noEnter=S.cur==='fire'||S.cur==='letter';
  'abcdefghijklmnopqrstuvwxyz'.split('').concat(["'"]).forEach(function(c){h+='<button class="sq-k" data-act="sqkey" data-id="'+(c==="'"?'apos':c)+'"'+(dis[c]?' disabled':'')+' aria-label="'+(c==="'"?'apostrophe':c)+'">'+esc(c.toUpperCase())+'</button>'});
- if(S.cur!=='fire')h+='<button class="sq-k wide" data-act="sqkey" data-id="ERASE">ERASE</button><button class="sq-k wide go" data-act="sqkey" data-id="ENTER">ENTER</button>';
+ if(S.mode==='codemake')h+='<button class="sq-k wide" data-act="sqkey" data-id="SPACE">SPACE</button><button class="sq-k wide go" data-act="sqkey" data-id="ERASE">ERASE</button>';
+ else if(!noEnter)h+='<button class="sq-k wide" data-act="sqkey" data-id="ERASE">ERASE</button><button class="sq-k wide go" data-act="sqkey" data-id="ENTER">ENTER</button>';
  return h+'</div>';
 }
 function vSq(){
@@ -611,11 +633,14 @@ function vSq(){
  h+='<div class="sqm"><div class="sqm-top"><span class="sqm-brand">WORD MACHINE</span><span class="sqm-grill" aria-hidden="true"></span></div><div class="sqscr" role="status" aria-live="polite">'+sqScreen()+'</div>';
  if(S.phase==='menu'){
   h+='<div class="sq-menu">'+SQ_MODES.map(function(m,i){return '<button class="sq-mb'+(i===0?' main':'')+'" data-act="sqmode" data-id="'+m[0]+'"><b>'+esc(m[1])+'</b><small>'+esc(m[2])+'</small></button>'}).join('')+'</div>';
+ }else if(S.mode==='codemake'){
+  h+='<div class="sq-row"><button class="sq-mb sm" data-act="sqshift" data-id="-1" aria-label="Smaller key"><b>Key −</b></button><button class="sq-mb sm" data-act="sqshift" data-id="1" aria-label="Bigger key"><b>Key +</b></button><button class="sq-mb sm" data-act="sqdir"><b>'+(S.dec?'Make a code':'Read a code')+'</b></button>'+(S.dec?'':'<button class="sq-mb sm" data-act="sqcopy"><b>'+(S.copied?'Copied!':S.copyError?'Copy unavailable':'Copy code')+'</b></button>')+'<button class="sq-mb sm" data-act="sqmenu"><b>Menu</b></button></div>'+sqKeys()+'<p class="sq-tip">'+(S.dec?'Set the same key number your brother used, then type his code.':'Give your brother the code and the key number. He can tap Read a code to crack it.')+'</p>';
  }else if(S.phase==='end'){
-  h+='<div class="sq-res">'+S.res.map(function(r){return '<span class="'+(r.ok?'ok':'no')+'">'+(r.ok?'✓ ':'✗ ')+esc(r.w)+'</span>'}).join('')+'</div><div class="sq-row"><button class="sq-mb main" data-act="sqmode" data-id="'+S.mode+'"><b>Play again</b></button><button class="sq-mb" data-act="sqmenu"><b>Menu</b></button></div>';
+  if(S.mode==='sayit')h+='<div class="sq-res">'+S.list.map(function(it){return '<span>'+esc(it.w)+'</span>'}).join('')+'</div><div class="sq-row"><button class="sq-mb main" data-act="sqmode" data-id="spell"><b>Test me: Spell it</b></button><button class="sq-mb" data-act="sqmenu"><b>Menu</b></button></div>';
+  else h+='<div class="sq-res">'+S.res.map(function(r){return '<span class="'+(r.ok?'ok':'no')+'">'+(r.ok?'✓ ':'✗ ')+esc(r.w)+'</span>'}).join('')+'</div><div class="sq-row"><button class="sq-mb main" data-act="sqmode" data-id="'+S.mode+'"><b>Play again</b></button><button class="sq-mb" data-act="sqmenu"><b>Menu</b></button></div>';
  }else{
   var it=S.list[S.i];
-  h+='<div class="sq-row">'+(wdCanSpeak()&&S.cur!=='fire'?'<button class="sq-mb sm" data-act="sqsay"><b>🔊 Say it</b></button>':'')+(S.phase==='right'||S.phase==='wrong'?'<button class="sq-mb sm main" data-act="sqkey" data-id="ENTER"><b>Next →</b></button>':'')+'<button class="sq-mb sm" data-act="sqmenu"><b>Menu</b></button></div>';
+  h+='<div class="sq-row">'+(wdCanSpeak()&&S.cur!=='fire'&&S.cur!=='code'?'<button class="sq-mb sm" data-act="sqsay"><b>🔊 '+(S.cur==='sayit'?'Again':'Say it')+'</b></button>':'')+(S.phase==='right'||S.phase==='wrong'||S.phase==='show'?'<button class="sq-mb sm main" data-act="sqkey" data-id="ENTER"><b>Next →</b></button>':'')+'<button class="sq-mb sm" data-act="sqmenu"><b>Menu</b></button></div>';
   if(S.phase==='ask'||S.phase==='look'){
    if(S.cur==='fix')h+='<div class="sq-opts">'+S.opts.map(function(o,i){return '<button class="sq-opt" data-act="sqpick" data-id="'+i+'">'+esc(o)+'</button>'}).join('')+'</div>';
    else if(S.cur==='scr')h+='<div class="sq-tiles">'+S.tiles.map(function(c,i){return '<button class="sq-k tile" data-act="sqtile" data-id="'+i+'"'+(S.used.indexOf(i)>=0?' disabled':'')+'>'+esc(c.toUpperCase())+'</button>'}).join('')+'<button class="sq-k wide" data-act="sqkey" data-id="ERASE">ERASE</button></div>';
@@ -632,9 +657,12 @@ function sqClick(a,id,el){
  switch(a){
   case 'sqmode':sqBeep(880,0.05);sqStart(id);return true;
   case 'sqmenu':wdStop();v.sq={ownerId:db.active,phase:'menu'};return true;
-  case 'sqsound':{var p=me();p.sqQuiet=!p.sqQuiet;if(p.sqQuiet)wdStop();save();return true}
-  case 'sqsay':{var it=S.list&&S.list[S.i];if(it){if(S.cur==='look'&&S.phase==='ask')wdSay('Spell it from memory.',{pitch:0.7});else wdSay(it.w+'. '+sqCtxFull(it),{rate:0.85,pitch:0.7})}return true}
-  case 'sqkey':sqType(id==='apos'?"'":id);return true;
+  case 'sqsound':{var p=me();p.sqQuiet=!p.sqQuiet;if(p.sqQuiet){wdStop();if(S.cur==='letter')S.revealed=true}save();return true}
+  case 'sqsay':{var it=S.list&&S.list[S.i];if(it){if(S.cur==='look'&&S.phase==='ask')wdSay('Spell it from memory.',{pitch:0.7});else if(S.cur==='letter'||S.cur==='sayit')sqSpeakWord();else wdSay(it.w+'. '+sqCtxFull(it),{rate:0.85,pitch:0.7})}return true}
+  case 'sqkey':sqType(id==='apos'?"'":id==='SPACE'?' ':id);return true;
+  case 'sqdir':if(S.mode!=='codemake')return true;S.dec=!S.dec;S.input='';S.copied=false;return true;
+  case 'sqshift':if(S.mode!=='codemake'||!['-1','1'].includes(id))return true;S.shift=((S.shift||3)-1+parseInt(id,10)+25)%25+1;S.copied=false;return true;
+  case 'sqcopy':{if(S.mode!=='codemake')return true;var enc=sqCode(S.input||'',S.shift).toUpperCase()+' (KEY '+S.shift+')',owned=S;S.copied=false;S.copyError=false;function done(ok){if(v.s==='sq'&&v.sq===owned&&owned.ownerId===db.active){owned.copied=ok;owned.copyError=!ok;render()}}try{if(!navigator.clipboard||!navigator.clipboard.writeText)done(false);else navigator.clipboard.writeText(enc).then(function(){done(true)},function(){done(false)})}catch(e){done(false)}return true}
   case 'sqpick':{if(S.phase!=='ask'||S.cur!=='fix')return true;var o=S.opts[parseInt(id,10)];S.lastTry=o;if(o===S.list[S.i].w){S.phase='right';sqJingle(true);if(sqSoundOn())wdSay('That is correct!',{pitch:0.7});sqRecord(true)}else{S.phase='wrong';sqJingle(false);if(sqSoundOn())wdSay('Not quite. It is spelled '+S.list[S.i].w.split('').join(', ')+'.',{rate:0.85,pitch:0.7});sqRecord(false)}return true}
   case 'sqtile':{if(S.phase!=='ask'||S.cur!=='scr')return true;var k=parseInt(id,10);if(S.used.indexOf(k)<0){S.used.push(k);sqBeep(520,0.03);if(S.used.length===S.tiles.length)sqCheckTyped(S.used.map(function(i){return S.tiles[i]}).join(''))}return true}
  }
@@ -642,6 +670,7 @@ function sqClick(a,id,el){
 }
 document.addEventListener('keydown',function(e){
  if(v.s!=='sq'||!v.sq||v.sq.ownerId!==db.active||v.sq.phase==='menu'||v.sq.phase==='end'||e.metaKey||e.ctrlKey||e.altKey)return;
+ if(e.key===' '&&v.sq.mode==='codemake'&&!(e.target&&/INPUT|TEXTAREA|BUTTON/.test(e.target.tagName))){e.preventDefault();sqType(' ');render();return}
  var t=e.target;if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'))return;
  var k=e.key,S=v.sq;
  if(/^[a-zA-Z']$/.test(k)){e.preventDefault();if(S.cur==='scr'){var i=S.tiles.findIndex(function(c,j){return c===k.toLowerCase()&&S.used.indexOf(j)<0});if(i>=0)sqClick('sqtile',String(i))}else sqType(k.toLowerCase())}
@@ -672,5 +701,5 @@ var pathBeforeWd=vPath;vPath=function(){if(v.subj==='write')return vWdHome();ret
 var renderBeforeWd=render;render=function(){if(v.s!=='wd'&&v.s!=='sq')wdStop();renderBeforeWd();if(v.s==='wd')wdSize()};
 var checkpointBeforeWd=checkpoint;checkpoint=function(){var p=me();if(p&&v.s==='wd'&&v.wd&&v.wd.ownerId===db.active){var d=wdDoc(v.wd.id);if(d){p.resume={subj:'write',kind:'wd',id:d.id,title:d.title||'Untitled writing'};save();return}}checkpointBeforeWd()};
 var resumeBeforeWd=resumeWorkshop;resumeWorkshop=function(){var r=me()&&me().resume;if(r&&r.kind==='wd'){if(wdDoc(r.id))wdOpen(r.id);else{v.subj='write';v.s='path'}return}resumeBeforeWd()};
-if(window.ShopLab)Object.assign(window.ShopLab,{wde:wde,WDT:WDT,wdNew:wdNew,wdOpen:wdOpen,wdClick:wdClick,vWd:vWd,wdIssues:wdIssues,wdLearn:wdLearn,sqOpen:sqOpen,sqStart:sqStart,sqClick:sqClick,vSq:vSq,sqPick:sqPick,sqWrongs:sqWrongs,checkpoint:checkpoint,resumeWorkshop:resumeWorkshop,vPath:vPath});
+if(window.ShopLab)Object.assign(window.ShopLab,{wde:wde,WDT:WDT,wdNew:wdNew,wdOpen:wdOpen,wdClick:wdClick,vWd:vWd,wdIssues:wdIssues,wdLearn:wdLearn,sqOpen:sqOpen,sqStart:sqStart,sqClick:sqClick,vSq:vSq,sqPick:sqPick,sqWrongs:sqWrongs,sqCode:sqCode,SQ_MODES:SQ_MODES,checkpoint:checkpoint,resumeWorkshop:resumeWorkshop,vPath:vPath});
 /* END WRITING DESK */

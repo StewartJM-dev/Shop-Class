@@ -4,7 +4,7 @@ A learning workshop built for the Stewart boys and their interests. It runs in a
 
 ## Current baseline
 
-302 lesson entries across eight workshops:
+337 lesson entries across nine workshops:
 
 | Workshop | Entries |
 | --- | ---: |
@@ -16,8 +16,9 @@ A learning workshop built for the Stewart boys and their interests. It runs in a
 | Coding, including Python and Web Lab | 71 |
 | Writing Desk | 16 |
 | Money Lab | 4 |
+| Trail Detective | 35 |
 
-The build includes six illustrated workshop covers, 45 progress badges, a personal project shelf, four saved game slots and four saved web-page slots per learner, and export/restore of browser-local progress.
+The build includes nine illustrated workshop covers, 48 progress badges, a personal project shelf, four saved game slots and four saved web-page slots per learner, and export/restore of browser-local progress.
 
 ## Run the app
 
@@ -148,6 +149,21 @@ The price book retains the supplied package’s values and dated source notes as
 
 Serving targets are simplified budget-puzzle units, not complete nutrition plans. The monthly scenario uses a fixed 16% pay deduction, allocated prepaid-phone costs, and already-covered startup deposits. It omits many real expenses and is not a personal tax or financial plan. [BLS average-price guidance](https://www.bls.gov/cpi/factsheets/average-prices.htm) and [CFPB emergency-fund guidance](https://www.consumerfinance.gov/an-essential-guide-to-building-an-emergency-fund/) are linked in the price book. Original package notes are retained in `MONEY-LAB-IMPORT.md`.
 
-The current total is **302 entries, eight workshops and 45 badges**. The original six photographic workshop covers are retained; Writing Desk and Money Lab use embedded SVG illustrations.
+The v0.8.0 total was **302 entries, eight workshops and 45 badges**. The original six photographic workshop covers are retained; Writing Desk and Money Lab use embedded SVG illustrations.
 
 `npm test` includes all original checks plus full delegated injection/no-start traversals, repair/verification/replay gates, restored progress, 16 writing templates, all four budget solutions, price edits/reset, monthly surprise stability and owner isolation. SVG diagrams were rendered and visually inspected. Additional real Chromium 153 checks completed both fuel activities with native controls at 1366×768 and 390×844 viewports, and exercised Money Lab, price edits and writing saves with no script errors or horizontal overflow. The new desktop labs use the full available width. Actual hardware, Safari/ChromeOS-specific behavior, speech output and printing remain to be checked. The hosted preview has not been updated. Optional browser tests: `npm run test:browser` with Playwright/Chromium installed for development; `PLAYWRIGHT_MODULE_PATH` and `SHOP_CLASS_CHROMIUM` may point to existing installations.
+
+
+## Trail Detective, new spelling games and workshop art (v0.9.0)
+
+The new `detect` workshop contains 35 original cases (`td1`–`td35`). Read the story and Word of the Day, select the sentence containing the clue, then answer the question. Missed clue selections and answers affect stars; best stars are permanent. Rank grows from Rookie to Master Detective. Sharp eye requires five known cases solved with three stars. Each case gives 25 XP once and zero on replay. Unfinished phase, hints and mistakes save per learner under `drafts['td:tdN']` and resume through the existing Continue action and backups.
+
+The merge corrects overconfident explanations in four cases. Oil color alone does not establish when oil was changed; track shape and claw marks need corroboration; a photograph of open water replaces a temperature-only claim about pond ice; floating eggs raise a freshness question but do not establish an exact lay date or safety. Primary references appear with the relevant solutions. The puzzles teach observation within stated facts, not forensic certainty from one clue. The incoming package notes are retained in `NEW-WORKSHOPS-IMPORT.md` as history.
+
+Spelling Quest adds Say it (unscored word study), Letter, Secret code and Code maker, for ten menu choices. Say it and Code maker give no XP. Letter and Secret code share the existing daily scored-round limit. Letter practice does not add letters to the misspelled-word bank; muted/unavailable speech reveals the target letter. Code maker supports Caesar keys 1–25, typing spaces, decoding and clipboard copy. Clipboard success is reported only on success and is ignored after a profile/view change. These simple ciphers are word games, not secure messaging.
+
+Writing Desk, Money Lab and Trail Detective now use newly generated photographic covers consistent with the earlier workshop art. The same covers appear on the home cards, featured workshop and the three course pages. Scoped cover styles keep the images full width instead of shrinking them into a corner of a card. All nine covers are embedded in `index.html`; no image-host requests are required. The new optimized assets are `artwork/writing-desk.webp`, `artwork/money-lab.webp` and `artwork/trail-detective.webp`. Exact prompts, paths and generation method are in `artwork/ASSET_NOTES.json`. They were made with the built-in ImageGen tool and optimized for the app.
+
+Editable sources: `extensions/trail-detective.js`/`.css`, the updated `writing-desk.js`/`.css`, and `workshop-covers.js`/`.css`. Run the sync script after source edits. Current total: **337 entries, nine workshops, 48 badges**. Existing fuel labs, both Shop Detective cases, Money Lab corrections, saved-project migration, runner isolation, writing templates and earned progress remain.
+
+New tests exercise all 35 selectable clues/answers, keyboard clue selection, first/replay XP, best stars/ranks/badges, profile switching/resume/restore, all four added spelling/code modes, muted Letter fallback, code shifts, asynchronous clipboard ownership, nine distinct image assets and three course headers. Real Chromium checks at 1366×768 and 390×844 verify loaded images, native detective/word-game controls and no page errors or horizontal overflow. Actual speech output, printing and physical-device/Safari testing remain open. Hosting is unchanged.

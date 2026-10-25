@@ -37,7 +37,7 @@ assert.equal(profile().sq.words.friend.box,1,'Repeated same-day practice advance
 const endXP=profile().xp;L.sqClick('sqkey','ENTER');assert.equal(profile().xp,endXP);
 act('back');assert.equal(V.s,'path');act('back');assert.equal(V.s,'home');act('subj','auto');act('cbopen');assert(document.querySelector('#cb-diagram svg'),'Carburetor retained alongside writing');
 for(const ext of ['writing-desk.js','writing-desk.css'])assert(html.includes(fs.readFileSync('extensions/'+ext,'utf8').trim()));
-assert(!html.includes('<<<<<<<'));assert.equal(L.SUBJECTS.length,8);assert.equal(L.allWorkshopBadges().length,45);
+assert(!html.includes('<<<<<<<'));assert.equal(L.SUBJECTS.length,9);assert.equal(L.allWorkshopBadges().length,48);
 // Restore keeps new writing/spelling data, established XP and large writing collections.
 const backup=data(),restored=backup.profiles[0],savedXP=restored.xp;
 while(restored.docs.length<301)restored.docs.push({id:'kept'+restored.docs.length,tpl:'blank',title:'Kept',text:'A kept page.',created:1,updated:1,fin:false,ign:{}});

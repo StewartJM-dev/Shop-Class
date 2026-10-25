@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.9.0 — 2026-10-24
+
+- Merge Claude’s 35 Trail Detective cases and four added spelling/code menu choices into current development.
+- Add owner-bound detective drafts/resume, keyboard clue actions, guarded phase transitions, permanent best stars, first-completion XP and known-case badge checks.
+- Retain current writing, Money Lab, fuel labs, saved progress, source markers and runner isolation.
+- Keep Say it/Code maker unscored, reveal letters for muted/unavailable speech, preserve round-end guards and guard delayed clipboard feedback by owner/view.
+- Correct oil-color, track, ice and egg explanations to distinguish clues from proof; include primary references.
+- Generate and embed matching photographic covers for Writing Desk, Money Lab and Trail Detective, including course-page headers; preserve the other six covers.
+- Total: 337 entries, nine workshops and 48 badges. Add full case/mode/art regression checks and real Chromium layout/native-control checks at Chromebook/phone viewport sizes.
+- Preserve disabled Time Pass and hosting audience; hosted preview unchanged.
+
 ## 0.8.0 — 2026-10-24
 
 - Add Fuel Injection Lab (inj1): six discoveries with pulse width, needle movement, port/direct location, RPM, missing fuel pressure and nozzle restriction.

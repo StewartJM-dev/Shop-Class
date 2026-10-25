@@ -52,4 +52,7 @@
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .wdbox{background:#1f3a42}:root:not([data-theme="light"]) #wdtext{color:#edf2df}:root:not([data-theme="light"]) .wdback .k-spell{background:#e8590c33}:root:not([data-theme="light"]) .wdback mark.cur{background:#ffe06655}}
 @media(max-width:420px){.sq-keys{gap:4px}.sq-k{min-height:42px;font-size:15px}.sq-l1{font-size:22px}.sq-word{font-size:24px}}
 
+.sq-big{font-size:56px;line-height:1.1}.sq-code{font-size:28px;letter-spacing:.18em;color:#ffe066;text-shadow:0 0 8px #ffe066aa}.sq-strip{margin:8px auto 6px;font:700 11px/1.5 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.18em;color:#c9ffe0;overflow-x:auto;white-space:nowrap;text-align:left;display:inline-block;max-width:100%}.sq-strip span{display:inline-block;width:46px;letter-spacing:.05em;opacity:.7}.sq-strip div+div{color:#ffe066}.sq-tip{font-size:13px;font-weight:600;color:#e6fcf5;margin:10px 4px 0;text-align:center}.sq-res span:not(.ok):not(.no){color:#4a2f12}
+@media(max-width:420px){.sq-strip{font-size:9.5px;letter-spacing:.12em}.sq-strip span{width:38px}}
+
 /* END WRITING DESK STYLES */

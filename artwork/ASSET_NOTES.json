@@ -25,6 +25,39 @@
     {
       "id": "code",
       "subject": "Coding workshop: a modern slim laptop on a tidy desk, screen split between an elegant dark code editor with colorful abstract code lines and a bright modern web page preview with cards, a mountain photograph and a large green button. A small miniature website window floats just above the screen as a creative dimensional detail. No game character, no controller, no blocky pixel styling, no readable text."
+    },
+    {
+      "id": "write",
+      "prompt": "Use case: photorealistic-natural. Asset type: wide 16:9 workshop-card illustration for a hands-on learning app. Create a warm, inviting photographic still life for WRITING DESK, matching cinematic, sunlit wooden-workbench photography. An open cream-colored writing notebook with a fountain pen resting diagonally on the right page, a sharpened pencil and eraser, a few story index cards, and a small stack of worn books on a solid oak desk beside a window. Morning sunlight, tangible paper and wood grain, forest green and warm amber accents, realistic natural shadows. The open notebook and pen are the unmistakable central subject. Slightly elevated three-quarter view, clean deliberate composition that remains legible as a small thumbnail, keep the main objects within the central 70% for responsive cropping. No people, no readable writing, no text overlay, no logos, no watermark, no computer screen, no cartoon look. Full-bleed landscape photograph, not a framed UI.",
+      "path": "artwork/writing-desk.webp",
+      "size": [
+        1000,
+        563
+      ],
+      "generator": "Built-in ImageGen",
+      "use": "Decorative workshop-card and course-cover art"
+    },
+    {
+      "id": "money",
+      "prompt": "Use case: photorealistic-natural. Asset type: wide 16:9 workshop-card illustration for a hands-on learning app. Create a warm photographic still life for MONEY LAB, matching cinematic sunlight on a wooden workbench. A small forest-green calculator, several neat stacks of generic silver and copper coins, a few folded paper banknotes with indistinct unbranded designs, a kraft-paper grocery bag with an apple and a loaf of bread visible, and an open budget notebook with simple ruled columns and no readable text. The calculator and coin stacks are the main subjects in the center, groceries provide the context of everyday budgeting rather than finance trading. Warm morning sunlight, believable materials and shadows, oak table, muted teal-green and amber palette. Slightly elevated three-quarter view, clear composition readable as a small card thumbnail; main objects within the central 70% for responsive cropping. No people, no text overlay, no logos, no watermark, no stock-market chart, no luxury objects, no cartoon look. Full-bleed landscape photograph.",
+      "path": "artwork/money-lab.webp",
+      "size": [
+        1000,
+        563
+      ],
+      "generator": "Built-in ImageGen",
+      "use": "Decorative workshop-card and course-cover art"
+    },
+    {
+      "id": "detect",
+      "prompt": "Use case: photorealistic-natural. Asset type: wide 16:9 workshop-card illustration for a hands-on learning app. Create a bright, adventurous photographic still life for TRAIL DETECTIVE, matching cinematic sunlight and real wooden workbench textures. At a woodland trailhead picnic table, a substantial brass-rimmed magnifying glass clearly enlarges a crisp animal paw print on a small paper evidence card, beside an open field notebook, a stubby pencil, a small brass compass, and a folded topographic map. A muddy boot print is visible in the ground just beyond the table; soft-focus Pennsylvania-style woodland and a sunlit path in the background. The magnifying glass and paw-print evidence card are the unmistakable central focal point. Welcoming outdoor mystery and careful observation, not crime or horror. Rich natural greens, warm amber highlights, sharp tactile foreground and soft background, three-quarter close view, main objects within central 70% so the card crops well on phones. No people, no readable writing, no text overlay, no logos, no watermark, no weapons, no cartoon look. Full-bleed landscape photograph.",
+      "path": "artwork/trail-detective.webp",
+      "size": [
+        1000,
+        563
+      ],
+      "generator": "Built-in ImageGen",
+      "use": "Decorative workshop-card and course-cover art"
     }
   ],
   "sharedPrompt": "Premium photorealistic 3D still-life illustration for a polished learning web app; tactile material textures; soft studio key light from upper left, warm golden accents; teal, cream, copper and amber palette. Wide 16:9 centered composition, uncluttered environment and soft depth of field. No text, logos, watermarks, borders, collages, flat vectors, low-poly shapes or pixel art.",

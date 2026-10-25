@@ -2,6 +2,10 @@
 const fs=require('fs');
 const file='index.html';let html=fs.readFileSync(file,'utf8');
 for(const [start,end,path] of [
+ ['/* BEGIN TRAIL DETECTIVE */','/* END TRAIL DETECTIVE */','extensions/trail-detective.js'],
+ ['/* BEGIN TRAIL DETECTIVE STYLES */','/* END TRAIL DETECTIVE STYLES */','extensions/trail-detective.css'],
+ ['/* BEGIN NEW WORKSHOP COVERS */','/* END NEW WORKSHOP COVERS */','extensions/workshop-covers.js'],
+ ['/* BEGIN NEW WORKSHOP COVER STYLES */','/* END NEW WORKSHOP COVER STYLES */','extensions/workshop-covers.css'],
  ['/* BEGIN MONEY LAB */','/* END MONEY LAB */','extensions/money-lab.js'],
  ['/* BEGIN MONEY LAB STYLES */','/* END MONEY LAB STYLES */','extensions/money-lab.css'],
  ['/* BEGIN WRITING TEMPLATES TWO */','/* END WRITING TEMPLATES TWO */','extensions/writing-templates-2.js'],
